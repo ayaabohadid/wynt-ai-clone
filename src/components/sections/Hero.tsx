@@ -4,11 +4,11 @@ import { ArrowRight, CheckCircle2, Star } from 'lucide-react'
 
 export function Hero() {
   return (
-    <section className="relative overflow-hidden bg-white pb-20 pt-16">
+    <section className="relative overflow-hidden bg-white pb-20 pt-16 dark:bg-slate-950">
       {/* Background gradient blobs */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 left-1/2 h-[600px] w-[600px] -translate-x-1/2 rounded-full bg-blue-50 opacity-60 blur-3xl" />
-        <div className="absolute -top-20 right-0 h-[400px] w-[400px] rounded-full bg-violet-50 opacity-50 blur-3xl" />
+        <div className="absolute -top-40 left-1/2 h-[600px] w-[600px] -translate-x-1/2 rounded-full bg-blue-50 opacity-60 blur-3xl dark:bg-blue-950/40" />
+        <div className="absolute -top-20 right-0 h-[400px] w-[400px] rounded-full bg-violet-50 opacity-50 blur-3xl dark:bg-violet-950/40" />
       </div>
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -20,7 +20,7 @@ export function Hero() {
           </Badge>
 
           {/* Headline */}
-          <h1 className="max-w-4xl text-5xl font-bold tracking-tight text-slate-900 sm:text-6xl lg:text-7xl">
+          <h1 className="max-w-4xl text-5xl font-bold tracking-tight text-slate-900 sm:text-6xl lg:text-7xl dark:text-white">
             Your Career,{' '}
             <span className="bg-gradient-to-r from-blue-600 to-violet-600 bg-clip-text text-transparent">
               Intelligently
@@ -28,7 +28,7 @@ export function Hero() {
             Accelerated
           </h1>
 
-          <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-600">
+          <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-600 dark:text-slate-300">
             Upload your CV, match against thousands of jobs with AI precision, ace interviews
             with personalised coaching, and land your dream role — all in one platform.
           </p>
@@ -45,7 +45,7 @@ export function Hero() {
           </div>
 
           {/* Trust signals */}
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-sm text-slate-500">
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-sm text-slate-500 dark:text-slate-400">
             {[
               'No credit card required',
               'Free tokens included',

@@ -56,16 +56,16 @@ const colorMap = {
 
 export function HowItWorks() {
   return (
-    <section id="how-it-works" className="bg-slate-50 py-24">
+    <section id="how-it-works" className="bg-slate-50 py-24 dark:bg-slate-900">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center">
           <span className="text-sm font-semibold uppercase tracking-widest text-blue-600">
             How It Works
           </span>
-          <h2 className="mt-2 text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl">
+          <h2 className="mt-2 text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl dark:text-white">
             From CV to Offer in Three Steps
           </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-lg text-slate-600">
+          <p className="mx-auto mt-4 max-w-2xl text-lg text-slate-600 dark:text-slate-300">
             A streamlined workflow that puts AI to work at every stage of your job search.
           </p>
         </div>
@@ -89,9 +89,9 @@ export function HowItWorks() {
                     </div>
                   </div>
 
-                  <div className={`mt-6 w-full rounded-2xl ${c.bg} p-6`}>
-                    <h3 className="text-xl font-bold text-slate-900">{title}</h3>
-                    <p className="mt-2 text-sm leading-relaxed text-slate-600">{description}</p>
+                  <div className={`mt-6 w-full rounded-2xl ${c.bg} p-6 dark:bg-slate-800/50`}>
+                    <h3 className="text-xl font-bold text-slate-900 dark:text-white">{title}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-300">{description}</p>
                     <span className={`mt-4 inline-block rounded-full px-3 py-1 text-xs font-semibold ${c.badge}`}>
                       ✓ {highlight}
                     </span>

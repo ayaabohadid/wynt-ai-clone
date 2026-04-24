@@ -7,7 +7,7 @@ import { Footer } from '@/components/sections/Footer'
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-white font-sans antialiased">
+    <div className="min-h-screen bg-white font-sans antialiased transition-colors dark:bg-slate-950 dark:text-slate-100">
       <Navbar />
       <main>
         <Hero />

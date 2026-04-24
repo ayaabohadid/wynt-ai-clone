@@ -202,16 +202,16 @@ export function Features() {
   const current = features.find((f) => f.id === active)!
 
   return (
-    <section id="features" className="bg-white py-24">
+    <section id="features" className="bg-white py-24 dark:bg-slate-950">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center">
           <span className="text-sm font-semibold uppercase tracking-widest text-violet-600">
             Features
           </span>
-          <h2 className="mt-2 text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl">
+          <h2 className="mt-2 text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl dark:text-white">
             Everything You Need to Land the Role
           </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-lg text-slate-600">
+          <p className="mx-auto mt-4 max-w-2xl text-lg text-slate-600 dark:text-slate-300">
             Purpose-built AI tools at every stage — from first CV upload to final offer.
           </p>
         </div>
@@ -226,8 +226,8 @@ export function Features() {
                 className={cn(
                   'w-full flex items-center gap-4 rounded-xl border p-4 text-left transition-all',
                   active === id
-                    ? 'border-blue-200 bg-blue-50 shadow-sm'
-                    : 'border-transparent hover:border-slate-200 hover:bg-slate-50'
+                    ? 'border-blue-200 bg-blue-50 shadow-sm dark:border-blue-900/50 dark:bg-blue-950/40'
+                    : 'border-transparent hover:border-slate-200 hover:bg-slate-50 dark:hover:border-slate-800 dark:hover:bg-slate-900/50'
                 )}
               >
                 <div
@@ -241,8 +241,8 @@ export function Features() {
                   <Icon className="h-5 w-5" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="font-semibold text-slate-900">{title}</p>
-                  <p className="text-sm text-slate-500">{tagline}</p>
+                  <p className="font-semibold text-slate-900 dark:text-white">{title}</p>
+                  <p className="text-sm text-slate-500 dark:text-slate-400">{tagline}</p>
                 </div>
                 <ChevronRight
                   className={cn(
@@ -255,10 +255,10 @@ export function Features() {
           </div>
 
           {/* Preview panel */}
-          <div className="sticky top-24 rounded-2xl border border-slate-200 bg-slate-50 p-6">
+          <div className="sticky top-24 rounded-2xl border border-slate-200 bg-slate-50 p-6 dark:border-slate-800 dark:bg-slate-900/50">
             <div className="mb-4">
-              <h3 className="text-xl font-bold text-slate-900">{current.title}</h3>
-              <p className="mt-1 text-sm leading-relaxed text-slate-600">{current.description}</p>
+              <h3 className="text-xl font-bold text-slate-900 dark:text-white">{current.title}</h3>
+              <p className="mt-1 text-sm leading-relaxed text-slate-600 dark:text-slate-300">{current.description}</p>
             </div>
             {current.preview ? (
               current.preview
@@ -280,12 +280,12 @@ export function Features() {
             { icon: TrendingUp, title: 'Salary Negotiation', desc: 'AI coach helps you negotiate the offer you deserve' },
             { icon: FileText, title: 'Application Tracker', desc: 'Track every application, interview, and offer in one view' },
           ].map(({ icon: Icon, title, desc }) => (
-            <div key={title} className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-slate-100 text-slate-600">
+            <div key={title} className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300">
                 <Icon className="h-5 w-5" />
               </div>
-              <h3 className="mt-3 font-semibold text-slate-900">{title}</h3>
-              <p className="mt-1 text-sm text-slate-500">{desc}</p>
+              <h3 className="mt-3 font-semibold text-slate-900 dark:text-white">{title}</h3>
+              <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">{desc}</p>
             </div>
           ))}
         </div>

@@ -72,16 +72,16 @@ const tokenExamples = [
 
 export function Pricing() {
   return (
-    <section id="pricing" className="bg-slate-50 py-24">
+    <section id="pricing" className="bg-slate-50 py-24 dark:bg-slate-900">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center">
           <span className="text-sm font-semibold uppercase tracking-widest text-blue-600">
             Pricing
           </span>
-          <h2 className="mt-2 text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl">
+          <h2 className="mt-2 text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl dark:text-white">
             Pay Only for What You Use
           </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-lg text-slate-600">
+          <p className="mx-auto mt-4 max-w-2xl text-lg text-slate-600 dark:text-slate-300">
             Transparent token-based pricing. No hidden fees, no surprise charges.
           </p>
         </div>
@@ -92,8 +92,8 @@ export function Pricing() {
             <div
               key={name}
               className={cn(
-                'relative flex flex-col rounded-2xl border bg-white p-8 shadow-sm',
-                popular ? 'border-blue-500 ring-2 ring-blue-500' : 'border-slate-200'
+                'relative flex flex-col rounded-2xl border bg-white p-8 shadow-sm dark:bg-slate-950',
+                popular ? 'border-blue-500 ring-2 ring-blue-500' : 'border-slate-200 dark:border-slate-800'
               )}
             >
               {popular && (
@@ -105,20 +105,20 @@ export function Pricing() {
               )}
 
               <div>
-                <p className="text-sm font-semibold uppercase tracking-wide text-slate-500">{name}</p>
+                <p className="text-sm font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">{name}</p>
                 <div className="mt-2 flex items-end gap-1">
-                  <span className="text-5xl font-bold tracking-tight text-slate-900">{price}</span>
-                  <span className="mb-1 text-slate-500">{period}</span>
+                  <span className="text-5xl font-bold tracking-tight text-slate-900 dark:text-white">{price}</span>
+                  <span className="mb-1 text-slate-500 dark:text-slate-400">{period}</span>
                 </div>
-                <p className="mt-2 text-sm text-slate-500">{description}</p>
-                <div className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-blue-50 px-3 py-1 text-xs font-medium text-blue-700">
+                <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">{description}</p>
+                <div className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-blue-50 px-3 py-1 text-xs font-medium text-blue-700 dark:bg-blue-950/50 dark:text-blue-300">
                   <Zap className="h-3 w-3" /> {tokens}
                 </div>
               </div>
 
               <ul className="mt-8 flex-1 space-y-3">
                 {features.map((f) => (
-                  <li key={f} className="flex items-center gap-2.5 text-sm text-slate-700">
+                  <li key={f} className="flex items-center gap-2.5 text-sm text-slate-700 dark:text-slate-300">
                     <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-500" />
                     {f}
                   </li>
@@ -135,21 +135,21 @@ export function Pricing() {
         </div>
 
         {/* Token examples */}
-        <div className="mt-16 rounded-2xl border border-slate-200 bg-white p-8">
-          <h3 className="text-center text-lg font-bold text-slate-900">
+        <div className="mt-16 rounded-2xl border border-slate-200 bg-white p-8 dark:border-slate-800 dark:bg-slate-950">
+          <h3 className="text-center text-lg font-bold text-slate-900 dark:text-white">
             What Can You Do with Tokens?
           </h3>
-          <p className="mt-1 text-center text-sm text-slate-500">
+          <p className="mt-1 text-center text-sm text-slate-500 dark:text-slate-400">
             Each AI-powered action consumes a small number of tokens. Here are some examples:
           </p>
           <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {tokenExamples.map(({ action, tokens }) => (
               <div
                 key={action}
-                className="flex items-center justify-between rounded-xl bg-slate-50 px-4 py-3"
+                className="flex items-center justify-between rounded-xl bg-slate-50 px-4 py-3 dark:bg-slate-900"
               >
-                <span className="text-sm text-slate-700">{action}</span>
-                <div className="flex items-center gap-1 rounded-full bg-blue-100 px-2.5 py-1 text-xs font-bold text-blue-700">
+                <span className="text-sm text-slate-700 dark:text-slate-200">{action}</span>
+                <div className="flex items-center gap-1 rounded-full bg-blue-100 px-2.5 py-1 text-xs font-bold text-blue-700 dark:bg-blue-950/50 dark:text-blue-300">
                   <Zap className="h-3 w-3" /> {tokens}
                 </div>
               </div>
