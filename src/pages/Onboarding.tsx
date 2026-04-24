@@ -402,6 +402,17 @@ export function Onboarding() {
               <p className="mt-3 text-xs text-slate-500 dark:text-slate-400">
                 PDF, DOCX, or TXT · max 5MB · or skip and add later from your dashboard.
               </p>
+              <button
+                type="button"
+                onClick={() => {
+                  update('cvName', '')
+                  next()
+                }}
+                className="mt-5 flex w-full items-center justify-center gap-1.5 rounded-lg border border-dashed border-slate-300 bg-transparent px-4 py-3 text-sm font-medium text-slate-600 transition-colors hover:border-slate-400 hover:bg-slate-50 hover:text-slate-900 dark:border-slate-700 dark:text-slate-300 dark:hover:border-slate-500 dark:hover:bg-slate-800/60 dark:hover:text-white"
+              >
+                Skip CV for now — I'll add it later
+                <ArrowRight className="h-4 w-4" />
+              </button>
             </StepShell>
           )}
           {step === 12 && <Step12 answers={answers} onFinish={() => navigate('/')} />}
