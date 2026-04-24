@@ -7,6 +7,7 @@ import {
   DollarSign,
   FileText,
   Globe,
+  Home,
   Link2,
   LogOut,
   Mic2,
@@ -25,10 +26,50 @@ import { LanguageSwitcher } from '@/components/ui/language-switcher'
 import { ThemeToggle } from '@/components/ui/theme-toggle'
 import { DashboardSidebar, type NavKey } from '@/components/layout/DashboardSidebar'
 import { BrowseJobs } from '@/pages/BrowseJobs'
+import { DashboardOverview } from '@/pages/DashboardOverview'
 import { Link, useRouter } from '@/lib/router'
 import { useLanguage } from '@/lib/i18n'
 import { getCurrentUser, signOut } from '@/lib/auth'
 import { cn } from '@/lib/utils'
+
+/** Two-coins icon used in the top-bar token pill */
+function TopBarCoins({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <circle cx="9" cy="9" r="6" />
+      <circle cx="15" cy="15" r="6" />
+    </svg>
+  )
+}
+
+const sectionTitles: Record<NavKey, { en: string; ar: string }> = {
+  home: { en: 'Overview', ar: 'نظرة عامة' },
+  livefeed: { en: 'Wynt Live Feed', ar: 'تغذية Wynt المباشرة' },
+  intelligence: { en: 'Wynt Intelligence', ar: 'ذكاء Wynt' },
+  coach: { en: 'AI Coach', ar: 'المدرّب الذكي' },
+  interviews: { en: 'Interview Studio', ar: 'استوديو المقابلات' },
+  salary: { en: 'Salary AI', ar: 'ذكاء الراتب' },
+  linkedin: { en: 'LinkedIn Analysis', ar: 'تحليل LinkedIn' },
+  cv: { en: 'CV Studio', ar: 'استوديو السيرة' },
+  cover: { en: 'Cover Letters', ar: 'رسائل التقديم' },
+  tracker: { en: 'Application Tracker', ar: 'متتبّع الطلبات' },
+  analytics: { en: 'Apply Pilot Analytics', ar: 'تحليلات التقديم' },
+  profile: { en: 'Profile', ar: 'الملف الشخصي' },
+  settings: { en: 'Settings & Billing', ar: 'الإعدادات والفوترة' },
+  tokens: { en: 'Tokens & Usage', ar: 'التوكنات والاستخدام' },
+  chrome: { en: 'Chrome Extension', ar: 'إضافة Chrome' },
+  help: { en: 'Help & Support', ar: 'المساعدة والدعم' },
+}
 
 const matches = [
   {
@@ -140,46 +181,56 @@ export function Dashboard() {
         {/* Top bar */}
         <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/95 backdrop-blur dark:border-slate-800 dark:bg-slate-950/95">
           <div className="flex h-16 items-center gap-4 px-4 sm:px-6">
-            <div className="relative hidden flex-1 max-w-md md:block">
-              <Search className="absolute start-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
-              <input
-                type="text"
-                placeholder={copy('Search jobs, companies…', 'ابحث عن وظائف أو شركات')}
-                className="w-full rounded-lg border border-slate-200 bg-slate-50 ps-9 pe-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none dark:border-slate-700 dark:bg-slate-900 dark:text-white"
-              />
+            {/* Breadcrumb / page title */}
+            <div className="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-200">
+              <Home className="h-4 w-4 text-slate-400" />
+              <span className="font-medium">{sectionTitles[activeNav][lang]}</span>
             </div>
+
             <Link to="/" className="flex items-center gap-2 font-bold text-lg text-slate-900 dark:text-white lg:hidden">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-blue-600 to-violet-600">
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-indigo-600 to-purple-600">
                 <Zap className="h-4 w-4 text-white" />
               </div>
               <span className="hidden sm:inline">
-                wynt<span className="text-blue-600 dark:text-blue-400">.ai</span>
+                wynt<span className="text-indigo-600 dark:text-indigo-400">.ai</span>
               </span>
             </Link>
+
             <div className="ms-auto flex items-center gap-2">
               <LanguageSwitcher />
               <ThemeToggle />
+              {/* Token balance pill */}
               <button
-                className="relative rounded-md border border-slate-200 bg-white p-2 text-slate-600 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 dark:hover:bg-slate-800"
-                aria-label="Notifications"
+                type="button"
+                onClick={() => handleNavigate('tokens')}
+                className="inline-flex items-center gap-1.5 rounded-full border border-violet-200 bg-violet-50 px-3 py-1.5 text-sm font-semibold text-violet-700 transition-colors hover:bg-violet-100 dark:border-violet-900/60 dark:bg-violet-950/40 dark:text-violet-300 dark:hover:bg-violet-950/60"
+                aria-label="Token balance"
               >
-                <Bell className="h-4 w-4" />
-                <span className="absolute -top-1 -end-1 flex h-4 w-4 items-center justify-center rounded-full bg-rose-500 text-[10px] font-bold text-white">3</span>
+                <TopBarCoins className="h-3.5 w-3.5" />
+                65
               </button>
+              {/* Plan pill */}
+              <span className="rounded-full bg-indigo-50 px-2.5 py-1 text-xs font-semibold text-indigo-700 dark:bg-indigo-950/50 dark:text-indigo-300">
+                {copy('Free', 'مجاني')}
+              </span>
               <UserMenu
-              onSignOut={() => {
-                signOut()
-                navigate('/')
-              }}
-              firstName={firstName}
-            />
+                onSignOut={() => {
+                  signOut()
+                  navigate('/')
+                }}
+                firstName={firstName}
+              />
             </div>
           </div>
         </header>
 
         {/* Main */}
         <main className="min-w-0 flex-1 px-4 py-6 sm:px-6 lg:px-8">
-          {activeNav === 'livefeed' ? <BrowseJobs /> : (<>
+          {activeNav === 'livefeed' ? (
+            <BrowseJobs />
+          ) : activeNav === 'home' ? (
+            <DashboardOverview onNavigate={handleNavigate} />
+          ) : (<>
           {/* Greeting */}
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div>
