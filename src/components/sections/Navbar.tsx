@@ -1,7 +1,8 @@
 import { useState } from 'react'
+import { Button } from '@/components/ui/button'
 import { LanguageSwitcher } from '@/components/ui/language-switcher'
 import { ThemeToggle } from '@/components/ui/theme-toggle'
-import { Menu, X, Zap } from 'lucide-react'
+import { ArrowRight, Menu, X, Zap } from 'lucide-react'
 
 const navLinks = [
   { label: 'Features', href: '#features' },
@@ -37,10 +38,18 @@ export function Navbar() {
             ))}
           </nav>
 
-          {/* Header utilities */}
+          {/* Header utilities + auth CTAs */}
           <div className="hidden md:flex items-center gap-2">
             <LanguageSwitcher />
             <ThemeToggle />
+            <div className="mx-1 h-6 w-px bg-slate-200 dark:bg-slate-700" />
+            <Button variant="ghost" size="sm">
+              Sign In
+            </Button>
+            <Button variant="gradient" size="sm" className="gap-1.5">
+              Get Started
+              <ArrowRight className="h-4 w-4" />
+            </Button>
           </div>
 
           {/* Mobile right-side controls */}
@@ -72,6 +81,20 @@ export function Navbar() {
                 {link.label}
               </a>
             ))}
+            <div className="mt-3 flex flex-col gap-2">
+              <Button variant="outline" size="sm" onClick={() => setOpen(false)}>
+                Sign In
+              </Button>
+              <Button
+                variant="gradient"
+                size="sm"
+                onClick={() => setOpen(false)}
+                className="gap-1.5"
+              >
+                Get Started
+                <ArrowRight className="h-4 w-4" />
+              </Button>
+            </div>
           </nav>
         </div>
       )}
