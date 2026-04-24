@@ -32,7 +32,7 @@ import { useLanguage } from '@/lib/i18n'
 import { cn } from '@/lib/utils'
 
 const nav = [
-  { key: 'home', icon: Home, label: { en: 'Home', ar: 'الرئيسية' } },
+  { key: 'home', icon: Home, label: { en: 'Overview', ar: 'نظرة عامة' } },
   { key: 'jobs', icon: Briefcase, label: { en: 'Jobs', ar: 'الوظائف' } },
   { key: 'cv', icon: FileText, label: { en: 'My CV', ar: 'سيرتي الذاتية' } },
   { key: 'interviews', icon: Mic2, label: { en: 'Interviews', ar: 'المقابلات' } },
