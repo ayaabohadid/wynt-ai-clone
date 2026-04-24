@@ -2,21 +2,17 @@ import { useState } from 'react'
 import {
   BarChart3,
   Bell,
-  Briefcase,
   Brain,
   ChevronRight,
   DollarSign,
   FileText,
   Globe,
-  HelpCircle,
-  Home,
   Link2,
   LogOut,
   Mic2,
   PlayCircle,
   Search,
   Send,
-  Settings,
   Sparkles,
   TrendingUp,
   Upload,
@@ -27,26 +23,10 @@ import {
 import { Button } from '@/components/ui/button'
 import { LanguageSwitcher } from '@/components/ui/language-switcher'
 import { ThemeToggle } from '@/components/ui/theme-toggle'
+import { DashboardSidebar, type NavKey } from '@/components/layout/DashboardSidebar'
 import { Link, useRouter } from '@/lib/router'
 import { useLanguage } from '@/lib/i18n'
 import { cn } from '@/lib/utils'
-
-const nav = [
-  { key: 'home', icon: Home, label: { en: 'Overview', ar: 'نظرة عامة' } },
-  { key: 'match', icon: Brain, label: { en: 'AI Match', ar: 'المطابقة الذكية' } },
-  { key: 'jobs', icon: Briefcase, label: { en: 'Jobs', ar: 'الوظائف' } },
-  { key: 'applications', icon: Send, label: { en: 'Applications', ar: 'طلباتي' } },
-  { key: 'interviews', icon: Mic2, label: { en: 'Interviews', ar: 'المقابلات' } },
-  { key: 'cv', icon: FileText, label: { en: 'My CV', ar: 'سيرتي الذاتية' } },
-  { key: 'cover', icon: Wand2, label: { en: 'Cover Letters', ar: 'رسائل التقديم' } },
-  { key: 'salary', icon: DollarSign, label: { en: 'Salary', ar: 'الراتب' } },
-  { key: 'linkedin', icon: Link2, label: { en: 'LinkedIn', ar: 'LinkedIn' } },
-]
-
-const bottomNav = [
-  { key: 'settings', icon: Settings, label: { en: 'Settings', ar: 'الإعدادات' } },
-  { key: 'help', icon: HelpCircle, label: { en: 'Help & Support', ar: 'المساعدة والدعم' } },
-]
 
 const matches = [
   {
@@ -103,7 +83,7 @@ const interviewPersonas = [
 export function Dashboard() {
   const { lang, t } = useLanguage()
   const { navigate } = useRouter()
-  const [activeNav, setActiveNav] = useState('home')
+  const [activeNav, setActiveNav] = useState<NavKey>('home')
   const [wizardInput, setWizardInput] = useState('')
   const firstName =
     localStorage.getItem('wynt-user-name')?.split(' ')[0] ||
@@ -156,72 +136,7 @@ export function Dashboard() {
 
       <div className="mx-auto flex max-w-7xl">
         {/* Sidebar */}
-        <aside className="sticky top-16 hidden h-[calc(100vh-4rem)] w-60 shrink-0 flex-col justify-between overflow-y-auto border-e border-slate-200 bg-white px-3 py-6 dark:border-slate-800 dark:bg-slate-950 lg:flex">
-          <div>
-            <nav className="space-y-1">
-              {nav.map((item) => {
-                const active = activeNav === item.key
-                const Icon = item.icon
-                return (
-                  <button
-                    key={item.key}
-                    onClick={() => setActiveNav(item.key)}
-                    className={cn(
-                      'flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors',
-                      active
-                        ? 'bg-gradient-to-r from-blue-600 to-violet-600 text-white shadow-sm'
-                        : 'text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800'
-                    )}
-                  >
-                    <Icon className="h-4 w-4" />
-                    <span>{item.label[lang]}</span>
-                  </button>
-                )
-              })}
-            </nav>
-            <div className="mt-6 rounded-xl border border-slate-200 bg-gradient-to-br from-blue-50 to-violet-50 p-4 dark:border-slate-800 dark:from-blue-950/40 dark:to-violet-950/40">
-              <div className="flex items-center gap-2 text-xs font-semibold text-slate-700 dark:text-slate-200">
-                <Sparkles className="h-3.5 w-3.5 text-violet-600 dark:text-violet-400" />
-                {copy('Tip of the day', 'نصيحة اليوم')}
-              </div>
-              <p className="mt-2 text-xs leading-relaxed text-slate-600 dark:text-slate-300">
-                {copy(
-                  'Tailor your cover letter to the company culture to boost your chances by 40%.',
-                  'اضبط رسالتك التقديم حسب ثقافة الشركة لتحسين فرصك بنسبة 40%.'
-                )}
-              </p>
-            </div>
-          </div>
-
-          {/* Bottom section */}
-          <div className="mt-4 space-y-1 border-t border-slate-200 pt-3 dark:border-slate-800">
-            {bottomNav.map((item) => {
-              const Icon = item.icon
-              return (
-                <button
-                  key={item.key}
-                  onClick={() => setActiveNav(item.key)}
-                  className={cn(
-                    'flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors',
-                    activeNav === item.key
-                      ? 'bg-gradient-to-r from-blue-600 to-violet-600 text-white shadow-sm'
-                      : 'text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800'
-                  )}
-                >
-                  <Icon className="h-4 w-4" />
-                  <span>{item.label[lang]}</span>
-                </button>
-              )
-            })}
-            <button
-              onClick={() => navigate('/')}
-              className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-rose-600 transition-colors hover:bg-rose-50 dark:text-rose-400 dark:hover:bg-rose-950/40"
-            >
-              <LogOut className="h-4 w-4" />
-              <span>{copy('Sign out', 'تسجيل الخروج')}</span>
-            </button>
-          </div>
-        </aside>
+        <DashboardSidebar active={activeNav} onNavigate={setActiveNav} />
 
         {/* Main */}
         <main className="min-w-0 flex-1 px-4 py-6 sm:px-6 lg:px-8">
