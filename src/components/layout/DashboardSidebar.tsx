@@ -2,13 +2,13 @@ import {
   BrainCircuit,
   DollarSign,
   FileText,
+  GraduationCap,
   HelpCircle,
   Home,
   Link2,
   LogOut,
   Mic2,
   Radio,
-  Send,
   Settings,
   Sparkles,
   Wand2,
@@ -22,7 +22,7 @@ export type NavKey =
   | 'home'
   | 'livefeed'
   | 'intelligence'
-  | 'applications'
+  | 'coach'
   | 'interviews'
   | 'cv'
   | 'cover'
@@ -41,7 +41,7 @@ const topNav: Item[] = [
   { key: 'home', icon: Home, label: { en: 'Overview', ar: 'نظرة عامة' } },
   { key: 'livefeed', icon: Radio, label: { en: 'Wynt Live Feed', ar: 'تغذية Wynt المباشرة' } },
   { key: 'intelligence', icon: BrainCircuit, label: { en: 'Wynt Intelligence', ar: 'ذكاء Wynt' } },
-  { key: 'applications', icon: Send, label: { en: 'Applications', ar: 'طلباتي' } },
+  { key: 'coach', icon: GraduationCap, label: { en: 'AI Coach', ar: 'المدرّب الذكي' } },
   { key: 'interviews', icon: Mic2, label: { en: 'Interviews', ar: 'المقابلات' } },
   { key: 'cv', icon: FileText, label: { en: 'My CV', ar: 'سيرتي الذاتية' } },
   { key: 'cover', icon: Wand2, label: { en: 'Cover Letters', ar: 'رسائل التقديم' } },
