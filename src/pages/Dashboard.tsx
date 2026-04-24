@@ -26,6 +26,7 @@ import { ThemeToggle } from '@/components/ui/theme-toggle'
 import { DashboardSidebar, type NavKey } from '@/components/layout/DashboardSidebar'
 import { Link, useRouter } from '@/lib/router'
 import { useLanguage } from '@/lib/i18n'
+import { getCurrentUser, signOut } from '@/lib/auth'
 import { cn } from '@/lib/utils'
 
 const matches = [
@@ -85,9 +86,9 @@ export function Dashboard() {
   const { navigate } = useRouter()
   const [activeNav, setActiveNav] = useState<NavKey>('home')
   const [wizardInput, setWizardInput] = useState('')
+  const currentUser = getCurrentUser()
   const firstName =
-    localStorage.getItem('wynt-user-name')?.split(' ')[0] ||
-    (lang === 'ar' ? 'أحمد' : 'Alex')
+    currentUser?.name?.split(' ')[0] || (lang === 'ar' ? 'أحمد' : 'Alex')
 
   const copy = (en: string, ar: string) => (lang === 'ar' ? ar : en)
 
@@ -133,7 +134,13 @@ export function Dashboard() {
                 <Bell className="h-4 w-4" />
                 <span className="absolute -top-1 -end-1 flex h-4 w-4 items-center justify-center rounded-full bg-rose-500 text-[10px] font-bold text-white">3</span>
               </button>
-              <UserMenu onSignOut={() => navigate('/')} firstName={firstName} />
+              <UserMenu
+              onSignOut={() => {
+                signOut()
+                navigate('/')
+              }}
+              firstName={firstName}
+            />
             </div>
           </div>
         </header>

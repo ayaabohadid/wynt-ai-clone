@@ -3,6 +3,7 @@ import { ArrowRight, Eye, EyeOff, Mail, Lock, User, Zap, CheckCircle2 } from 'lu
 import { Button } from '@/components/ui/button'
 import { Link, useRouter } from '@/lib/router'
 import { useLanguage } from '@/lib/i18n'
+import { registerUser } from '@/lib/auth'
 import { cn } from '@/lib/utils'
 
 export function Signup() {
@@ -34,15 +35,14 @@ export function Signup() {
     setTimeout(() => {
       setSubmitting(false)
       setSuccess(true)
-      // Persist name so the dashboard can greet the user later
+      // Register the user and set them as the current session
       try {
-        localStorage.setItem('wynt-user-name', form.name)
-        localStorage.setItem('wynt-user-email', form.email)
+        registerUser({ name: form.name, email: form.email })
       } catch {
         /* ignore */
       }
       // Route into onboarding after a brief celebratory pause
-      setTimeout(() => navigate('/onboarding'), 1200)
+      setTimeout(() => navigate('/onboarding'), 1600)
     }, 900)
   }
 
@@ -107,6 +107,13 @@ export function Signup() {
               <p className="mt-1 text-sm text-slate-600 dark:text-slate-300">
                 {t('signup.ready')}
               </p>
+              <div className="mt-4 flex items-center gap-2 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800/60">
+                <Mail className="h-4 w-4 text-slate-400" />
+                <span className="truncate font-medium text-slate-700 dark:text-slate-200">
+                  {form.email}
+                </span>
+                <CheckCircle2 className="ms-auto h-4 w-4 shrink-0 text-emerald-500" />
+              </div>
               <Button
                 variant="gradient"
                 size="lg"

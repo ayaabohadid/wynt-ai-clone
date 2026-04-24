@@ -19,6 +19,7 @@ import {
   Zap,
 } from 'lucide-react'
 import { useLanguage, type Lang } from '@/lib/i18n'
+import { getCurrentUser } from '@/lib/auth'
 import { cn } from '@/lib/utils'
 
 export type NavKey =
@@ -208,8 +209,9 @@ export function DashboardSidebar({ active, onNavigate, className }: Props) {
   const { lang } = useLanguage()
   const [viewMode, setViewMode] = useState<'list' | 'grid'>('list')
 
-  const userName = localStorage.getItem('wynt-user-name') || 'aya abohadid'
-  const userEmail = localStorage.getItem('wynt-user-email') || 'ayayora1188@gmail.com'
+  const user = getCurrentUser()
+  const userName = user?.name || 'aya abohadid'
+  const userEmail = user?.email || 'ayayora1188@gmail.com'
   const initial = userName.trim().charAt(0).toUpperCase()
 
   return (
