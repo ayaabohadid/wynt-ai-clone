@@ -1,19 +1,58 @@
-import type { ComponentType } from 'react'
+import { useState, type ComponentType } from 'react'
 import {
+  BarChart3,
   Brain,
   DollarSign,
   FileText,
+  Globe,
+  Headphones,
   LayoutGrid,
+  List,
   Mail,
   PanelLeft,
+  Rocket,
   Search,
+  Settings,
   Sparkles,
   Target,
+  User,
+  Zap,
 } from 'lucide-react'
 import { useLanguage, type Lang } from '@/lib/i18n'
 import { cn } from '@/lib/utils'
 
+export type NavKey =
+  | 'home'
+  | 'livefeed'
+  | 'intelligence'
+  | 'coach'
+  | 'interviews'
+  | 'salary'
+  | 'linkedin'
+  | 'cv'
+  | 'cover'
+  | 'tracker'
+  | 'analytics'
+  | 'profile'
+  | 'settings'
+  | 'tokens'
+  | 'chrome'
+  | 'help'
+
 type IconComponent = ComponentType<{ className?: string }>
+
+type Item = {
+  key: NavKey
+  icon: IconComponent
+  label: Record<Lang, string>
+}
+
+type Section = {
+  title: Record<Lang, string>
+  items: Item[]
+}
+
+/* ---------- Icons missing from lucide 1.9 ---------- */
 
 function LinkedinIcon({ className }: { className?: string }) {
   return (
@@ -29,27 +68,46 @@ function LinkedinIcon({ className }: { className?: string }) {
   )
 }
 
-export type NavKey =
-  | 'home'
-  | 'livefeed'
-  | 'intelligence'
-  | 'coach'
-  | 'interviews'
-  | 'salary'
-  | 'linkedin'
-  | 'cv'
-  | 'cover'
-
-type Item = {
-  key: NavKey
-  icon: IconComponent
-  label: Record<Lang, string>
+function CoinsIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <circle cx="9" cy="9" r="6" />
+      <circle cx="15" cy="15" r="6" />
+    </svg>
+  )
 }
 
-type Section = {
-  title: Record<Lang, string>
-  items: Item[]
+function WLogo({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 32 32"
+      className={className}
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden
+    >
+      <path
+        d="M3 8 L9 25 L13 14 L16 19 L19 14 L23 25 L29 8"
+        stroke="currentColor"
+        strokeWidth="3.2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        fill="none"
+      />
+    </svg>
+  )
 }
+
+/* ---------- Navigation data ---------- */
 
 const sections: Section[] = [
   {
@@ -97,6 +155,47 @@ const sections: Section[] = [
       { key: 'cover', icon: Mail, label: { en: 'Cover Letters', ar: 'رسائل التقديم' } },
     ],
   },
+  {
+    title: { en: 'TRACKING', ar: 'التتبّع' },
+    items: [
+      {
+        key: 'tracker',
+        icon: BarChart3,
+        label: { en: 'Application Tracker', ar: 'متتبّع الطلبات' },
+      },
+      {
+        key: 'analytics',
+        icon: Rocket,
+        label: { en: 'Apply Pilot Analytics', ar: 'تحليلات التقديم' },
+      },
+    ],
+  },
+  {
+    title: { en: 'ACCOUNT', ar: 'الحساب' },
+    items: [
+      { key: 'profile', icon: User, label: { en: 'Profile', ar: 'الملف الشخصي' } },
+      {
+        key: 'settings',
+        icon: Settings,
+        label: { en: 'Settings & Billing', ar: 'الإعدادات والفوترة' },
+      },
+      {
+        key: 'tokens',
+        icon: CoinsIcon,
+        label: { en: 'Tokens & Usage', ar: 'التوكنات والاستخدام' },
+      },
+      {
+        key: 'chrome',
+        icon: Globe,
+        label: { en: 'Chrome Extension', ar: 'إضافة Chrome' },
+      },
+      {
+        key: 'help',
+        icon: Headphones,
+        label: { en: 'Help & Support', ar: 'المساعدة والدعم' },
+      },
+    ],
+  },
 ]
 
 interface Props {
@@ -105,33 +204,23 @@ interface Props {
   className?: string
 }
 
-function WLogo({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 32 32" className={className} xmlns="http://www.w3.org/2000/svg" aria-hidden>
-      <path
-        d="M3 8 L9 25 L13 14 L16 19 L19 14 L23 25 L29 8"
-        stroke="currentColor"
-        strokeWidth="3.2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        fill="none"
-      />
-    </svg>
-  )
-}
-
 export function DashboardSidebar({ active, onNavigate, className }: Props) {
   const { lang } = useLanguage()
+  const [viewMode, setViewMode] = useState<'list' | 'grid'>('list')
+
+  const userName = localStorage.getItem('wynt-user-name') || 'aya abohadid'
+  const userEmail = localStorage.getItem('wynt-user-email') || 'ayayora1188@gmail.com'
+  const initial = userName.trim().charAt(0).toUpperCase()
 
   return (
     <aside
       className={cn(
-        'sticky top-0 hidden h-screen w-64 shrink-0 overflow-y-auto border-e border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-950 lg:block',
+        'sticky top-0 hidden h-screen w-64 shrink-0 flex-col overflow-y-auto border-e border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-950 lg:flex',
         className
       )}
     >
       {/* Brand header */}
-      <div className="flex h-16 items-center gap-3 border-b border-slate-200 px-4 dark:border-slate-800">
+      <div className="flex h-16 shrink-0 items-center gap-3 border-b border-slate-200 px-4 dark:border-slate-800">
         <button
           type="button"
           aria-label="Collapse sidebar"
@@ -147,8 +236,8 @@ export function DashboardSidebar({ active, onNavigate, className }: Props) {
         </div>
       </div>
 
-      {/* Sections */}
-      <div className="px-3 py-4 space-y-5">
+      {/* Scrollable sections */}
+      <div className="flex-1 overflow-y-auto px-3 py-4 space-y-5">
         {sections.map((section) => (
           <div key={section.title.en}>
             <p className="mb-2 px-3 text-[11px] font-semibold tracking-widest text-slate-400 dark:text-slate-500">
@@ -186,6 +275,68 @@ export function DashboardSidebar({ active, onNavigate, className }: Props) {
             </ul>
           </div>
         ))}
+
+        {/* Upgrade Plan CTA */}
+        <div className="border-t border-slate-200 pt-4 dark:border-slate-800">
+          <button
+            type="button"
+            className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-bold text-emerald-600 transition-colors hover:bg-emerald-50 dark:text-emerald-400 dark:hover:bg-emerald-950/40"
+          >
+            <Zap className="h-4 w-4 shrink-0 fill-emerald-500 text-emerald-500 dark:fill-emerald-400 dark:text-emerald-400" />
+            <span>{lang === 'ar' ? 'ترقية الخطة' : 'Upgrade Plan'}</span>
+          </button>
+        </div>
+      </div>
+
+      {/* VIEW toggle + user card */}
+      <div className="shrink-0 border-t border-slate-200 px-3 py-3 dark:border-slate-800">
+        <div className="flex items-center justify-between px-1">
+          <span className="text-[11px] font-semibold tracking-widest text-slate-400 dark:text-slate-500">
+            {lang === 'ar' ? 'العرض' : 'VIEW'}
+          </span>
+          <div className="flex items-center gap-0.5 rounded-md bg-slate-100 p-0.5 dark:bg-slate-800">
+            <button
+              type="button"
+              aria-label="List view"
+              aria-pressed={viewMode === 'list'}
+              onClick={() => setViewMode('list')}
+              className={cn(
+                'flex h-6 w-7 items-center justify-center rounded transition-colors',
+                viewMode === 'list'
+                  ? 'bg-white text-violet-600 shadow-sm dark:bg-slate-900 dark:text-violet-400'
+                  : 'text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200'
+              )}
+            >
+              <List className="h-3.5 w-3.5" />
+            </button>
+            <button
+              type="button"
+              aria-label="Grid view"
+              aria-pressed={viewMode === 'grid'}
+              onClick={() => setViewMode('grid')}
+              className={cn(
+                'flex h-6 w-7 items-center justify-center rounded transition-colors',
+                viewMode === 'grid'
+                  ? 'bg-white text-violet-600 shadow-sm dark:bg-slate-900 dark:text-violet-400'
+                  : 'text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200'
+              )}
+            >
+              <LayoutGrid className="h-3.5 w-3.5" />
+            </button>
+          </div>
+        </div>
+
+        <div className="mt-3 flex items-center gap-2.5 rounded-lg px-1 py-1.5">
+          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-violet-500 text-xs font-bold text-white">
+            {initial}
+          </div>
+          <div className="min-w-0">
+            <p className="truncate text-sm font-semibold text-slate-900 dark:text-white">
+              {userName}
+            </p>
+            <p className="truncate text-xs text-slate-500 dark:text-slate-400">{userEmail}</p>
+          </div>
+        </div>
       </div>
     </aside>
   )
