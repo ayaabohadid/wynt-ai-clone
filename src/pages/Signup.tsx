@@ -33,6 +33,8 @@ export function Signup() {
     setTimeout(() => {
       setSubmitting(false)
       setSuccess(true)
+      // Route into onboarding after a brief celebratory pause
+      setTimeout(() => navigate('/onboarding'), 1200)
     }, 900)
   }
 
@@ -93,18 +95,18 @@ export function Signup() {
                 <CheckCircle2 className="h-7 w-7 text-emerald-600 dark:text-emerald-400" />
               </div>
               <h2 className="mt-4 text-lg font-bold text-slate-900 dark:text-white">
-                Welcome to wynt.ai, {form.name.split(' ')[0]}!
+                Welcome, {form.name.split(' ')[0]}!
               </h2>
               <p className="mt-1 text-sm text-slate-600 dark:text-slate-300">
-                Check {form.email} for a verification link to activate your account.
+                Your account is ready. Let's personalise your experience next.
               </p>
               <Button
                 variant="gradient"
                 size="lg"
                 className="mt-6 w-full gap-1.5"
-                onClick={() => navigate('/')}
+                onClick={() => navigate('/onboarding')}
               >
-                Back to homepage
+                Continue to onboarding
                 <ArrowRight className="h-4 w-4" />
               </Button>
             </div>

@@ -5,6 +5,7 @@ import { Features } from '@/components/sections/Features'
 import { Pricing } from '@/components/sections/Pricing'
 import { Footer } from '@/components/sections/Footer'
 import { Signup } from '@/pages/Signup'
+import { Onboarding } from '@/pages/Onboarding'
 import { useRouter } from '@/lib/router'
 
 function HomePage() {
@@ -26,5 +27,6 @@ export default function App() {
   const { path } = useRouter()
 
   if (path === '/signup') return <Signup />
+  if (path === '/onboarding') return <Onboarding />
   return <HomePage />
 }
