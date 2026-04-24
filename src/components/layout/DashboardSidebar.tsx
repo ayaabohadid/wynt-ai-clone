@@ -42,7 +42,7 @@ const topNav: Item[] = [
   { key: 'livefeed', icon: Radio, label: { en: 'Wynt Live Feed', ar: 'تغذية Wynt المباشرة' } },
   { key: 'intelligence', icon: BrainCircuit, label: { en: 'Wynt Intelligence', ar: 'ذكاء Wynt' } },
   { key: 'coach', icon: GraduationCap, label: { en: 'AI Coach', ar: 'المدرّب الذكي' } },
-  { key: 'interviews', icon: Mic2, label: { en: 'Interviews', ar: 'المقابلات' } },
+  { key: 'interviews', icon: Mic2, label: { en: 'Interview Studio', ar: 'استوديو المقابلات' } },
   { key: 'cv', icon: FileText, label: { en: 'My CV', ar: 'سيرتي الذاتية' } },
   { key: 'cover', icon: Wand2, label: { en: 'Cover Letters', ar: 'رسائل التقديم' } },
   { key: 'salary', icon: DollarSign, label: { en: 'Salary', ar: 'الراتب' } },
