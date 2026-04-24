@@ -99,44 +99,44 @@ export function Dashboard() {
   ]
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950" lang={lang} dir={lang === 'ar' ? 'rtl' : 'ltr'}>
-      {/* Top bar */}
-      <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/95 backdrop-blur dark:border-slate-800 dark:bg-slate-950/95">
-        <div className="flex h-16 items-center gap-4 px-4 sm:px-6">
-          <Link to="/" className="flex items-center gap-2 font-bold text-lg text-slate-900 dark:text-white">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-blue-600 to-violet-600">
-              <Zap className="h-4 w-4 text-white" />
-            </div>
-            <span className="hidden sm:inline">
-              wynt<span className="text-blue-600 dark:text-blue-400">.ai</span>
-            </span>
-          </Link>
-          <div className="relative hidden flex-1 max-w-md md:block">
-            <Search className="absolute start-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
-            <input
-              type="text"
-              placeholder={copy('Search jobs, companies…', 'ابحث عن وظائف أو شركات')}
-              className="w-full rounded-lg border border-slate-200 bg-slate-50 ps-9 pe-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none dark:border-slate-700 dark:bg-slate-900 dark:text-white"
-            />
-          </div>
-          <div className="ms-auto flex items-center gap-2">
-            <LanguageSwitcher />
-            <ThemeToggle />
-            <button
-              className="relative rounded-md border border-slate-200 bg-white p-2 text-slate-600 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 dark:hover:bg-slate-800"
-              aria-label="Notifications"
-            >
-              <Bell className="h-4 w-4" />
-              <span className="absolute -top-1 -end-1 flex h-4 w-4 items-center justify-center rounded-full bg-rose-500 text-[10px] font-bold text-white">3</span>
-            </button>
-            <UserMenu onSignOut={() => navigate('/')} firstName={firstName} />
-          </div>
-        </div>
-      </header>
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex" lang={lang} dir={lang === 'ar' ? 'rtl' : 'ltr'}>
+      {/* Sidebar (full height, own brand header) */}
+      <DashboardSidebar active={activeNav} onNavigate={setActiveNav} />
 
-      <div className="mx-auto flex max-w-7xl">
-        {/* Sidebar */}
-        <DashboardSidebar active={activeNav} onNavigate={setActiveNav} />
+      <div className="flex min-w-0 flex-1 flex-col">
+        {/* Top bar */}
+        <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/95 backdrop-blur dark:border-slate-800 dark:bg-slate-950/95">
+          <div className="flex h-16 items-center gap-4 px-4 sm:px-6">
+            <div className="relative hidden flex-1 max-w-md md:block">
+              <Search className="absolute start-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+              <input
+                type="text"
+                placeholder={copy('Search jobs, companies…', 'ابحث عن وظائف أو شركات')}
+                className="w-full rounded-lg border border-slate-200 bg-slate-50 ps-9 pe-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none dark:border-slate-700 dark:bg-slate-900 dark:text-white"
+              />
+            </div>
+            <Link to="/" className="flex items-center gap-2 font-bold text-lg text-slate-900 dark:text-white lg:hidden">
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-blue-600 to-violet-600">
+                <Zap className="h-4 w-4 text-white" />
+              </div>
+              <span className="hidden sm:inline">
+                wynt<span className="text-blue-600 dark:text-blue-400">.ai</span>
+              </span>
+            </Link>
+            <div className="ms-auto flex items-center gap-2">
+              <LanguageSwitcher />
+              <ThemeToggle />
+              <button
+                className="relative rounded-md border border-slate-200 bg-white p-2 text-slate-600 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 dark:hover:bg-slate-800"
+                aria-label="Notifications"
+              >
+                <Bell className="h-4 w-4" />
+                <span className="absolute -top-1 -end-1 flex h-4 w-4 items-center justify-center rounded-full bg-rose-500 text-[10px] font-bold text-white">3</span>
+              </button>
+              <UserMenu onSignOut={() => navigate('/')} firstName={firstName} />
+            </div>
+          </div>
+        </header>
 
         {/* Main */}
         <main className="min-w-0 flex-1 px-4 py-6 sm:px-6 lg:px-8">

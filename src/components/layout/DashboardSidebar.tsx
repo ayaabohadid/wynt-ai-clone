@@ -1,22 +1,33 @@
+import type { ComponentType } from 'react'
 import {
-  BrainCircuit,
+  Brain,
   DollarSign,
   FileText,
-  GraduationCap,
-  HelpCircle,
-  Home,
-  Link2,
-  LogOut,
-  Mic2,
-  Radio,
-  Settings,
+  LayoutGrid,
+  Mail,
+  PanelLeft,
+  Search,
   Sparkles,
-  Wand2,
-  type LucideIcon,
+  Target,
 } from 'lucide-react'
-import { useRouter } from '@/lib/router'
 import { useLanguage, type Lang } from '@/lib/i18n'
 import { cn } from '@/lib/utils'
+
+type IconComponent = ComponentType<{ className?: string }>
+
+function LinkedinIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      fill="currentColor"
+      aria-hidden
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.3 6.5a1.78 1.78 0 01-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0013 14.19a.66.66 0 000 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.86 3.36 3.66z" />
+    </svg>
+  )
+}
 
 export type NavKey =
   | 'home'
@@ -24,127 +35,157 @@ export type NavKey =
   | 'intelligence'
   | 'coach'
   | 'interviews'
-  | 'cv'
-  | 'cover'
   | 'salary'
   | 'linkedin'
-  | 'settings'
-  | 'help'
+  | 'cv'
+  | 'cover'
 
 type Item = {
   key: NavKey
-  icon: LucideIcon
+  icon: IconComponent
   label: Record<Lang, string>
 }
 
-const topNav: Item[] = [
-  { key: 'home', icon: Home, label: { en: 'Overview', ar: 'نظرة عامة' } },
-  { key: 'livefeed', icon: Radio, label: { en: 'Wynt Live Feed', ar: 'تغذية Wynt المباشرة' } },
-  { key: 'intelligence', icon: BrainCircuit, label: { en: 'Wynt Intelligence', ar: 'ذكاء Wynt' } },
-  { key: 'coach', icon: GraduationCap, label: { en: 'AI Coach', ar: 'المدرّب الذكي' } },
-  { key: 'interviews', icon: Mic2, label: { en: 'Interview Studio', ar: 'استوديو المقابلات' } },
-  { key: 'cv', icon: FileText, label: { en: 'My CV', ar: 'سيرتي الذاتية' } },
-  { key: 'cover', icon: Wand2, label: { en: 'Cover Letters', ar: 'رسائل التقديم' } },
-  { key: 'salary', icon: DollarSign, label: { en: 'Salary', ar: 'الراتب' } },
-  { key: 'linkedin', icon: Link2, label: { en: 'LinkedIn', ar: 'LinkedIn' } },
-]
+type Section = {
+  title: Record<Lang, string>
+  items: Item[]
+}
 
-const bottomNav: Item[] = [
-  { key: 'settings', icon: Settings, label: { en: 'Settings', ar: 'الإعدادات' } },
-  { key: 'help', icon: HelpCircle, label: { en: 'Help & Support', ar: 'المساعدة والدعم' } },
+const sections: Section[] = [
+  {
+    title: { en: 'MAIN', ar: 'الرئيسية' },
+    items: [
+      { key: 'home', icon: LayoutGrid, label: { en: 'Overview', ar: 'نظرة عامة' } },
+    ],
+  },
+  {
+    title: { en: 'JOBS', ar: 'الوظائف' },
+    items: [
+      {
+        key: 'livefeed',
+        icon: Search,
+        label: { en: 'Wynt Live Feed', ar: 'تغذية Wynt المباشرة' },
+      },
+      {
+        key: 'intelligence',
+        icon: Target,
+        label: { en: 'Wynt Intelligence', ar: 'ذكاء Wynt' },
+      },
+    ],
+  },
+  {
+    title: { en: 'CAREER TOOLS', ar: 'أدوات المسار المهني' },
+    items: [
+      { key: 'coach', icon: Sparkles, label: { en: 'AI Coach', ar: 'المدرّب الذكي' } },
+      {
+        key: 'interviews',
+        icon: Brain,
+        label: { en: 'Interview Studio', ar: 'استوديو المقابلات' },
+      },
+      { key: 'salary', icon: DollarSign, label: { en: 'Salary AI', ar: 'ذكاء الراتب' } },
+      {
+        key: 'linkedin',
+        icon: LinkedinIcon,
+        label: { en: 'LinkedIn Analysis', ar: 'تحليل LinkedIn' },
+      },
+    ],
+  },
+  {
+    title: { en: 'DOCUMENTS', ar: 'المستندات' },
+    items: [
+      { key: 'cv', icon: FileText, label: { en: 'CV Studio', ar: 'استوديو السيرة' } },
+      { key: 'cover', icon: Mail, label: { en: 'Cover Letters', ar: 'رسائل التقديم' } },
+    ],
+  },
 ]
 
 interface Props {
   active: NavKey
   onNavigate: (key: NavKey) => void
-  /** Render inline as a sticky sidebar (default) or as a slide-out drawer */
   className?: string
-  /** Whether to show the 'Tip of the day' card between sections */
-  showTip?: boolean
 }
 
-export function DashboardSidebar({
-  active,
-  onNavigate,
-  className,
-  showTip = true,
-}: Props) {
+function WLogo({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 32 32" className={className} xmlns="http://www.w3.org/2000/svg" aria-hidden>
+      <path
+        d="M3 8 L9 25 L13 14 L16 19 L19 14 L23 25 L29 8"
+        stroke="currentColor"
+        strokeWidth="3.2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        fill="none"
+      />
+    </svg>
+  )
+}
+
+export function DashboardSidebar({ active, onNavigate, className }: Props) {
   const { lang } = useLanguage()
-  const { navigate } = useRouter()
 
   return (
     <aside
       className={cn(
-        'sticky top-16 hidden h-[calc(100vh-4rem)] w-60 shrink-0 flex-col justify-between overflow-y-auto border-e border-slate-200 bg-white px-3 py-6 dark:border-slate-800 dark:bg-slate-950 lg:flex',
+        'sticky top-0 hidden h-screen w-64 shrink-0 overflow-y-auto border-e border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-950 lg:block',
         className
       )}
     >
-      <div>
-        <nav className="space-y-1">
-          {topNav.map((item) => {
-            const isActive = active === item.key
-            const Icon = item.icon
-            return (
-              <button
-                key={item.key}
-                onClick={() => onNavigate(item.key)}
-                className={cn(
-                  'flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors',
-                  isActive
-                    ? 'bg-gradient-to-r from-blue-600 to-violet-600 text-white shadow-sm'
-                    : 'text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800'
-                )}
-              >
-                <Icon className="h-4 w-4" />
-                <span>{item.label[lang]}</span>
-              </button>
-            )
-          })}
-        </nav>
-
-        {showTip && (
-          <div className="mt-6 rounded-xl border border-slate-200 bg-gradient-to-br from-blue-50 to-violet-50 p-4 dark:border-slate-800 dark:from-blue-950/40 dark:to-violet-950/40">
-            <div className="flex items-center gap-2 text-xs font-semibold text-slate-700 dark:text-slate-200">
-              <Sparkles className="h-3.5 w-3.5 text-violet-600 dark:text-violet-400" />
-              {lang === 'ar' ? 'نصيحة اليوم' : 'Tip of the day'}
-            </div>
-            <p className="mt-2 text-xs leading-relaxed text-slate-600 dark:text-slate-300">
-              {lang === 'ar'
-                ? 'اضبط رسالتك التقديم حسب ثقافة الشركة لتحسين فرصك بنسبة 40%.'
-                : 'Tailor your cover letter to the company culture to boost your chances by 40%.'}
-            </p>
-          </div>
-        )}
+      {/* Brand header */}
+      <div className="flex h-16 items-center gap-3 border-b border-slate-200 px-4 dark:border-slate-800">
+        <button
+          type="button"
+          aria-label="Collapse sidebar"
+          className="flex h-8 w-8 items-center justify-center rounded-md text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white"
+        >
+          <PanelLeft className="h-4 w-4" />
+        </button>
+        <div className="flex items-center gap-1.5">
+          <WLogo className="h-7 w-7 text-violet-600" />
+          <span className="text-xl font-bold tracking-tight text-violet-600 dark:text-violet-400">
+            wynt
+          </span>
+        </div>
       </div>
 
-      {/* Bottom section */}
-      <div className="mt-4 space-y-1 border-t border-slate-200 pt-3 dark:border-slate-800">
-        {bottomNav.map((item) => {
-          const isActive = active === item.key
-          const Icon = item.icon
-          return (
-            <button
-              key={item.key}
-              onClick={() => onNavigate(item.key)}
-              className={cn(
-                'flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors',
-                isActive
-                  ? 'bg-gradient-to-r from-blue-600 to-violet-600 text-white shadow-sm'
-                  : 'text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800'
-              )}
-            >
-              <Icon className="h-4 w-4" />
-              <span>{item.label[lang]}</span>
-            </button>
-          )
-        })}
-        <button
-          onClick={() => navigate('/')}
-          className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-rose-600 transition-colors hover:bg-rose-50 dark:text-rose-400 dark:hover:bg-rose-950/40"
-        >
-          <LogOut className="h-4 w-4" />
-          <span>{lang === 'ar' ? 'تسجيل الخروج' : 'Sign out'}</span>
-        </button>
+      {/* Sections */}
+      <div className="px-3 py-4 space-y-5">
+        {sections.map((section) => (
+          <div key={section.title.en}>
+            <p className="mb-2 px-3 text-[11px] font-semibold tracking-widest text-slate-400 dark:text-slate-500">
+              {section.title[lang]}
+            </p>
+            <ul className="space-y-0.5">
+              {section.items.map((item) => {
+                const isActive = active === item.key
+                const Icon = item.icon
+                return (
+                  <li key={item.key}>
+                    <button
+                      type="button"
+                      onClick={() => onNavigate(item.key)}
+                      className={cn(
+                        'flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors',
+                        isActive
+                          ? 'bg-blue-50 text-blue-700 dark:bg-blue-950/50 dark:text-blue-300'
+                          : 'text-slate-700 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white'
+                      )}
+                    >
+                      <Icon
+                        className={cn(
+                          'h-4 w-4 shrink-0',
+                          isActive
+                            ? 'text-blue-600 dark:text-blue-400'
+                            : 'text-slate-500 dark:text-slate-400'
+                        )}
+                      />
+                      <span>{item.label[lang]}</span>
+                    </button>
+                  </li>
+                )
+              })}
+            </ul>
+          </div>
+        ))}
       </div>
     </aside>
   )
