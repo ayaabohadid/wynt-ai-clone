@@ -413,15 +413,20 @@ export function Onboarding() {
                 <ArrowLeft className="h-4 w-4" />
                 Back
               </Button>
-              <Button
-                variant="gradient"
-                onClick={next}
-                disabled={!canAdvance}
-                className="gap-1.5"
-              >
-                {step === 11 ? 'Finish' : 'Continue'}
-                <ArrowRight className="h-4 w-4" />
-              </Button>
+              <div className="flex items-center gap-2">
+                <Button variant="ghost" onClick={next} className="text-slate-500 dark:text-slate-400">
+                  Skip
+                </Button>
+                <Button
+                  variant="gradient"
+                  onClick={next}
+                  disabled={!canAdvance}
+                  className="gap-1.5"
+                >
+                  {step === 11 ? 'Finish' : 'Continue'}
+                  <ArrowRight className="h-4 w-4" />
+                </Button>
+              </div>
             </div>
           )}
         </div>
