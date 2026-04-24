@@ -1,5 +1,5 @@
 import {
-  Briefcase,
+  BrainCircuit,
   DollarSign,
   FileText,
   HelpCircle,
@@ -21,7 +21,7 @@ import { cn } from '@/lib/utils'
 export type NavKey =
   | 'home'
   | 'livefeed'
-  | 'jobs'
+  | 'intelligence'
   | 'applications'
   | 'interviews'
   | 'cv'
@@ -40,7 +40,7 @@ type Item = {
 const topNav: Item[] = [
   { key: 'home', icon: Home, label: { en: 'Overview', ar: 'نظرة عامة' } },
   { key: 'livefeed', icon: Radio, label: { en: 'Wynt Live Feed', ar: 'تغذية Wynt المباشرة' } },
-  { key: 'jobs', icon: Briefcase, label: { en: 'Jobs', ar: 'الوظائف' } },
+  { key: 'intelligence', icon: BrainCircuit, label: { en: 'Wynt Intelligence', ar: 'ذكاء Wynt' } },
   { key: 'applications', icon: Send, label: { en: 'Applications', ar: 'طلباتي' } },
   { key: 'interviews', icon: Mic2, label: { en: 'Interviews', ar: 'المقابلات' } },
   { key: 'cv', icon: FileText, label: { en: 'My CV', ar: 'سيرتي الذاتية' } },
