@@ -2,16 +2,17 @@ import { useState, type FormEvent } from 'react'
 import { ArrowRight, Eye, EyeOff, Mail, Lock, User, Zap, CheckCircle2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Link, useRouter } from '@/lib/router'
+import { useLanguage } from '@/lib/i18n'
 import { cn } from '@/lib/utils'
-
-const stats = [
-  { value: '10K+', label: 'Active users' },
-  { value: '95%', label: 'Match rate' },
-  { value: '3x', label: 'Faster hiring' },
-]
 
 export function Signup() {
   const { navigate } = useRouter()
+  const { t } = useLanguage()
+  const stats = [
+    { value: '10K+', label: t('signup.statUsers') },
+    { value: '95%', label: t('signup.statMatch') },
+    { value: '3x', label: t('signup.statHire') },
+  ]
   const [showPwd, setShowPwd] = useState(false)
   const [form, setForm] = useState({ name: '', email: '', password: '' })
   const [agree, setAgree] = useState({ terms: false, privacy: false })
@@ -63,14 +64,13 @@ export function Signup() {
         {/* Heading */}
         <div className="mt-8 text-center">
           <h1 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl dark:text-white">
-            Start your AI-powered{' '}
+            {t('signup.title1')}{' '}
             <span className="bg-gradient-to-r from-blue-600 to-violet-600 bg-clip-text text-transparent">
-              career journey
+              {t('signup.title2')}
             </span>
           </h1>
           <p className="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
-            Join thousands of professionals who are finding their next role with precision AI
-            matching, personalised coaching, and one-click applications.
+            {t('signup.subtitle')}
           </p>
         </div>
 
@@ -95,10 +95,10 @@ export function Signup() {
                 <CheckCircle2 className="h-7 w-7 text-emerald-600 dark:text-emerald-400" />
               </div>
               <h2 className="mt-4 text-lg font-bold text-slate-900 dark:text-white">
-                Welcome, {form.name.split(' ')[0]}!
+                {t('signup.welcome')} {form.name.split(' ')[0]}!
               </h2>
               <p className="mt-1 text-sm text-slate-600 dark:text-slate-300">
-                Your account is ready. Let's personalise your experience next.
+                {t('signup.ready')}
               </p>
               <Button
                 variant="gradient"
@@ -106,7 +106,7 @@ export function Signup() {
                 className="mt-6 w-full gap-1.5"
                 onClick={() => navigate('/onboarding')}
               >
-                Continue to onboarding
+                {t('signup.continueOnboarding')}
                 <ArrowRight className="h-4 w-4" />
               </Button>
             </div>
@@ -114,38 +114,38 @@ export function Signup() {
             <form onSubmit={onSubmit} className="space-y-4">
               <Field
                 id="name"
-                label="Full name"
+                label={t('signup.fullName')}
                 icon={<User className="h-4 w-4" />}
                 type="text"
                 autoComplete="name"
-                placeholder="Alex Morgan"
+                placeholder={t('signup.namePh')}
                 value={form.name}
                 onChange={(v) => setForm((f) => ({ ...f, name: v }))}
               />
               <Field
                 id="email"
-                label="Email address"
+                label={t('signup.email')}
                 icon={<Mail className="h-4 w-4" />}
                 type="email"
                 autoComplete="email"
-                placeholder="alex@example.com"
+                placeholder={t('signup.emailPh')}
                 value={form.email}
                 onChange={(v) => setForm((f) => ({ ...f, email: v }))}
               />
               <Field
                 id="password"
-                label="Password"
+                label={t('signup.password')}
                 icon={<Lock className="h-4 w-4" />}
                 type={showPwd ? 'text' : 'password'}
                 autoComplete="new-password"
-                placeholder="At least 8 characters"
+                placeholder={t('signup.pwdPh')}
                 value={form.password}
                 onChange={(v) => setForm((f) => ({ ...f, password: v }))}
                 trailing={
                   <button
                     type="button"
                     onClick={() => setShowPwd((v) => !v)}
-                    aria-label={showPwd ? 'Hide password' : 'Show password'}
+                    aria-label={showPwd ? t('signup.hidePwd') : t('signup.showPwd')}
                     className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
                   >
                     {showPwd ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
@@ -159,13 +159,13 @@ export function Signup() {
                   checked={agree.terms}
                   onChange={(v) => setAgree((a) => ({ ...a, terms: v }))}
                 >
-                  I agree to the{' '}
+                  {t('signup.termsAgree')}{' '}
                   <a href="#" className="font-medium text-blue-600 hover:underline dark:text-blue-400">
-                    Terms & Conditions
+                    {t('signup.terms')}
                   </a>{' '}
-                  and{' '}
+                  {t('signup.and')}{' '}
                   <a href="#" className="font-medium text-blue-600 hover:underline dark:text-blue-400">
-                    Acceptable Use Policy
+                    {t('signup.aup')}
                   </a>
                   .
                 </Check>
@@ -173,13 +173,13 @@ export function Signup() {
                   checked={agree.privacy}
                   onChange={(v) => setAgree((a) => ({ ...a, privacy: v }))}
                 >
-                  I have read the{' '}
+                  {t('signup.privacyRead')}{' '}
                   <a href="#" className="font-medium text-blue-600 hover:underline dark:text-blue-400">
-                    Privacy Policy
+                    {t('signup.privacy')}
                   </a>{' '}
-                  and{' '}
+                  {t('signup.and')}{' '}
                   <a href="#" className="font-medium text-blue-600 hover:underline dark:text-blue-400">
-                    Cookie Policy
+                    {t('signup.cookie')}
                   </a>
                   .
                 </Check>
@@ -192,7 +192,7 @@ export function Signup() {
                 className="w-full gap-2"
                 disabled={!canSubmit}
               >
-                {submitting ? 'Creating account…' : 'Create Account'}
+                {submitting ? t('signup.creating') : t('signup.create')}
                 {!submitting && <ArrowRight className="h-4 w-4" />}
               </Button>
             </form>
@@ -201,15 +201,15 @@ export function Signup() {
 
         {/* Sign-in link */}
         <p className="mt-6 text-center text-sm text-slate-600 dark:text-slate-400">
-          Already have an account?{' '}
+          {t('signup.already')}{' '}
           <Link to="/" className="font-semibold text-blue-600 hover:underline dark:text-blue-400">
-            Sign in
+            {t('signup.signin')}
           </Link>
         </p>
 
         {/* Footer */}
         <p className="mt-auto pt-8 text-center text-xs text-slate-400 dark:text-slate-500">
-          Powered by Wynt.AI — Your Career Copilot
+          {t('signup.poweredBy')}
         </p>
       </div>
     </div>

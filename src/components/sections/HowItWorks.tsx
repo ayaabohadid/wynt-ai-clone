@@ -1,34 +1,5 @@
 import { Upload, Search, Mic } from 'lucide-react'
-
-const steps = [
-  {
-    step: '01',
-    icon: Upload,
-    title: 'Upload Your CV',
-    description:
-      'Our AI extracts and scores every aspect of your CV — skills, experience, formatting, and ATS compatibility — giving you an actionable intelligence score.',
-    highlight: 'AI scoring in seconds',
-    color: 'blue',
-  },
-  {
-    step: '02',
-    icon: Search,
-    title: 'Find & Match Jobs',
-    description:
-      'Search millions of job postings across 12 languages. Our Deep Match Engine analyses each role across 15+ dimensions and ranks opportunities by your fit.',
-    highlight: '15+ match dimensions',
-    color: 'violet',
-  },
-  {
-    step: '03',
-    icon: Mic,
-    title: 'Practice & Apply',
-    description:
-      'Rehearse with AI interviewers, generate personalised cover letters, negotiate salary, and submit applications — all from one seamless workspace.',
-    highlight: '5 AI interviewer personas',
-    color: 'emerald',
-  },
-]
+import { useLanguage } from '@/lib/i18n'
 
 const colorMap = {
   blue: {
@@ -55,18 +26,45 @@ const colorMap = {
 }
 
 export function HowItWorks() {
+  const { t } = useLanguage()
+  const steps = [
+    {
+      step: '01',
+      icon: Upload,
+      title: t('how.s1Title'),
+      description: t('how.s1Desc'),
+      highlight: t('how.s1Highlight'),
+      color: 'blue',
+    },
+    {
+      step: '02',
+      icon: Search,
+      title: t('how.s2Title'),
+      description: t('how.s2Desc'),
+      highlight: t('how.s2Highlight'),
+      color: 'violet',
+    },
+    {
+      step: '03',
+      icon: Mic,
+      title: t('how.s3Title'),
+      description: t('how.s3Desc'),
+      highlight: t('how.s3Highlight'),
+      color: 'emerald',
+    },
+  ]
   return (
     <section id="how-it-works" className="bg-slate-50 py-24 dark:bg-slate-900">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center">
           <span className="text-sm font-semibold uppercase tracking-widest text-blue-600">
-            How It Works
+            {t('how.eyebrow')}
           </span>
           <h2 className="mt-2 text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl dark:text-white">
-            From CV to Offer in Three Steps
+            {t('how.title')}
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-lg text-slate-600 dark:text-slate-300">
-            A streamlined workflow that puts AI to work at every stage of your job search.
+            {t('how.subtitle')}
           </p>
         </div>
 
@@ -82,7 +80,7 @@ export function HowItWorks() {
                   {/* Step number + icon */}
                   <div className="relative z-10 flex flex-col items-center">
                     <span className={`mb-3 text-xs font-bold tracking-widest ${c.text}`}>
-                      STEP {step}
+                      {t('how.step')} {step}
                     </span>
                     <div className={`flex h-16 w-16 items-center justify-center rounded-2xl ${c.icon} shadow-lg`}>
                       <Icon className="h-8 w-8 text-white" />

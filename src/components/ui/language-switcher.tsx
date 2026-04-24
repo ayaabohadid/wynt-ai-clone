@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
 import { Globe, Check, ChevronDown } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { useLanguage, type Lang } from '@/lib/i18n'
 
-export const LANGUAGES = [
+export const LANGUAGES: { code: Lang; label: string; flag: string }[] = [
   { code: 'en', label: 'English', flag: '🇬🇧' },
   { code: 'ar', label: 'العربية', flag: '🇸🇦' },
 ]
@@ -12,9 +13,10 @@ interface Props {
 }
 
 export function LanguageSwitcher({ compact = false }: Props) {
+  const { lang, setLang } = useLanguage()
   const [open, setOpen] = useState(false)
-  const [selected, setSelected] = useState(LANGUAGES[0])
   const ref = useRef<HTMLDivElement>(null)
+  const selected = LANGUAGES.find((l) => l.code === lang) ?? LANGUAGES[0]
 
   useEffect(() => {
     function onClick(e: MouseEvent) {
@@ -52,30 +54,30 @@ export function LanguageSwitcher({ compact = false }: Props) {
         <div
           role="listbox"
           className={cn(
-            'absolute right-0 z-50 mt-2 max-h-80 w-48 overflow-y-auto rounded-lg border border-slate-200 bg-white p-1 shadow-xl',
+            'absolute end-0 z-50 mt-2 max-h-80 w-48 overflow-y-auto rounded-lg border border-slate-200 bg-white p-1 shadow-xl',
             'dark:border-slate-700 dark:bg-slate-900'
           )}
         >
-          {LANGUAGES.map((lang) => {
-            const active = lang.code === selected.code
+          {LANGUAGES.map((opt) => {
+            const active = opt.code === lang
             return (
               <button
-                key={lang.code}
+                key={opt.code}
                 role="option"
                 aria-selected={active}
                 onClick={() => {
-                  setSelected(lang)
+                  setLang(opt.code)
                   setOpen(false)
                 }}
                 className={cn(
-                  'flex w-full items-center gap-2 rounded-md px-2.5 py-2 text-left text-sm transition-colors',
+                  'flex w-full items-center gap-2 rounded-md px-2.5 py-2 text-start text-sm transition-colors',
                   active
                     ? 'bg-blue-50 text-blue-700 dark:bg-blue-950/50 dark:text-blue-300'
                     : 'text-slate-700 hover:bg-slate-50 dark:text-slate-200 dark:hover:bg-slate-800'
                 )}
               >
-                <span className="text-base">{lang.flag}</span>
-                <span className="flex-1">{lang.label}</span>
+                <span className="text-base">{opt.flag}</span>
+                <span className="flex-1">{opt.label}</span>
                 {active && <Check className="h-4 w-4" />}
               </button>
             )

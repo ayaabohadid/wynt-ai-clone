@@ -1,10 +1,12 @@
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { useRouter } from '@/lib/router'
+import { useLanguage } from '@/lib/i18n'
 import { ArrowRight, CheckCircle2, Star } from 'lucide-react'
 
 export function Hero() {
   const { navigate } = useRouter()
+  const { t } = useLanguage()
   return (
     <section className="relative overflow-hidden bg-white pb-20 pt-16 dark:bg-slate-950">
       {/* Background gradient blobs */}
@@ -18,21 +20,20 @@ export function Hero() {
           {/* Pill badge */}
           <Badge variant="purple" className="mb-6 gap-1.5 px-3 py-1 text-xs font-medium">
             <Star className="h-3 w-3 fill-violet-500 text-violet-500" />
-            AI-Powered Career Intelligence
+            {t('hero.badge')}
           </Badge>
 
           {/* Headline */}
           <h1 className="max-w-4xl text-5xl font-bold tracking-tight text-slate-900 sm:text-6xl lg:text-7xl dark:text-white">
-            Your Career,{' '}
+            {t('hero.titleStart')}{' '}
             <span className="bg-gradient-to-r from-blue-600 to-violet-600 bg-clip-text text-transparent">
-              Intelligently
+              {t('hero.titleEmphasis')}
             </span>{' '}
-            Accelerated
+            {t('hero.titleEnd')}
           </h1>
 
           <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-600 dark:text-slate-300">
-            Upload your CV, match against thousands of jobs with AI precision, ace interviews
-            with personalised coaching, and land your dream role — all in one platform.
+            {t('hero.subtitle')}
           </p>
 
           {/* CTA row */}
@@ -43,21 +44,17 @@ export function Hero() {
               className="gap-2"
               onClick={() => navigate('/signup')}
             >
-              Start for Free
+              {t('hero.startFree')}
               <ArrowRight className="h-5 w-5" />
             </Button>
             <Button variant="outline" size="xl">
-              Watch Demo
+              {t('hero.watchDemo')}
             </Button>
           </div>
 
           {/* Trust signals */}
           <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-sm text-slate-500 dark:text-slate-400">
-            {[
-              'No credit card required',
-              'Free tokens included',
-              '12 languages supported',
-            ].map((item) => (
+            {[t('hero.trust1'), t('hero.trust2'), t('hero.trust3')].map((item) => (
               <span key={item} className="flex items-center gap-1.5">
                 <CheckCircle2 className="h-4 w-4 text-emerald-500" />
                 {item}

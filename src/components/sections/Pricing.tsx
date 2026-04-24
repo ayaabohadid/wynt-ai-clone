@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { CheckCircle2, Zap } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { useLanguage } from '@/lib/i18n'
 
 const plans = [
   {
@@ -71,18 +72,19 @@ const tokenExamples = [
 ]
 
 export function Pricing() {
+  const { t } = useLanguage()
   return (
     <section id="pricing" className="bg-slate-50 py-24 dark:bg-slate-900">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center">
           <span className="text-sm font-semibold uppercase tracking-widest text-blue-600">
-            Pricing
+            {t('pricing.eyebrow')}
           </span>
           <h2 className="mt-2 text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl dark:text-white">
-            Pay Only for What You Use
+            {t('pricing.title')}
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-lg text-slate-600 dark:text-slate-300">
-            Transparent token-based pricing. No hidden fees, no surprise charges.
+            {t('pricing.subtitle')}
           </p>
         </div>
 
@@ -99,7 +101,7 @@ export function Pricing() {
               {popular && (
                 <div className="absolute -top-3.5 left-1/2 -translate-x-1/2">
                   <Badge variant="default" className="gap-1 px-3 py-1">
-                    <Zap className="h-3 w-3" /> Most Popular
+                    <Zap className="h-3 w-3" /> {t('pricing.mostPopular')}
                   </Badge>
                 </div>
               )}
@@ -137,10 +139,10 @@ export function Pricing() {
         {/* Token examples */}
         <div className="mt-16 rounded-2xl border border-slate-200 bg-white p-8 dark:border-slate-800 dark:bg-slate-950">
           <h3 className="text-center text-lg font-bold text-slate-900 dark:text-white">
-            What Can You Do with Tokens?
+            {t('pricing.tokensQuestion')}
           </h3>
           <p className="mt-1 text-center text-sm text-slate-500 dark:text-slate-400">
-            Each AI-powered action consumes a small number of tokens. Here are some examples:
+            {t('pricing.tokensSub')}
           </p>
           <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {tokenExamples.map(({ action, tokens }) => (

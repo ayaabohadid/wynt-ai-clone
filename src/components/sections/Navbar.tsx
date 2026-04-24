@@ -3,17 +3,19 @@ import { Button } from '@/components/ui/button'
 import { LanguageSwitcher } from '@/components/ui/language-switcher'
 import { ThemeToggle } from '@/components/ui/theme-toggle'
 import { useRouter } from '@/lib/router'
+import { useLanguage } from '@/lib/i18n'
 import { ArrowRight, Menu, X, Zap } from 'lucide-react'
-
-const navLinks = [
-  { label: 'Features', href: '#features' },
-  { label: 'How It Works', href: '#how-it-works' },
-  { label: 'Pricing', href: '#pricing' },
-]
 
 export function Navbar() {
   const [open, setOpen] = useState(false)
   const { navigate } = useRouter()
+  const { t } = useLanguage()
+
+  const navLinks = [
+    { label: t('nav.features'), href: '#features' },
+    { label: t('nav.howItWorks'), href: '#how-it-works' },
+    { label: t('nav.pricing'), href: '#pricing' },
+  ]
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-slate-200 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80 dark:border-slate-800 dark:bg-slate-950/95 dark:supports-[backdrop-filter]:bg-slate-950/80">
@@ -46,7 +48,7 @@ export function Navbar() {
             <ThemeToggle />
             <div className="mx-1 h-6 w-px bg-slate-200 dark:bg-slate-700" />
             <Button variant="ghost" size="sm" onClick={() => navigate('/signup')}>
-              Sign In
+              {t('nav.signIn')}
             </Button>
             <Button
               variant="gradient"
@@ -54,7 +56,7 @@ export function Navbar() {
               className="gap-1.5"
               onClick={() => navigate('/signup')}
             >
-              Get Started
+              {t('nav.getStarted')}
               <ArrowRight className="h-4 w-4" />
             </Button>
           </div>
@@ -66,7 +68,7 @@ export function Navbar() {
             <button
               className="rounded-md p-2 text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white"
               onClick={() => setOpen(!open)}
-              aria-label="Toggle menu"
+              aria-label={t('nav.toggleMenu')}
             >
               {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </button>
@@ -97,7 +99,7 @@ export function Navbar() {
                   navigate('/signup')
                 }}
               >
-                Sign In
+                {t('nav.signIn')}
               </Button>
               <Button
                 variant="gradient"
@@ -108,7 +110,7 @@ export function Navbar() {
                   navigate('/signup')
                 }}
               >
-                Get Started
+                {t('nav.getStarted')}
                 <ArrowRight className="h-4 w-4" />
               </Button>
             </div>

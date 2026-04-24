@@ -21,6 +21,7 @@ import {
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Link, useRouter } from '@/lib/router'
+import { useLanguage } from '@/lib/i18n'
 import { cn } from '@/lib/utils'
 
 type Answers = {
@@ -57,6 +58,7 @@ const STEPS = 12
 
 export function Onboarding() {
   const { navigate } = useRouter()
+  const { t } = useLanguage()
   const [step, setStep] = useState(1)
   const [answers, setAnswers] = useState<Answers>(initial)
 
@@ -116,14 +118,16 @@ export function Onboarding() {
             </span>
           </Link>
           <span className="text-xs font-medium text-slate-500 dark:text-slate-400">
-            Step <span className="text-slate-900 dark:text-white">{step}</span> of {STEPS}
+            {t('onboarding.step')}{' '}
+            <span className="text-slate-900 dark:text-white">{step}</span> {t('onboarding.of')}{' '}
+            {STEPS}
           </span>
           {step < STEPS ? (
             <button
               onClick={() => navigate('/')}
               className="text-sm font-medium text-slate-500 transition-colors hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
             >
-              Skip for now
+              {t('onboarding.skipForNow')}
             </button>
           ) : (
             <span className="w-[80px]" />
@@ -141,7 +145,7 @@ export function Onboarding() {
       {/* Content */}
       <div className="relative mx-auto flex max-w-2xl flex-col px-4 py-10 sm:px-6">
         <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900 sm:p-8">
-          {step === 1 && <Step1 onStart={next} />}
+          {step === 1 && <Step1 onStart={next} t={t} />}
           {step === 2 && (
             <StepShell
               icon={<TrendingUp className="h-5 w-5" />}
@@ -410,23 +414,23 @@ export function Onboarding() {
                 }}
                 className="mt-5 flex w-full items-center justify-center gap-1.5 rounded-lg border border-dashed border-slate-300 bg-transparent px-4 py-3 text-sm font-medium text-slate-600 transition-colors hover:border-slate-400 hover:bg-slate-50 hover:text-slate-900 dark:border-slate-700 dark:text-slate-300 dark:hover:border-slate-500 dark:hover:bg-slate-800/60 dark:hover:text-white"
               >
-                Skip CV for now — I'll add it later
+                {t('onboarding.skipCv')}
                 <ArrowRight className="h-4 w-4" />
               </button>
             </StepShell>
           )}
-          {step === 12 && <Step12 answers={answers} onFinish={() => navigate('/')} />}
+          {step === 12 && <Step12 answers={answers} onFinish={() => navigate('/')} t={t} />}
 
           {/* Nav buttons (hidden on step 1 and 12 which have their own) */}
           {step > 1 && step < 12 && (
             <div className="mt-8 flex items-center justify-between gap-3 border-t border-slate-100 pt-6 dark:border-slate-800">
               <Button variant="outline" onClick={back} className="gap-1.5">
                 <ArrowLeft className="h-4 w-4" />
-                Back
+                {t('onboarding.back')}
               </Button>
               <div className="flex items-center gap-2">
                 <Button variant="ghost" onClick={next} className="text-slate-500 dark:text-slate-400">
-                  Skip
+                  {t('onboarding.skip')}
                 </Button>
                 <Button
                   variant="gradient"
@@ -434,7 +438,7 @@ export function Onboarding() {
                   disabled={!canAdvance}
                   className="gap-1.5"
                 >
-                  {step === 11 ? 'Finish' : 'Continue'}
+                  {step === 11 ? t('onboarding.finish') : t('onboarding.continue')}
                   <ArrowRight className="h-4 w-4" />
                 </Button>
               </div>
@@ -443,7 +447,7 @@ export function Onboarding() {
         </div>
 
         <p className="mt-6 text-center text-xs text-slate-400 dark:text-slate-500">
-          Powered by Wynt.AI — Your Career Copilot
+          {t('signup.poweredBy')}
         </p>
       </div>
     </div>
@@ -452,12 +456,12 @@ export function Onboarding() {
 
 /* ---------- Step 1: Welcome ---------- */
 
-function Step1({ onStart }: { onStart: () => void }) {
+function Step1({ onStart, t }: { onStart: () => void; t: (k: any) => string }) {
   const features = [
-    { icon: Target, label: 'AI Job Matching' },
-    { icon: FileText, label: 'Smart CV Builder' },
-    { icon: Rocket, label: 'Auto Apply' },
-    { icon: Sparkles, label: 'Interview Studio' },
+    { icon: Target, label: t('onboarding.f1') },
+    { icon: FileText, label: t('onboarding.f2') },
+    { icon: Rocket, label: t('onboarding.f3') },
+    { icon: Sparkles, label: t('onboarding.f4') },
   ]
   return (
     <div className="text-center">
@@ -465,18 +469,17 @@ function Step1({ onStart }: { onStart: () => void }) {
         <Sparkles className="h-8 w-8 text-white" />
       </div>
       <p className="mt-5 text-xs font-bold uppercase tracking-widest text-blue-600 dark:text-blue-400">
-        Welcome to Wynt AI
+        {t('onboarding.welcomeEyebrow')}
       </p>
       <h1 className="mt-2 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl dark:text-white">
-        Hello, there!
+        {t('onboarding.welcomeTitle')}
       </h1>
       <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-slate-600 dark:text-slate-300">
-        Let's personalize your job search experience. We'll ask a few quick questions to find the
-        best opportunities for you.
+        {t('onboarding.welcomeSub')}
       </p>
       <p className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-600 dark:bg-slate-800 dark:text-slate-300">
         <Clock className="h-3 w-3" />
-        Takes about 2 minutes
+        {t('onboarding.takesAbout')}
       </p>
 
       <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
@@ -494,7 +497,7 @@ function Step1({ onStart }: { onStart: () => void }) {
       </div>
 
       <Button variant="gradient" size="lg" className="mt-8 w-full gap-2" onClick={onStart}>
-        Let's Get Started
+        {t('onboarding.letsStart')}
         <ArrowRight className="h-4 w-4" />
       </Button>
     </div>
@@ -503,7 +506,15 @@ function Step1({ onStart }: { onStart: () => void }) {
 
 /* ---------- Step 12: Done ---------- */
 
-function Step12({ answers, onFinish }: { answers: Answers; onFinish: () => void }) {
+function Step12({
+  answers,
+  onFinish,
+  t,
+}: {
+  answers: Answers
+  onFinish: () => void
+  t: (k: any) => string
+}) {
   const matchCount = 12 + answers.targetRoles.length * 3 + answers.industries.length * 2
   return (
     <div className="text-center">
@@ -511,21 +522,20 @@ function Step12({ answers, onFinish }: { answers: Answers; onFinish: () => void 
         <CheckCircle2 className="h-8 w-8 text-emerald-600 dark:text-emerald-400" />
       </div>
       <h1 className="mt-5 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl dark:text-white">
-        You're all set! 🎉
+        {t('onboarding.allSet')}
       </h1>
       <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-slate-600 dark:text-slate-300">
-        We've tuned your match engine based on your preferences. Here's what's waiting for you in
-        your dashboard:
+        {t('onboarding.allSetSub')}
       </p>
 
       <div className="mt-6 grid grid-cols-3 gap-3">
-        <StatCard value={matchCount} label="New matches" />
-        <StatCard value={answers.skills.length} label="Skills tracked" />
-        <StatCard value={answers.cvName ? 'A+' : '—'} label="CV score" />
+        <StatCard value={matchCount} label={t('onboarding.newMatches')} />
+        <StatCard value={answers.skills.length} label={t('onboarding.skillsTracked')} />
+        <StatCard value={answers.cvName ? 'A+' : '—'} label={t('onboarding.cvScore')} />
       </div>
 
       <Button variant="gradient" size="lg" className="mt-8 w-full gap-2" onClick={onFinish}>
-        Enter your dashboard
+        {t('onboarding.enterDashboard')}
         <ArrowRight className="h-4 w-4" />
       </Button>
     </div>

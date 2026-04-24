@@ -11,6 +11,7 @@ import {
   ChevronRight,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { useLanguage } from '@/lib/i18n'
 
 const features = [
   {
@@ -200,19 +201,20 @@ const features = [
 export function Features() {
   const [active, setActive] = useState('deep-match')
   const current = features.find((f) => f.id === active)!
+  const { t } = useLanguage()
 
   return (
     <section id="features" className="bg-white py-24 dark:bg-slate-950">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center">
           <span className="text-sm font-semibold uppercase tracking-widest text-violet-600">
-            Features
+            {t('features.eyebrow')}
           </span>
           <h2 className="mt-2 text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl dark:text-white">
-            Everything You Need to Land the Role
+            {t('features.title')}
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-lg text-slate-600 dark:text-slate-300">
-            Purpose-built AI tools at every stage — from first CV upload to final offer.
+            {t('features.subtitle')}
           </p>
         </div>
 
