@@ -2,28 +2,44 @@ import { createContext, useCallback, useContext, useEffect, useState, type React
 
 type RouterCtx = {
   path: string
+  search: string
+  params: URLSearchParams
   navigate: (to: string) => void
 }
 
 const Ctx = createContext<RouterCtx | null>(null)
 
 export function RouterProvider({ children }: { children: ReactNode }) {
-  const [path, setPath] = useState(() => window.location.pathname || '/')
+  const [loc, setLoc] = useState(() => ({
+    path: window.location.pathname || '/',
+    search: window.location.search || '',
+  }))
 
   useEffect(() => {
-    const onPop = () => setPath(window.location.pathname || '/')
+    const onPop = () =>
+      setLoc({
+        path: window.location.pathname || '/',
+        search: window.location.search || '',
+      })
     window.addEventListener('popstate', onPop)
     return () => window.removeEventListener('popstate', onPop)
   }, [])
 
   const navigate = useCallback((to: string) => {
-    if (to === window.location.pathname) return
+    const current = window.location.pathname + window.location.search
+    if (to === current) return
     window.history.pushState({}, '', to)
-    setPath(to)
+    const url = new URL(to, window.location.origin)
+    setLoc({ path: url.pathname, search: url.search })
     window.scrollTo(0, 0)
   }, [])
 
-  return <Ctx.Provider value={{ path, navigate }}>{children}</Ctx.Provider>
+  const params = new URLSearchParams(loc.search)
+  return (
+    <Ctx.Provider value={{ path: loc.path, search: loc.search, params, navigate }}>
+      {children}
+    </Ctx.Provider>
+  )
 }
 
 export function useRouter() {

@@ -24,6 +24,7 @@ import { Button } from '@/components/ui/button'
 import { LanguageSwitcher } from '@/components/ui/language-switcher'
 import { ThemeToggle } from '@/components/ui/theme-toggle'
 import { DashboardSidebar, type NavKey } from '@/components/layout/DashboardSidebar'
+import { BrowseJobs } from '@/pages/BrowseJobs'
 import { Link, useRouter } from '@/lib/router'
 import { useLanguage } from '@/lib/i18n'
 import { getCurrentUser, signOut } from '@/lib/auth'
@@ -81,14 +82,45 @@ const interviewPersonas = [
   { emoji: '🎯', name: { en: 'Kai', ar: 'كاي' }, role: { en: 'Culture', ar: 'ثقافة' } },
 ]
 
+const sectionByNav: Partial<Record<NavKey, string>> = {
+  livefeed: 'browse-jobs',
+  intelligence: 'intelligence',
+  coach: 'coach',
+  interviews: 'interviews',
+  salary: 'salary',
+  linkedin: 'linkedin',
+  cv: 'cv',
+  cover: 'cover',
+  tracker: 'tracker',
+  analytics: 'analytics',
+  profile: 'profile',
+  settings: 'settings',
+  tokens: 'tokens',
+  chrome: 'chrome',
+  help: 'help',
+}
+
+const navBySection: Record<string, NavKey> = Object.fromEntries(
+  Object.entries(sectionByNav).map(([k, v]) => [v as string, k as NavKey])
+) as Record<string, NavKey>
+
 export function Dashboard() {
   const { lang, t } = useLanguage()
-  const { navigate } = useRouter()
-  const [activeNav, setActiveNav] = useState<NavKey>('home')
+  const { navigate, params } = useRouter()
+  const sectionParam = params.get('section') || ''
+  const initialNav: NavKey = navBySection[sectionParam] || 'home'
+  const [activeNav, setActiveNav] = useState<NavKey>(initialNav)
   const [wizardInput, setWizardInput] = useState('')
   const currentUser = getCurrentUser()
   const firstName =
     currentUser?.name?.split(' ')[0] || (lang === 'ar' ? 'أحمد' : 'Alex')
+
+  const handleNavigate = (key: NavKey) => {
+    setActiveNav(key)
+    const section = sectionByNav[key]
+    const url = section ? `/dashboard?section=${section}` : '/dashboard'
+    navigate(url)
+  }
 
   const copy = (en: string, ar: string) => (lang === 'ar' ? ar : en)
 
@@ -102,7 +134,7 @@ export function Dashboard() {
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex" lang={lang} dir={lang === 'ar' ? 'rtl' : 'ltr'}>
       {/* Sidebar (full height, own brand header) */}
-      <DashboardSidebar active={activeNav} onNavigate={setActiveNav} />
+      <DashboardSidebar active={activeNav} onNavigate={handleNavigate} />
 
       <div className="flex min-w-0 flex-1 flex-col">
         {/* Top bar */}
@@ -147,6 +179,7 @@ export function Dashboard() {
 
         {/* Main */}
         <main className="min-w-0 flex-1 px-4 py-6 sm:px-6 lg:px-8">
+          {activeNav === 'livefeed' ? <BrowseJobs /> : (<>
           {/* Greeting */}
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div>
@@ -552,6 +585,7 @@ export function Dashboard() {
           <p className="mt-10 text-center text-xs text-slate-400 dark:text-slate-500">
             {t('signup.poweredBy')}
           </p>
+          </>)}
         </main>
       </div>
     </div>
