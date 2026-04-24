@@ -33,10 +33,14 @@ import { cn } from '@/lib/utils'
 
 const nav = [
   { key: 'home', icon: Home, label: { en: 'Overview', ar: 'نظرة عامة' } },
+  { key: 'match', icon: Brain, label: { en: 'AI Match', ar: 'المطابقة الذكية' } },
   { key: 'jobs', icon: Briefcase, label: { en: 'Jobs', ar: 'الوظائف' } },
-  { key: 'cv', icon: FileText, label: { en: 'My CV', ar: 'سيرتي الذاتية' } },
+  { key: 'applications', icon: Send, label: { en: 'Applications', ar: 'طلباتي' } },
   { key: 'interviews', icon: Mic2, label: { en: 'Interviews', ar: 'المقابلات' } },
-  { key: 'applications', icon: Brain, label: { en: 'Applications', ar: 'طلباتي' } },
+  { key: 'cv', icon: FileText, label: { en: 'My CV', ar: 'سيرتي الذاتية' } },
+  { key: 'cover', icon: Wand2, label: { en: 'Cover Letters', ar: 'رسائل التقديم' } },
+  { key: 'salary', icon: DollarSign, label: { en: 'Salary', ar: 'الراتب' } },
+  { key: 'linkedin', icon: Link2, label: { en: 'LinkedIn', ar: 'LinkedIn' } },
 ]
 
 const bottomNav = [
