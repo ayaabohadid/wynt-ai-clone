@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { LanguageSwitcher } from '@/components/ui/language-switcher'
 import { ThemeToggle } from '@/components/ui/theme-toggle'
+import { useRouter } from '@/lib/router'
 import { ArrowRight, Menu, X, Zap } from 'lucide-react'
 
 const navLinks = [
@@ -12,6 +13,7 @@ const navLinks = [
 
 export function Navbar() {
   const [open, setOpen] = useState(false)
+  const { navigate } = useRouter()
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-slate-200 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80 dark:border-slate-800 dark:bg-slate-950/95 dark:supports-[backdrop-filter]:bg-slate-950/80">
@@ -43,10 +45,15 @@ export function Navbar() {
             <LanguageSwitcher />
             <ThemeToggle />
             <div className="mx-1 h-6 w-px bg-slate-200 dark:bg-slate-700" />
-            <Button variant="ghost" size="sm">
+            <Button variant="ghost" size="sm" onClick={() => navigate('/signup')}>
               Sign In
             </Button>
-            <Button variant="gradient" size="sm" className="gap-1.5">
+            <Button
+              variant="gradient"
+              size="sm"
+              className="gap-1.5"
+              onClick={() => navigate('/signup')}
+            >
               Get Started
               <ArrowRight className="h-4 w-4" />
             </Button>
@@ -82,14 +89,24 @@ export function Navbar() {
               </a>
             ))}
             <div className="mt-3 flex flex-col gap-2">
-              <Button variant="outline" size="sm" onClick={() => setOpen(false)}>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  setOpen(false)
+                  navigate('/signup')
+                }}
+              >
                 Sign In
               </Button>
               <Button
                 variant="gradient"
                 size="sm"
-                onClick={() => setOpen(false)}
                 className="gap-1.5"
+                onClick={() => {
+                  setOpen(false)
+                  navigate('/signup')
+                }}
               >
                 Get Started
                 <ArrowRight className="h-4 w-4" />

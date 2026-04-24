@@ -1,8 +1,10 @@
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
+import { useRouter } from '@/lib/router'
 import { ArrowRight, CheckCircle2, Star } from 'lucide-react'
 
 export function Hero() {
+  const { navigate } = useRouter()
   return (
     <section className="relative overflow-hidden bg-white pb-20 pt-16 dark:bg-slate-950">
       {/* Background gradient blobs */}
@@ -35,7 +37,12 @@ export function Hero() {
 
           {/* CTA row */}
           <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-            <Button variant="gradient" size="xl" className="gap-2">
+            <Button
+              variant="gradient"
+              size="xl"
+              className="gap-2"
+              onClick={() => navigate('/signup')}
+            >
               Start for Free
               <ArrowRight className="h-5 w-5" />
             </Button>

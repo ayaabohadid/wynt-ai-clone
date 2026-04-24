@@ -4,8 +4,10 @@ import { HowItWorks } from '@/components/sections/HowItWorks'
 import { Features } from '@/components/sections/Features'
 import { Pricing } from '@/components/sections/Pricing'
 import { Footer } from '@/components/sections/Footer'
+import { Signup } from '@/pages/Signup'
+import { useRouter } from '@/lib/router'
 
-export default function App() {
+function HomePage() {
   return (
     <div className="min-h-screen bg-white font-sans antialiased transition-colors dark:bg-slate-950 dark:text-slate-100">
       <Navbar />
@@ -18,4 +20,11 @@ export default function App() {
       <Footer />
     </div>
   )
+}
+
+export default function App() {
+  const { path } = useRouter()
+
+  if (path === '/signup') return <Signup />
+  return <HomePage />
 }
