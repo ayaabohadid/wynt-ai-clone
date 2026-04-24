@@ -327,7 +327,7 @@ export function DashboardSidebar({ active, onNavigate, className }: Props) {
         </div>
 
         <div className="mt-3 flex items-center gap-2.5 rounded-lg px-1 py-1.5">
-          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-violet-500 text-xs font-bold text-white">
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-violet-100 text-sm font-semibold text-violet-700 dark:bg-violet-950/50 dark:text-violet-300">
             {initial}
           </div>
           <div className="min-w-0">
