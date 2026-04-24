@@ -1,5 +1,4 @@
 import {
-  Brain,
   Briefcase,
   DollarSign,
   FileText,
@@ -8,6 +7,7 @@ import {
   Link2,
   LogOut,
   Mic2,
+  Radio,
   Send,
   Settings,
   Sparkles,
@@ -20,7 +20,7 @@ import { cn } from '@/lib/utils'
 
 export type NavKey =
   | 'home'
-  | 'match'
+  | 'livefeed'
   | 'jobs'
   | 'applications'
   | 'interviews'
@@ -39,7 +39,7 @@ type Item = {
 
 const topNav: Item[] = [
   { key: 'home', icon: Home, label: { en: 'Overview', ar: 'نظرة عامة' } },
-  { key: 'match', icon: Brain, label: { en: 'AI Match', ar: 'المطابقة الذكية' } },
+  { key: 'livefeed', icon: Radio, label: { en: 'Wynt Live Feed', ar: 'تغذية Wynt المباشرة' } },
   { key: 'jobs', icon: Briefcase, label: { en: 'Jobs', ar: 'الوظائف' } },
   { key: 'applications', icon: Send, label: { en: 'Applications', ar: 'طلباتي' } },
   { key: 'interviews', icon: Mic2, label: { en: 'Interviews', ar: 'المقابلات' } },
