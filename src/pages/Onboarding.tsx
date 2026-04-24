@@ -124,7 +124,7 @@ export function Onboarding() {
           </span>
           {step < STEPS ? (
             <button
-              onClick={() => navigate('/')}
+              onClick={() => navigate('/dashboard')}
               className="text-sm font-medium text-slate-500 transition-colors hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
             >
               {t('onboarding.skipForNow')}
@@ -419,7 +419,20 @@ export function Onboarding() {
               </button>
             </StepShell>
           )}
-          {step === 12 && <Step12 answers={answers} onFinish={() => navigate('/')} t={t} />}
+          {step === 12 && (
+            <Step12
+              answers={answers}
+              onFinish={() => {
+                try {
+                  localStorage.setItem('wynt-onboarding', JSON.stringify(answers))
+                } catch {
+                  /* ignore */
+                }
+                navigate('/dashboard')
+              }}
+              t={t}
+            />
+          )}
 
           {/* Nav buttons (hidden on step 1 and 12 which have their own) */}
           {step > 1 && step < 12 && (

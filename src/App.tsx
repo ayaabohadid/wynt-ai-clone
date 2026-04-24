@@ -6,6 +6,7 @@ import { Pricing } from '@/components/sections/Pricing'
 import { Footer } from '@/components/sections/Footer'
 import { Signup } from '@/pages/Signup'
 import { Onboarding } from '@/pages/Onboarding'
+import { Dashboard } from '@/pages/Dashboard'
 import { useRouter } from '@/lib/router'
 
 function HomePage() {
@@ -28,5 +29,6 @@ export default function App() {
 
   if (path === '/signup') return <Signup />
   if (path === '/onboarding') return <Onboarding />
+  if (path === '/dashboard') return <Dashboard />
   return <HomePage />
 }

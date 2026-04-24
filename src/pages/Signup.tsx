@@ -34,6 +34,13 @@ export function Signup() {
     setTimeout(() => {
       setSubmitting(false)
       setSuccess(true)
+      // Persist name so the dashboard can greet the user later
+      try {
+        localStorage.setItem('wynt-user-name', form.name)
+        localStorage.setItem('wynt-user-email', form.email)
+      } catch {
+        /* ignore */
+      }
       // Route into onboarding after a brief celebratory pause
       setTimeout(() => navigate('/onboarding'), 1200)
     }, 900)
