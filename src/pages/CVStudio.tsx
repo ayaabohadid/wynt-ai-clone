@@ -49,10 +49,51 @@ type Variant =
   | 'academic-scholar'
   | 'startup-fresh'
   | 'finance-pro'
-  | 'creative-pink'
-  | 'minimal-mono'
-  | 'executive-amber'
-  | 'professional-dark'
+  | 'design-portfolio'
+  | 'engineering-precision'
+  | 'luxury-premium'
+  | 'healthcare-clean'
+
+/* ---------- Custom inline icons ---------- */
+
+function GemIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path d="M6 3h12l4 6-10 13L2 9z" />
+      <path d="M11 3 8 9l4 13 4-13-3-6" />
+      <path d="M2 9h20" />
+    </svg>
+  )
+}
+
+function HeartPulseIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5l7 7Z" />
+      <path d="M3.22 12H9.5l.5-1 2 4 .5-2H17" />
+    </svg>
+  )
+}
 
 type Template = {
   id: string
@@ -122,7 +163,7 @@ const templates: Template[] = [
     },
     tags: { en: ['Creative', 'Timeline', 'Vibrant'], ar: ['إبداعي', 'زمني', 'نابض'] },
     style: 'creative',
-    icon: Palette as IconC,
+    icon: Sparkles as IconC,
     variant: 'creative-bold',
   },
   {
@@ -163,51 +204,51 @@ const templates: Template[] = [
   },
   {
     id: 't9',
-    name: { en: 'Creative Pink', ar: 'إبداعي وردي' },
+    name: { en: 'Design Portfolio', ar: 'محفظة تصميم' },
     description: {
-      en: 'Soft pink header with circular avatar slot. Stand out for branding, fashion and lifestyle roles.',
-      ar: 'هيدر وردي ناعم مع مساحة دائرية للصورة. تميّز في أدوار العلامات والموضة وأسلوب الحياة.',
+      en: 'Artistic timeline layout with rose accents and filled skill chips. Ideal for UX/UI and visual designers.',
+      ar: 'تخطيط فنّي زمني مع لمسات وردية وأشرطة مهارات معبّأة. مثالي لمصمّمي UX/UI والمصمّمين البصريين.',
     },
-    tags: { en: ['Creative', 'Color', 'Branding'], ar: ['إبداعي', 'ملوّن', 'علامة'] },
+    tags: { en: ['Design', 'Timeline', 'Portfolio'], ar: ['تصميم', 'زمني', 'محفظة'] },
     style: 'creative',
-    icon: Sparkles as IconC,
-    variant: 'creative-pink',
+    icon: Palette as IconC,
+    variant: 'design-portfolio',
   },
   {
     id: 't10',
-    name: { en: 'Minimal Mono', ar: 'مينيمال أحادي' },
+    name: { en: 'Engineering Precision', ar: 'دقّة هندسية' },
     description: {
-      en: 'Strict black-and-white type-driven layout. Quiet confidence for senior individual contributors.',
-      ar: 'تخطيط أحادي اللون يعتمد على الطباعة بقوة. ثقة هادئة للمساهمين الفرديين الكبار.',
+      en: 'Structured two-column layout with skill progress bars and clean sections. Perfect for senior engineers.',
+      ar: 'تخطيط منظَّم بعمودين مع أشرطة تقدّم للمهارات وأقسام نظيفة. مثالي للمهندسين الكبار.',
     },
-    tags: { en: ['Minimal', 'Mono', 'Type'], ar: ['مينيمال', 'أحادي', 'طباعة'] },
-    style: 'minimal',
-    icon: Feather as IconC,
-    variant: 'minimal-mono',
+    tags: { en: ['Engineering', 'Two-Column', 'Technical'], ar: ['هندسة', 'عمودين', 'تقني'] },
+    style: 'modern',
+    icon: Wand2 as IconC,
+    variant: 'engineering-precision',
   },
   {
     id: 't11',
-    name: { en: 'Executive Amber', ar: 'تنفيذي كهرماني' },
+    name: { en: 'Luxury Premium', ar: 'فاخر بريميوم' },
     description: {
-      en: 'Side amber stripe paired with classic typography. Sharp choice for directors and C-suite candidates.',
-      ar: 'شريط جانبي كهرماني مع طباعة كلاسيكية. اختيار حاد للمدراء وقيادات C-suite.',
+      en: 'Sophisticated banner layout with gold accents and uppercase styling. Suited for hospitality and brand leadership.',
+      ar: 'تخطيط راقٍ ببانر فاخر ولمسات ذهبية وأحرف كبيرة. مناسب لقطاع الضيافة وقيادة العلامات.',
     },
-    tags: { en: ['Executive', 'Sharp', 'Stripe'], ar: ['تنفيذي', 'حاد', 'شريط'] },
+    tags: { en: ['Luxury', 'Banner', 'Premium'], ar: ['فاخر', 'بانر', 'بريميوم'] },
     style: 'executive',
-    icon: Rocket as IconC,
-    variant: 'executive-amber',
+    icon: GemIcon,
+    variant: 'luxury-premium',
   },
   {
     id: 't12',
-    name: { en: 'Professional Dark', ar: 'احترافي داكن' },
+    name: { en: 'Healthcare Clean', ar: 'صحّي نظيف' },
     description: {
-      en: 'Dark header section with light body. Strong personal brand presence while keeping ATS scans clean.',
-      ar: 'هيدر داكن مع جسم فاتح. حضور قوي للعلامة الشخصية مع توافق ATS.',
+      en: 'Clean compact layout with green tones and dot-style skill indicators. Designed for medical and care roles.',
+      ar: 'تخطيط نظيف مدمج بدرجات خضراء ومؤشّرات مهارات بنقاط. مصمَّم لأدوار الرعاية الصحّية.',
     },
-    tags: { en: ['Professional', 'Dark', 'Modern'], ar: ['احترافي', 'داكن', 'حديث'] },
-    style: 'professional',
-    icon: FileText as IconC,
-    variant: 'professional-dark',
+    tags: { en: ['Healthcare', 'Compact', 'Clean'], ar: ['صحّي', 'مدمج', 'نظيف'] },
+    style: 'minimal',
+    icon: HeartPulseIcon,
+    variant: 'healthcare-clean',
   },
 ]
 
@@ -691,67 +732,84 @@ function TemplatePreview({
           </div>
         </div>
       )
-    case 'creative-pink':
+    case 'design-portfolio':
+      // Rose accent timeline layout
       return (
-        <div className="flex h-full flex-col bg-white">
-          <div className="flex items-center gap-2 bg-pink-100 p-3">
-            <div className="h-6 w-6 rounded-full bg-pink-400" />
+        <div className="flex h-full flex-col gap-2 bg-white p-3">
+          {bar('w-2/3', 'bg-rose-700', 'h-2.5')}
+          {bar('w-1/3', 'bg-rose-300')}
+          <div className="my-1 border-t border-rose-100" />
+          <div className="flex gap-2">
+            <div className="h-2 w-2 shrink-0 rounded-full bg-rose-500 mt-0.5" />
             <div className="flex-1 space-y-1">
-              {bar('w-3/4', 'bg-pink-500')}
-              {bar('w-1/2', 'bg-pink-300')}
+              {bar('w-full', 'bg-rose-300')}
+              {bar('w-3/4', 'bg-rose-100')}
             </div>
           </div>
-          <div className="flex flex-1 flex-col gap-2 p-3">
-            {bar('w-1/3', 'bg-pink-400')}
-            {bar('w-full', 'bg-slate-200')}
-            {bar('w-5/6', 'bg-slate-200')}
-            {bar('w-1/3', 'bg-pink-400')}
-            {bar('w-full', 'bg-slate-200')}
+          <div className="flex gap-2">
+            <div className="h-2 w-2 shrink-0 rounded-full bg-rose-300 mt-0.5" />
+            <div className="flex-1 space-y-1">
+              {bar('w-2/3', 'bg-rose-200')}
+              {bar('w-1/2', 'bg-rose-100')}
+            </div>
           </div>
         </div>
       )
-    case 'minimal-mono':
+    case 'engineering-precision':
+      // Slate header banner + 2-column with skill bars
       return (
-        <div className="flex h-full flex-col gap-2 bg-stone-50 p-3">
-          {bar('w-1/2', 'bg-stone-900', 'h-3')}
-          {bar('w-1/4', 'bg-stone-500')}
-          <div className="my-1 border-t border-stone-300" />
-          {bar('w-full', 'bg-stone-300')}
-          {bar('w-5/6', 'bg-stone-300')}
-          {bar('w-4/6', 'bg-stone-300')}
-        </div>
-      )
-    case 'executive-amber':
-      return (
-        <div className="flex h-full bg-white">
-          <div className="w-1.5 bg-amber-500" />
-          <div className="flex flex-1 flex-col gap-2 p-3">
-            {bar('w-3/4', 'bg-slate-800', 'h-2.5')}
-            {bar('w-1/3', 'bg-amber-400')}
-            <div className="my-1 border-t border-slate-200" />
-            {bar('w-full', 'bg-slate-300')}
-            {bar('w-5/6', 'bg-slate-200')}
-            {bar('w-4/6', 'bg-slate-200')}
-            {bar('w-1/3', 'bg-amber-400')}
-            {bar('w-full', 'bg-slate-200')}
+        <div className="flex h-full flex-col gap-2 bg-white p-3">
+          {bar('w-2/3', 'bg-slate-900', 'h-2.5')}
+          <div className="my-1 border-t border-slate-200" />
+          <div className="grid flex-1 grid-cols-2 gap-2">
+            <div className="flex flex-col gap-1.5">
+              {bar('w-full', 'bg-slate-300')}
+              {bar('w-5/6', 'bg-slate-200')}
+              {bar('w-2/3', 'bg-slate-200')}
+            </div>
+            <div className="flex flex-col gap-1.5">
+              {bar('w-full', 'bg-slate-300')}
+              {bar('w-5/6', 'bg-slate-200')}
+              {bar('w-3/4', 'bg-slate-200')}
+            </div>
           </div>
         </div>
       )
-    case 'professional-dark':
+    case 'luxury-premium':
+      // Black banner header with gold underline
       return (
         <div className="flex h-full flex-col bg-white">
-          <div className="bg-slate-900 p-3">
-            <div className="space-y-1">
-              {bar('w-2/3', 'bg-white', 'h-2.5')}
-              {bar('w-1/3', 'bg-slate-400')}
-            </div>
+          <div className="flex flex-col gap-1.5 bg-slate-900 p-3">
+            {bar('w-2/3', 'bg-white', 'h-2.5')}
+            {bar('w-1/3', 'bg-amber-300')}
           </div>
           <div className="flex flex-1 flex-col gap-2 p-3">
-            {bar('w-1/3', 'bg-slate-700')}
-            {bar('w-full', 'bg-slate-200')}
+            {bar('w-full', 'bg-amber-200')}
             {bar('w-5/6', 'bg-slate-200')}
-            {bar('w-1/3', 'bg-slate-700')}
+            {bar('w-3/4', 'bg-slate-200')}
+            {bar('w-full', 'bg-amber-200')}
+          </div>
+        </div>
+      )
+    case 'healthcare-clean':
+      // Clean white with green accent header + dotted skill rows
+      return (
+        <div className="flex h-full flex-col gap-2 bg-white p-3">
+          {bar('w-2/3', 'bg-emerald-700', 'h-2.5')}
+          {bar('w-1/2', 'bg-emerald-400')}
+          {bar('w-1/3', 'bg-emerald-300')}
+          <div className="my-1 border-t border-emerald-100" />
+          <div className="flex items-center gap-1.5">
+            <div className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
             {bar('w-full', 'bg-slate-200')}
+          </div>
+          <div className="flex items-center gap-1.5">
+            <div className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+            {bar('w-5/6', 'bg-slate-200')}
+          </div>
+          <div className="flex items-center gap-1.5">
+            <div className="h-1.5 w-1.5 rounded-full bg-emerald-300" />
+            {bar('w-2/3', 'bg-slate-200')}
           </div>
         </div>
       )
