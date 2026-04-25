@@ -1,11 +1,11 @@
 import { useState, type ComponentType } from 'react'
 import {
+  Book,
   Briefcase,
   Crown,
   Eye,
   Feather,
   FileText,
-  GraduationCap,
   LayoutGrid,
   Layers,
   List,
@@ -13,9 +13,10 @@ import {
   Palette,
   Rocket,
   Search,
+  Shield,
   Sparkles,
-  Star,
   Table2,
+  Target,
   Upload,
   Wand2,
   ArrowRight,
@@ -44,10 +45,10 @@ type Variant =
   | 'modern-tech'
   | 'executive-suite'
   | 'minimal-elegance'
-  | 'creative-purple'
-  | 'professional-blue'
-  | 'academic-green'
-  | 'modern-stripe'
+  | 'creative-bold'
+  | 'academic-scholar'
+  | 'startup-fresh'
+  | 'finance-pro'
   | 'creative-pink'
   | 'minimal-mono'
   | 'executive-amber'
@@ -114,51 +115,51 @@ const templates: Template[] = [
   },
   {
     id: 't5',
-    name: { en: 'Creative Studio', ar: 'استوديو إبداعي' },
+    name: { en: 'Creative Bold', ar: 'إبداعي جريء' },
     description: {
-      en: 'Bold violet accents with a playful header. Perfect for designers, marketers and creative roles.',
-      ar: 'لمسات بنفسجية جريئة مع هيدر مرح. مثالي للمصمّمين والمسوّقين والأدوار الإبداعية.',
+      en: 'Vibrant timeline layout with dot markers and date pills. Perfect for marketing, sales and growth roles.',
+      ar: 'تخطيط زمني نابض بالحياة مع نقاط تأشير وحبوب تاريخ. مثالي للتسويق والمبيعات وأدوار النمو.',
     },
-    tags: { en: ['Creative', 'Bold', 'Designer'], ar: ['إبداعي', 'جريء', 'مصمّم'] },
+    tags: { en: ['Creative', 'Timeline', 'Vibrant'], ar: ['إبداعي', 'زمني', 'نابض'] },
     style: 'creative',
     icon: Palette as IconC,
-    variant: 'creative-purple',
+    variant: 'creative-bold',
   },
   {
     id: 't6',
-    name: { en: 'Professional Blue', ar: 'احترافي أزرق' },
+    name: { en: 'Academic Scholar', ar: 'أكاديمي علمي' },
     description: {
-      en: 'Clean blue accents on white background. Universally appropriate for finance, legal and consulting.',
-      ar: 'لمسات زرقاء نظيفة على خلفية بيضاء. مناسب للمالية والقانون والاستشارات.',
+      en: 'Two-column layout with skills and education on the left, experience on the right. Tuned for researchers.',
+      ar: 'تخطيط بعمودين مع المهارات والتعليم يساراً، والخبرة يميناً. مضبوط للباحثين.',
     },
-    tags: { en: ['Professional', 'Clean', 'ATS-Friendly'], ar: ['احترافي', 'نظيف', 'متوافق ATS'] },
-    style: 'professional',
-    icon: Star as IconC,
-    variant: 'professional-blue',
+    tags: { en: ['Academic', 'Two-Column', 'Research'], ar: ['أكاديمي', 'عمودين', 'بحثي'] },
+    style: 'academic',
+    icon: Book as IconC,
+    variant: 'academic-scholar',
   },
   {
     id: 't7',
-    name: { en: 'Academic Scholar', ar: 'أكاديمي علمي' },
+    name: { en: 'Startup Fresh', ar: 'ستارت-أب طازج' },
     description: {
-      en: 'Centered traditional layout with serif accent. Ideal for PhDs, researchers and academic positions.',
-      ar: 'تخطيط تقليدي متمركز بلمسة serif. مثالي لطلبة الدكتوراه والباحثين والمناصب الأكاديمية.',
+      en: 'Teal-accented sidebar layout with skill progress bars. Great for startup founders and product roles.',
+      ar: 'سايدبار بلمسات تركوازية مع أشرطة تقدّم للمهارات. رائع لمؤسّسي الستارت-أب وأدوار المنتج.',
     },
-    tags: { en: ['Academic', 'Research', 'Traditional'], ar: ['أكاديمي', 'بحثي', 'تقليدي'] },
-    style: 'academic',
-    icon: GraduationCap as IconC,
-    variant: 'academic-green',
+    tags: { en: ['Startup', 'Sidebar', 'Fresh'], ar: ['ستارت-أب', 'سايدبار', 'طازج'] },
+    style: 'modern',
+    icon: Target as IconC,
+    variant: 'startup-fresh',
   },
   {
     id: 't8',
-    name: { en: 'Modern Stripe', ar: 'مودرن مخطّط' },
+    name: { en: 'Finance Pro', ar: 'احترافي مالي' },
     description: {
-      en: 'Two-column layout with subtle blue accent stripes. Modern look while staying ATS-readable.',
-      ar: 'تخطيط بعمودين مع خطوط زرقاء ناعمة. مظهر عصري مع توافق ATS.',
+      en: 'Dense compact layout with two-column grid for maximum content density. Built for finance and consulting.',
+      ar: 'تخطيط مدمج كثيف بشبكة عمودين لأعلى كثافة محتوى. مصمّم للمالية والاستشارات.',
     },
-    tags: { en: ['Modern', 'Stripe', 'Clean'], ar: ['حديث', 'مخطّط', 'نظيف'] },
-    style: 'modern',
-    icon: Wand2 as IconC,
-    variant: 'modern-stripe',
+    tags: { en: ['Finance', 'Compact', 'Dense'], ar: ['مالي', 'مدمج', 'كثيف'] },
+    style: 'professional',
+    icon: Shield as IconC,
+    variant: 'finance-pro',
   },
   {
     id: 't9',
@@ -595,73 +596,98 @@ function TemplatePreview({
           {bar('w-4/6', 'bg-slate-200')}
         </div>
       )
-    case 'creative-purple':
+    case 'creative-bold':
+      // Vibrant timeline with dot markers + violet pills
       return (
-        <div className="flex h-full flex-col bg-white">
-          <div className="flex items-center gap-2 bg-violet-100 p-3">
-            <div className="h-5 w-5 rounded-full bg-violet-500" />
+        <div className="flex h-full flex-col gap-2 bg-white p-3">
+          {bar('w-2/3', 'bg-violet-600', 'h-2.5')}
+          {bar('w-1/3', 'bg-violet-300')}
+          <div className="my-1 border-t border-violet-100" />
+          <div className="flex gap-2">
+            <div className="h-2 w-2 shrink-0 rounded-full bg-violet-500 mt-0.5" />
             <div className="flex-1 space-y-1">
-              {bar('w-3/4', 'bg-violet-600')}
-              {bar('w-1/2', 'bg-violet-400')}
+              {bar('w-full', 'bg-violet-400')}
+              {bar('w-5/6', 'bg-slate-200')}
             </div>
           </div>
-          <div className="flex flex-1 flex-col gap-2 p-3">
-            {bar('w-1/3', 'bg-violet-500')}
-            {bar('w-full', 'bg-slate-200')}
-            {bar('w-5/6', 'bg-slate-200')}
-            {bar('w-1/3', 'bg-violet-500')}
-            {bar('w-full', 'bg-slate-200')}
+          <div className="flex gap-2">
+            <div className="h-2 w-2 shrink-0 rounded-full bg-violet-300 mt-0.5" />
+            <div className="flex-1 space-y-1">
+              {bar('w-2/3', 'bg-violet-200')}
+              {bar('w-1/2', 'bg-slate-200')}
+            </div>
           </div>
         </div>
       )
-    case 'professional-blue':
+    case 'academic-scholar':
+      // Two-column with blue accents
       return (
-        <div className="flex h-full flex-col gap-2 bg-blue-50/30 p-3">
-          {bar('w-2/3', 'bg-blue-700', 'h-2.5')}
+        <div className="flex h-full flex-col gap-2 bg-white p-3">
+          {bar('w-2/3', 'bg-slate-800', 'h-2.5')}
           {bar('w-1/3', 'bg-blue-300')}
-          <div className="my-1 border-t border-blue-200" />
-          {bar('w-full', 'bg-blue-200')}
-          {bar('w-5/6', 'bg-slate-200')}
-          {bar('w-4/6', 'bg-slate-200')}
-          {bar('w-full', 'bg-blue-200')}
-          {bar('w-3/4', 'bg-slate-200')}
-        </div>
-      )
-    case 'academic-green':
-      return (
-        <div className="flex h-full flex-col bg-white">
-          <div className="bg-emerald-800 p-3">
-            <div className="space-y-1">
-              {bar('w-2/3', 'bg-emerald-200', 'h-2.5')}
-              {bar('w-1/3', 'bg-emerald-400')}
+          <div className="my-1 border-t border-slate-200" />
+          <div className="grid flex-1 grid-cols-2 gap-2">
+            <div className="flex flex-col gap-1.5">
+              {bar('w-full', 'bg-blue-400')}
+              {bar('w-5/6', 'bg-slate-200')}
+              {bar('w-2/3', 'bg-slate-200')}
+              {bar('w-full', 'bg-blue-400')}
+            </div>
+            <div className="flex flex-col gap-1.5">
+              {bar('w-full', 'bg-blue-400')}
+              {bar('w-5/6', 'bg-slate-200')}
+              {bar('w-3/4', 'bg-slate-200')}
+              {bar('w-2/3', 'bg-slate-200')}
             </div>
           </div>
-          <div className="flex flex-1 flex-col items-center gap-2 p-3">
-            <div className="my-1 w-full border-t border-emerald-200" />
-            {bar('w-1/3', 'bg-emerald-500')}
+        </div>
+      )
+    case 'startup-fresh':
+      // Teal sidebar with skill progress bars
+      return (
+        <div className="grid h-full grid-cols-[35%_1fr] bg-white">
+          <div className="flex flex-col gap-2 bg-teal-700 p-3">
+            <div className="mx-auto h-6 w-6 rounded-full bg-teal-500" />
+            {bar('w-full', 'bg-teal-300')}
+            {bar('w-3/4', 'bg-teal-400')}
+            <div className="mt-1 space-y-1.5">
+              <div className="h-1.5 w-full overflow-hidden rounded-full bg-teal-900">
+                <div className="h-full w-3/4 rounded-full bg-teal-300" />
+              </div>
+              <div className="h-1.5 w-full overflow-hidden rounded-full bg-teal-900">
+                <div className="h-full w-2/3 rounded-full bg-teal-300" />
+              </div>
+            </div>
+          </div>
+          <div className="flex flex-col gap-2 p-3">
+            {bar('w-3/4', 'bg-teal-700', 'h-2.5')}
+            {bar('w-1/3', 'bg-teal-300')}
             {bar('w-full', 'bg-slate-200')}
             {bar('w-5/6', 'bg-slate-200')}
-            {bar('w-1/3', 'bg-emerald-500')}
             {bar('w-4/6', 'bg-slate-200')}
           </div>
         </div>
       )
-    case 'modern-stripe':
+    case 'finance-pro':
+      // Dense compact two-column grid
       return (
-        <div className="grid h-full grid-cols-[1fr_30%] gap-2 bg-white p-3">
-          <div className="flex flex-col gap-2">
-            {bar('w-3/4', 'bg-slate-700', 'h-2.5')}
-            {bar('w-1/3', 'bg-blue-400')}
-            {bar('w-full', 'bg-slate-200')}
-            {bar('w-5/6', 'bg-slate-200')}
-            {bar('w-1/3', 'bg-blue-400')}
-            {bar('w-full', 'bg-slate-200')}
-          </div>
-          <div className="flex flex-col gap-1.5 border-s-2 border-blue-300 ps-2">
-            {bar('w-full', 'bg-slate-300')}
-            {bar('w-2/3', 'bg-slate-200')}
-            {bar('w-3/4', 'bg-slate-200')}
-            {bar('w-1/2', 'bg-slate-200')}
+        <div className="flex h-full flex-col gap-1.5 bg-white p-3">
+          {bar('w-1/2', 'bg-slate-900', 'h-2.5')}
+          {bar('w-1/4', 'bg-slate-400')}
+          <div className="my-1 border-t border-slate-200" />
+          <div className="grid flex-1 grid-cols-2 gap-1.5">
+            <div className="space-y-1">
+              {bar('w-full', 'bg-slate-700')}
+              {bar('w-5/6', 'bg-slate-300')}
+              {bar('w-2/3', 'bg-slate-300')}
+              {bar('w-full', 'bg-slate-300')}
+            </div>
+            <div className="space-y-1">
+              {bar('w-full', 'bg-slate-700')}
+              {bar('w-3/4', 'bg-slate-300')}
+              {bar('w-5/6', 'bg-slate-300')}
+              {bar('w-2/3', 'bg-slate-300')}
+            </div>
           </div>
         </div>
       )
