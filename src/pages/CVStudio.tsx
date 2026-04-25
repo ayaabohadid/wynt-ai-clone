@@ -1,12 +1,24 @@
-import { useState } from 'react'
+import { useState, type ComponentType } from 'react'
 import {
+  Briefcase,
+  Crown,
+  Eye,
+  Feather,
   FileText,
+  GraduationCap,
   LayoutGrid,
+  Layers,
   List,
   Mic,
+  Palette,
+  Rocket,
   Search,
+  Sparkles,
+  Star,
   Table2,
   Upload,
+  Wand2,
+  ArrowRight,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useLanguage, type Lang } from '@/lib/i18n'
@@ -25,26 +37,177 @@ const styleFilters: { value: Style; label: Record<Lang, string> }[] = [
   { value: 'minimal', label: { en: 'Minimal', ar: 'مينيمال' } },
 ]
 
+type IconC = ComponentType<{ className?: string }>
+
+type Variant =
+  | 'corporate-classic'
+  | 'modern-tech'
+  | 'executive-suite'
+  | 'minimal-elegance'
+  | 'creative-purple'
+  | 'professional-blue'
+  | 'academic-green'
+  | 'modern-stripe'
+  | 'creative-pink'
+  | 'minimal-mono'
+  | 'executive-amber'
+  | 'professional-dark'
+
 type Template = {
   id: string
   name: Record<Lang, string>
+  description: Record<Lang, string>
+  tags: Record<Lang, string[]>
   style: Exclude<Style, 'all'>
-  variant: 'light' | 'dark-sidebar-left' | 'dark-header' | 'light-blue' | 'creative-split' | 'minimal-mono' | 'executive-stripe' | 'academic-classic' | 'modern-sidebar-right' | 'modern-bold-header' | 'creative-color' | 'minimal-clean'
+  icon: IconC
+  variant: Variant
 }
 
 const templates: Template[] = [
-  { id: 't1', name: { en: 'Classic Professional', ar: 'كلاسيكي احترافي' }, style: 'professional', variant: 'light' },
-  { id: 't2', name: { en: 'Dark Sidebar Pro', ar: 'سايدبار داكن' }, style: 'modern', variant: 'dark-sidebar-left' },
-  { id: 't3', name: { en: 'Bold Header', ar: 'هيدر بارز' }, style: 'modern', variant: 'modern-bold-header' },
-  { id: 't4', name: { en: 'Minimal Clean', ar: 'مينيمال نظيف' }, style: 'minimal', variant: 'minimal-clean' },
-  { id: 't5', name: { en: 'Executive Stripe', ar: 'تنفيذي مخطط' }, style: 'executive', variant: 'executive-stripe' },
-  { id: 't6', name: { en: 'Academic Classic', ar: 'أكاديمي كلاسيكي' }, style: 'academic', variant: 'academic-classic' },
-  { id: 't7', name: { en: 'Creative Split', ar: 'إبداعي مقسّم' }, style: 'creative', variant: 'creative-split' },
-  { id: 't8', name: { en: 'Modern Sidebar', ar: 'سايدبار حديث' }, style: 'modern', variant: 'modern-sidebar-right' },
-  { id: 't9', name: { en: 'Light Blue Pro', ar: 'احترافي أزرق فاتح' }, style: 'professional', variant: 'light-blue' },
-  { id: 't10', name: { en: 'Minimal Mono', ar: 'مينيمال أحادي' }, style: 'minimal', variant: 'minimal-mono' },
-  { id: 't11', name: { en: 'Creative Color', ar: 'إبداعي ملوّن' }, style: 'creative', variant: 'creative-color' },
-  { id: 't12', name: { en: 'Dark Header', ar: 'هيدر داكن' }, style: 'professional', variant: 'dark-header' },
+  {
+    id: 't1',
+    name: { en: 'Corporate Classic', ar: 'كلاسيكي مؤسّسي' },
+    description: {
+      en: 'Traditional single-column layout with centered header and clean typography. Battle-tested for ATS systems.',
+      ar: 'تخطيط تقليدي بعمود واحد مع هيدر متمركز وطباعة نظيفة. مُختبَر لأنظمة ATS.',
+    },
+    tags: { en: ['Corporate', 'Traditional', 'ATS-Friendly'], ar: ['مؤسّسي', 'تقليدي', 'متوافق ATS'] },
+    style: 'professional',
+    icon: Briefcase as IconC,
+    variant: 'corporate-classic',
+  },
+  {
+    id: 't2',
+    name: { en: 'Modern Tech', ar: 'تقني حديث' },
+    description: {
+      en: 'Dark left sidebar with contact info and skill bars, white main content area for clean readability.',
+      ar: 'سايدبار يسار داكن لمعلومات الاتصال ومهارات، ومنطقة محتوى رئيسية بيضاء لقراءة نظيفة.',
+    },
+    tags: { en: ['Tech', 'Sidebar', 'Modern'], ar: ['تقني', 'سايدبار', 'حديث'] },
+    style: 'modern',
+    icon: Layers as IconC,
+    variant: 'modern-tech',
+  },
+  {
+    id: 't3',
+    name: { en: 'Executive Suite', ar: 'الجناح التنفيذي' },
+    description: {
+      en: 'Bold colored header banner with uppercase name and accent bar. Perfect for senior leadership roles.',
+      ar: 'بانر هيدر بارز ملوّن مع اسم بحروف كبيرة وشريط لون. مثالي لأدوار القيادة العليا.',
+    },
+    tags: { en: ['Executive', 'Banner', 'Bold'], ar: ['تنفيذي', 'بانر', 'بارز'] },
+    style: 'executive',
+    icon: Crown as IconC,
+    variant: 'executive-suite',
+  },
+  {
+    id: 't4',
+    name: { en: 'Minimal Elegance', ar: 'أناقة مينيمال' },
+    description: {
+      en: 'Whitespace-focused classic layout with elegant simplicity. Great for designers, writers and creatives.',
+      ar: 'تخطيط كلاسيكي يركّز على المساحات البيضاء بأناقة بسيطة. رائع للمصمّمين والكتّاب والمبدعين.',
+    },
+    tags: { en: ['Minimal', 'Elegant', 'Whitespace'], ar: ['مينيمال', 'أنيق', 'مساحات'] },
+    style: 'minimal',
+    icon: Feather as IconC,
+    variant: 'minimal-elegance',
+  },
+  {
+    id: 't5',
+    name: { en: 'Creative Studio', ar: 'استوديو إبداعي' },
+    description: {
+      en: 'Bold violet accents with a playful header. Perfect for designers, marketers and creative roles.',
+      ar: 'لمسات بنفسجية جريئة مع هيدر مرح. مثالي للمصمّمين والمسوّقين والأدوار الإبداعية.',
+    },
+    tags: { en: ['Creative', 'Bold', 'Designer'], ar: ['إبداعي', 'جريء', 'مصمّم'] },
+    style: 'creative',
+    icon: Palette as IconC,
+    variant: 'creative-purple',
+  },
+  {
+    id: 't6',
+    name: { en: 'Professional Blue', ar: 'احترافي أزرق' },
+    description: {
+      en: 'Clean blue accents on white background. Universally appropriate for finance, legal and consulting.',
+      ar: 'لمسات زرقاء نظيفة على خلفية بيضاء. مناسب للمالية والقانون والاستشارات.',
+    },
+    tags: { en: ['Professional', 'Clean', 'ATS-Friendly'], ar: ['احترافي', 'نظيف', 'متوافق ATS'] },
+    style: 'professional',
+    icon: Star as IconC,
+    variant: 'professional-blue',
+  },
+  {
+    id: 't7',
+    name: { en: 'Academic Scholar', ar: 'أكاديمي علمي' },
+    description: {
+      en: 'Centered traditional layout with serif accent. Ideal for PhDs, researchers and academic positions.',
+      ar: 'تخطيط تقليدي متمركز بلمسة serif. مثالي لطلبة الدكتوراه والباحثين والمناصب الأكاديمية.',
+    },
+    tags: { en: ['Academic', 'Research', 'Traditional'], ar: ['أكاديمي', 'بحثي', 'تقليدي'] },
+    style: 'academic',
+    icon: GraduationCap as IconC,
+    variant: 'academic-green',
+  },
+  {
+    id: 't8',
+    name: { en: 'Modern Stripe', ar: 'مودرن مخطّط' },
+    description: {
+      en: 'Two-column layout with subtle blue accent stripes. Modern look while staying ATS-readable.',
+      ar: 'تخطيط بعمودين مع خطوط زرقاء ناعمة. مظهر عصري مع توافق ATS.',
+    },
+    tags: { en: ['Modern', 'Stripe', 'Clean'], ar: ['حديث', 'مخطّط', 'نظيف'] },
+    style: 'modern',
+    icon: Wand2 as IconC,
+    variant: 'modern-stripe',
+  },
+  {
+    id: 't9',
+    name: { en: 'Creative Pink', ar: 'إبداعي وردي' },
+    description: {
+      en: 'Soft pink header with circular avatar slot. Stand out for branding, fashion and lifestyle roles.',
+      ar: 'هيدر وردي ناعم مع مساحة دائرية للصورة. تميّز في أدوار العلامات والموضة وأسلوب الحياة.',
+    },
+    tags: { en: ['Creative', 'Color', 'Branding'], ar: ['إبداعي', 'ملوّن', 'علامة'] },
+    style: 'creative',
+    icon: Sparkles as IconC,
+    variant: 'creative-pink',
+  },
+  {
+    id: 't10',
+    name: { en: 'Minimal Mono', ar: 'مينيمال أحادي' },
+    description: {
+      en: 'Strict black-and-white type-driven layout. Quiet confidence for senior individual contributors.',
+      ar: 'تخطيط أحادي اللون يعتمد على الطباعة بقوة. ثقة هادئة للمساهمين الفرديين الكبار.',
+    },
+    tags: { en: ['Minimal', 'Mono', 'Type'], ar: ['مينيمال', 'أحادي', 'طباعة'] },
+    style: 'minimal',
+    icon: Feather as IconC,
+    variant: 'minimal-mono',
+  },
+  {
+    id: 't11',
+    name: { en: 'Executive Amber', ar: 'تنفيذي كهرماني' },
+    description: {
+      en: 'Side amber stripe paired with classic typography. Sharp choice for directors and C-suite candidates.',
+      ar: 'شريط جانبي كهرماني مع طباعة كلاسيكية. اختيار حاد للمدراء وقيادات C-suite.',
+    },
+    tags: { en: ['Executive', 'Sharp', 'Stripe'], ar: ['تنفيذي', 'حاد', 'شريط'] },
+    style: 'executive',
+    icon: Rocket as IconC,
+    variant: 'executive-amber',
+  },
+  {
+    id: 't12',
+    name: { en: 'Professional Dark', ar: 'احترافي داكن' },
+    description: {
+      en: 'Dark header section with light body. Strong personal brand presence while keeping ATS scans clean.',
+      ar: 'هيدر داكن مع جسم فاتح. حضور قوي للعلامة الشخصية مع توافق ATS.',
+    },
+    tags: { en: ['Professional', 'Dark', 'Modern'], ar: ['احترافي', 'داكن', 'حديث'] },
+    style: 'professional',
+    icon: FileText as IconC,
+    variant: 'professional-dark',
+  },
 ]
 
 export function CVStudio() {
@@ -59,7 +222,11 @@ export function CVStudio() {
     if (style !== 'all' && t.style !== style) return false
     if (search.trim()) {
       const q = search.trim().toLowerCase()
-      return t.name.en.toLowerCase().includes(q) || t.style.includes(q)
+      return (
+        t.name.en.toLowerCase().includes(q) ||
+        t.style.includes(q) ||
+        t.tags.en.some((tag) => tag.toLowerCase().includes(q))
+      )
     }
     return true
   })
@@ -98,9 +265,7 @@ export function CVStudio() {
 
       {/* Empty state card */}
       <section className="mt-6 rounded-2xl border border-slate-200 bg-white py-16 text-center shadow-sm dark:border-slate-800 dark:bg-slate-900">
-        <div className="mx-auto flex h-14 w-14 items-center justify-center">
-          <FileText className="h-12 w-12 text-slate-300 dark:text-slate-600" />
-        </div>
+        <FileText className="mx-auto h-12 w-12 text-slate-300 dark:text-slate-600" />
         <h3 className="mt-3 text-xl font-bold text-slate-900 dark:text-white">
           {copy('No CVs uploaded yet', 'لم ترفع سيرة ذاتية بعد')}
         </h3>
@@ -161,7 +326,7 @@ export function CVStudio() {
                 className={cn(
                   'rounded-lg px-3 py-1.5 text-sm font-medium transition-colors',
                   style === f.value
-                    ? 'bg-slate-900 text-white shadow-sm dark:bg-slate-100 dark:text-slate-900'
+                    ? 'bg-indigo-600 text-white shadow-sm dark:bg-indigo-500'
                     : 'text-slate-600 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800'
                 )}
               >
@@ -171,38 +336,53 @@ export function CVStudio() {
           </div>
         </div>
 
-        {/* Templates grid */}
+        {/* Templates */}
         {filtered.length === 0 ? (
           <p className="mt-8 text-center text-sm text-slate-500 dark:text-slate-400">
             {copy('No templates found.', 'لم يتم العثور على قوالب.')}
           </p>
         ) : view === 'grid' ? (
-          <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-5 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {filtered.map((t) => <TemplateCard key={t.id} template={t} />)}
           </div>
         ) : view === 'list' ? (
           <div className="mt-5 space-y-3">
-            {filtered.map((t) => (
-              <div
-                key={t.id}
-                className="flex items-center gap-4 rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900"
-              >
-                <div className="h-16 w-12 shrink-0 overflow-hidden rounded-md border border-slate-200 dark:border-slate-700">
-                  <TemplatePreview variant={t.variant} compact />
+            {filtered.map((t) => {
+              const Icon = t.icon
+              return (
+                <div
+                  key={t.id}
+                  className="flex items-center gap-4 rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900"
+                >
+                  <div className="h-20 w-14 shrink-0 overflow-hidden rounded-md border border-slate-200 dark:border-slate-700">
+                    <TemplatePreview variant={t.variant} compact />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <p className="inline-flex items-center gap-2 font-semibold text-slate-900 dark:text-white">
+                      <Icon className="h-4 w-4 text-slate-500 dark:text-slate-400" />
+                      {t.name[lang]}
+                    </p>
+                    <p className="mt-1 line-clamp-2 text-xs text-slate-500 dark:text-slate-400">
+                      {t.description[lang]}
+                    </p>
+                  </div>
+                  <div className="flex shrink-0 gap-2">
+                    <Button variant="outline" size="sm" className="gap-1.5">
+                      <Eye className="h-3.5 w-3.5" />
+                      {copy('Preview', 'معاينة')}
+                    </Button>
+                    <Button
+                      variant="default"
+                      size="sm"
+                      className="gap-1.5 bg-indigo-600 hover:bg-indigo-700 focus-visible:ring-indigo-600"
+                    >
+                      <ArrowRight className="h-3.5 w-3.5" />
+                      {copy('Use', 'استخدم')}
+                    </Button>
+                  </div>
                 </div>
-                <div className="min-w-0 flex-1">
-                  <p className="font-semibold text-slate-900 dark:text-white">
-                    {t.name[lang]}
-                  </p>
-                  <p className="mt-0.5 text-xs capitalize text-slate-500 dark:text-slate-400">
-                    {t.style}
-                  </p>
-                </div>
-                <Button variant="outline" size="sm">
-                  {copy('Use', 'استخدم')}
-                </Button>
-              </div>
-            ))}
+              )
+            })}
           </div>
         ) : (
           <div className="mt-5 overflow-hidden rounded-xl border border-slate-200 dark:border-slate-800">
@@ -215,6 +395,9 @@ export function CVStudio() {
                   <th className="px-4 py-2 text-start font-semibold text-slate-700 dark:text-slate-200">
                     {copy('Style', 'الأسلوب')}
                   </th>
+                  <th className="px-4 py-2 text-start font-semibold text-slate-700 dark:text-slate-200">
+                    {copy('Tags', 'الوسوم')}
+                  </th>
                   <th className="px-4 py-2 text-end font-semibold text-slate-700 dark:text-slate-200" />
                 </tr>
               </thead>
@@ -224,9 +407,7 @@ export function CVStudio() {
                     key={t.id}
                     className={cn(
                       'border-t',
-                      i % 2 === 0
-                        ? 'bg-white dark:bg-slate-900'
-                        : 'bg-slate-50/50 dark:bg-slate-900/50',
+                      i % 2 === 0 ? 'bg-white dark:bg-slate-900' : 'bg-slate-50/50 dark:bg-slate-900/50',
                       'border-slate-200 dark:border-slate-800'
                     )}
                   >
@@ -235,6 +416,15 @@ export function CVStudio() {
                     </td>
                     <td className="px-4 py-3 capitalize text-slate-600 dark:text-slate-300">
                       {t.style}
+                    </td>
+                    <td className="px-4 py-3">
+                      <div className="flex flex-wrap gap-1">
+                        {t.tags[lang].slice(0, 2).map((tag) => (
+                          <span key={tag} className={tagPillClass}>
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
                     </td>
                     <td className="px-4 py-3 text-end">
                       <Button variant="outline" size="sm">
@@ -252,12 +442,15 @@ export function CVStudio() {
   )
 }
 
+const tagPillClass =
+  'rounded-md bg-slate-100 px-2 py-0.5 text-[11px] font-medium text-slate-600 dark:bg-slate-800 dark:text-slate-300'
+
 function ViewBtn({
   icon: Icon,
   active,
   onClick,
 }: {
-  icon: React.FC<{ className?: string }>
+  icon: IconC
   active: boolean
   onClick: () => void
 }) {
@@ -279,36 +472,60 @@ function ViewBtn({
 
 function TemplateCard({ template }: { template: Template }) {
   const { lang } = useLanguage()
+  const Icon = template.icon
   const copy = (en: string, ar: string) => (lang === 'ar' ? ar : en)
   return (
-    <div className="group cursor-pointer overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm transition-all hover:-translate-y-0.5 hover:border-indigo-300 hover:shadow-md dark:border-slate-800 dark:bg-slate-900 dark:hover:border-indigo-500/50">
-      <div className="aspect-[3/4] overflow-hidden">
-        <TemplatePreview variant={template.variant} />
-      </div>
-      <div className="flex items-center justify-between gap-2 border-t border-slate-100 px-3 py-2.5 dark:border-slate-800">
-        <div className="min-w-0">
-          <p className="truncate text-sm font-semibold text-slate-900 dark:text-white">
-            {template.name[lang]}
-          </p>
-          <p className="truncate text-[11px] capitalize text-slate-500 dark:text-slate-400">
-            {template.style}
-          </p>
+    <div className="group overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-all hover:-translate-y-0.5 hover:border-indigo-300 hover:shadow-md dark:border-slate-800 dark:bg-slate-900 dark:hover:border-indigo-500/50">
+      {/* Preview area */}
+      <div className="relative bg-slate-50 p-4 dark:bg-slate-800/40">
+        <div className="aspect-[3/4] overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm dark:border-slate-700">
+          <TemplatePreview variant={template.variant} />
         </div>
-        <Button variant="outline" size="sm" className="h-7 px-2 text-xs">
-          {copy('Use', 'استخدم')}
-        </Button>
+        {/* Hover overlay buttons */}
+        <div className="pointer-events-none absolute inset-x-4 bottom-6 flex justify-center gap-2 opacity-0 transition-opacity duration-200 group-hover:pointer-events-auto group-hover:opacity-100">
+          <Button variant="outline" size="sm" className="gap-1.5 shadow-md">
+            <Eye className="h-3.5 w-3.5" />
+            {copy('Preview', 'معاينة')}
+          </Button>
+          <Button
+            variant="default"
+            size="sm"
+            className="gap-1.5 bg-indigo-600 shadow-md hover:bg-indigo-700 focus-visible:ring-indigo-600"
+          >
+            <ArrowRight className="h-3.5 w-3.5" />
+            {copy('Use', 'استخدم')}
+          </Button>
+        </div>
+      </div>
+
+      {/* Footer info */}
+      <div className="p-4">
+        <h3 className="inline-flex items-center gap-2 font-bold text-slate-900 dark:text-white">
+          <Icon className="h-4 w-4 text-slate-500 dark:text-slate-400" />
+          {template.name[lang]}
+        </h3>
+        <p className="mt-1.5 line-clamp-2 text-xs leading-relaxed text-slate-500 dark:text-slate-400">
+          {template.description[lang]}
+        </p>
+        <div className="mt-3 flex flex-wrap gap-1.5">
+          {template.tags[lang].map((tag) => (
+            <span key={tag} className={tagPillClass}>
+              {tag}
+            </span>
+          ))}
+        </div>
       </div>
     </div>
   )
 }
 
-/* ---------- Stylized resume previews (no real PII, decorative bars only) ---------- */
+/* ---------- Stylized resume previews ---------- */
 
 function TemplatePreview({
   variant,
   compact = false,
 }: {
-  variant: Template['variant']
+  variant: Variant
   compact?: boolean
 }) {
   const stripe = compact ? 'h-1.5' : 'h-2'
@@ -316,8 +533,7 @@ function TemplatePreview({
     <div className={cn('rounded-full', h, w, color)} />
 
   switch (variant) {
-    case 'light':
-    case 'minimal-clean':
+    case 'corporate-classic':
       return (
         <div className="flex h-full flex-col gap-2 bg-white p-3">
           {bar('w-2/3', 'bg-slate-700', compact ? 'h-2' : 'h-2.5')}
@@ -330,7 +546,7 @@ function TemplatePreview({
           {bar('w-3/4', 'bg-slate-200')}
         </div>
       )
-    case 'dark-sidebar-left':
+    case 'modern-tech':
       return (
         <div className="grid h-full grid-cols-[35%_1fr] bg-white">
           <div className="flex flex-col gap-2 bg-slate-900 p-3">
@@ -349,8 +565,7 @@ function TemplatePreview({
           </div>
         </div>
       )
-    case 'dark-header':
-    case 'modern-bold-header':
+    case 'executive-suite':
       return (
         <div className="flex h-full flex-col bg-white">
           <div className="flex flex-col justify-center gap-1.5 bg-slate-900 p-3">
@@ -367,9 +582,41 @@ function TemplatePreview({
           </div>
         </div>
       )
-    case 'light-blue':
+    case 'minimal-elegance':
       return (
-        <div className="flex h-full flex-col gap-2 bg-blue-50/40 p-3">
+        <div className="flex h-full flex-col gap-3 bg-white p-3">
+          {bar('w-1/2', 'bg-slate-700', 'h-3')}
+          {bar('w-1/4', 'bg-slate-400')}
+          <div className="my-2 border-t border-slate-200" />
+          {bar('w-full', 'bg-slate-200')}
+          {bar('w-5/6', 'bg-slate-200')}
+          <div className="my-1" />
+          {bar('w-1/4', 'bg-slate-400')}
+          {bar('w-4/6', 'bg-slate-200')}
+        </div>
+      )
+    case 'creative-purple':
+      return (
+        <div className="flex h-full flex-col bg-white">
+          <div className="flex items-center gap-2 bg-violet-100 p-3">
+            <div className="h-5 w-5 rounded-full bg-violet-500" />
+            <div className="flex-1 space-y-1">
+              {bar('w-3/4', 'bg-violet-600')}
+              {bar('w-1/2', 'bg-violet-400')}
+            </div>
+          </div>
+          <div className="flex flex-1 flex-col gap-2 p-3">
+            {bar('w-1/3', 'bg-violet-500')}
+            {bar('w-full', 'bg-slate-200')}
+            {bar('w-5/6', 'bg-slate-200')}
+            {bar('w-1/3', 'bg-violet-500')}
+            {bar('w-full', 'bg-slate-200')}
+          </div>
+        </div>
+      )
+    case 'professional-blue':
+      return (
+        <div className="flex h-full flex-col gap-2 bg-blue-50/30 p-3">
           {bar('w-2/3', 'bg-blue-700', 'h-2.5')}
           {bar('w-1/3', 'bg-blue-300')}
           <div className="my-1 border-t border-blue-200" />
@@ -380,81 +627,49 @@ function TemplatePreview({
           {bar('w-3/4', 'bg-slate-200')}
         </div>
       )
-    case 'creative-split':
-      return (
-        <div className="grid h-full grid-cols-[40%_1fr] gap-1 bg-white">
-          <div className="flex flex-col gap-2 bg-violet-100 p-3">
-            <div className="mx-auto h-6 w-6 rounded-full bg-violet-300" />
-            {bar('w-full', 'bg-violet-300')}
-            {bar('w-2/3', 'bg-violet-200')}
-            {bar('w-full', 'bg-violet-300')}
-          </div>
-          <div className="flex flex-col gap-2 p-3">
-            {bar('w-3/4', 'bg-slate-700', 'h-2.5')}
-            {bar('w-1/3', 'bg-violet-300')}
-            {bar('w-full', 'bg-slate-200')}
-            {bar('w-5/6', 'bg-slate-200')}
-          </div>
-        </div>
-      )
-    case 'minimal-mono':
-      return (
-        <div className="flex h-full flex-col gap-2 bg-stone-50 p-3">
-          {bar('w-1/2', 'bg-stone-800', 'h-3')}
-          {bar('w-1/4', 'bg-stone-400')}
-          <div className="my-1 border-t border-stone-300" />
-          {bar('w-full', 'bg-stone-300')}
-          {bar('w-5/6', 'bg-stone-300')}
-          {bar('w-4/6', 'bg-stone-300')}
-        </div>
-      )
-    case 'executive-stripe':
-      return (
-        <div className="flex h-full bg-white">
-          <div className="w-1.5 bg-amber-500" />
-          <div className="flex flex-1 flex-col gap-2 p-3">
-            {bar('w-3/4', 'bg-slate-800', 'h-2.5')}
-            {bar('w-1/3', 'bg-amber-400')}
-            <div className="my-1 border-t border-slate-200" />
-            {bar('w-full', 'bg-slate-300')}
-            {bar('w-5/6', 'bg-slate-200')}
-            {bar('w-4/6', 'bg-slate-200')}
-          </div>
-        </div>
-      )
-    case 'academic-classic':
-      return (
-        <div className="flex h-full flex-col items-center gap-2 bg-white p-3">
-          {bar('w-2/3', 'bg-slate-800', 'h-2.5')}
-          {bar('w-1/3', 'bg-slate-400')}
-          <div className="my-1 w-full border-t border-slate-200" />
-          {bar('w-full', 'bg-slate-200')}
-          {bar('w-5/6', 'bg-slate-200')}
-          {bar('w-4/6', 'bg-slate-200')}
-        </div>
-      )
-    case 'modern-sidebar-right':
-      return (
-        <div className="grid h-full grid-cols-[1fr_35%] bg-white">
-          <div className="flex flex-col gap-2 p-3">
-            {bar('w-3/4', 'bg-slate-700', 'h-2.5')}
-            {bar('w-1/3', 'bg-slate-300')}
-            {bar('w-full', 'bg-indigo-200')}
-            {bar('w-5/6', 'bg-slate-200')}
-            {bar('w-4/6', 'bg-slate-200')}
-          </div>
-          <div className="flex flex-col gap-2 bg-indigo-100 p-3">
-            <div className="mx-auto h-6 w-6 rounded-full bg-indigo-300" />
-            {bar('w-full', 'bg-indigo-300')}
-            {bar('w-2/3', 'bg-indigo-200')}
-          </div>
-        </div>
-      )
-    case 'creative-color':
+    case 'academic-green':
       return (
         <div className="flex h-full flex-col bg-white">
-          <div className="flex items-center gap-1.5 bg-pink-100 p-3">
-            <div className="h-5 w-5 rounded-full bg-pink-400" />
+          <div className="bg-emerald-800 p-3">
+            <div className="space-y-1">
+              {bar('w-2/3', 'bg-emerald-200', 'h-2.5')}
+              {bar('w-1/3', 'bg-emerald-400')}
+            </div>
+          </div>
+          <div className="flex flex-1 flex-col items-center gap-2 p-3">
+            <div className="my-1 w-full border-t border-emerald-200" />
+            {bar('w-1/3', 'bg-emerald-500')}
+            {bar('w-full', 'bg-slate-200')}
+            {bar('w-5/6', 'bg-slate-200')}
+            {bar('w-1/3', 'bg-emerald-500')}
+            {bar('w-4/6', 'bg-slate-200')}
+          </div>
+        </div>
+      )
+    case 'modern-stripe':
+      return (
+        <div className="grid h-full grid-cols-[1fr_30%] gap-2 bg-white p-3">
+          <div className="flex flex-col gap-2">
+            {bar('w-3/4', 'bg-slate-700', 'h-2.5')}
+            {bar('w-1/3', 'bg-blue-400')}
+            {bar('w-full', 'bg-slate-200')}
+            {bar('w-5/6', 'bg-slate-200')}
+            {bar('w-1/3', 'bg-blue-400')}
+            {bar('w-full', 'bg-slate-200')}
+          </div>
+          <div className="flex flex-col gap-1.5 border-s-2 border-blue-300 ps-2">
+            {bar('w-full', 'bg-slate-300')}
+            {bar('w-2/3', 'bg-slate-200')}
+            {bar('w-3/4', 'bg-slate-200')}
+            {bar('w-1/2', 'bg-slate-200')}
+          </div>
+        </div>
+      )
+    case 'creative-pink':
+      return (
+        <div className="flex h-full flex-col bg-white">
+          <div className="flex items-center gap-2 bg-pink-100 p-3">
+            <div className="h-6 w-6 rounded-full bg-pink-400" />
             <div className="flex-1 space-y-1">
               {bar('w-3/4', 'bg-pink-500')}
               {bar('w-1/2', 'bg-pink-300')}
@@ -465,6 +680,51 @@ function TemplatePreview({
             {bar('w-full', 'bg-slate-200')}
             {bar('w-5/6', 'bg-slate-200')}
             {bar('w-1/3', 'bg-pink-400')}
+            {bar('w-full', 'bg-slate-200')}
+          </div>
+        </div>
+      )
+    case 'minimal-mono':
+      return (
+        <div className="flex h-full flex-col gap-2 bg-stone-50 p-3">
+          {bar('w-1/2', 'bg-stone-900', 'h-3')}
+          {bar('w-1/4', 'bg-stone-500')}
+          <div className="my-1 border-t border-stone-300" />
+          {bar('w-full', 'bg-stone-300')}
+          {bar('w-5/6', 'bg-stone-300')}
+          {bar('w-4/6', 'bg-stone-300')}
+        </div>
+      )
+    case 'executive-amber':
+      return (
+        <div className="flex h-full bg-white">
+          <div className="w-1.5 bg-amber-500" />
+          <div className="flex flex-1 flex-col gap-2 p-3">
+            {bar('w-3/4', 'bg-slate-800', 'h-2.5')}
+            {bar('w-1/3', 'bg-amber-400')}
+            <div className="my-1 border-t border-slate-200" />
+            {bar('w-full', 'bg-slate-300')}
+            {bar('w-5/6', 'bg-slate-200')}
+            {bar('w-4/6', 'bg-slate-200')}
+            {bar('w-1/3', 'bg-amber-400')}
+            {bar('w-full', 'bg-slate-200')}
+          </div>
+        </div>
+      )
+    case 'professional-dark':
+      return (
+        <div className="flex h-full flex-col bg-white">
+          <div className="bg-slate-900 p-3">
+            <div className="space-y-1">
+              {bar('w-2/3', 'bg-white', 'h-2.5')}
+              {bar('w-1/3', 'bg-slate-400')}
+            </div>
+          </div>
+          <div className="flex flex-1 flex-col gap-2 p-3">
+            {bar('w-1/3', 'bg-slate-700')}
+            {bar('w-full', 'bg-slate-200')}
+            {bar('w-5/6', 'bg-slate-200')}
+            {bar('w-1/3', 'bg-slate-700')}
             {bar('w-full', 'bg-slate-200')}
           </div>
         </div>
