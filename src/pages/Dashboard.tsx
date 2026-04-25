@@ -29,6 +29,8 @@ import { BrowseJobs } from '@/pages/BrowseJobs'
 import { DashboardOverview } from '@/pages/DashboardOverview'
 import { WyntIntelligence } from '@/pages/WyntIntelligence'
 import { AICoach } from '@/pages/AICoach'
+import { InterviewStudio } from '@/pages/InterviewStudio'
+import { SalaryAI } from '@/pages/SalaryAI'
 import { Link, useRouter } from '@/lib/router'
 import { useLanguage } from '@/lib/i18n'
 import { getCurrentUser, signOut } from '@/lib/auth'
@@ -244,6 +246,10 @@ export function Dashboard() {
             <BrowseJobs />
           ) : activeNav === 'intelligence' ? (
             <WyntIntelligence />
+          ) : activeNav === 'interviews' ? (
+            <InterviewStudio />
+          ) : activeNav === 'salary' ? (
+            <SalaryAI />
           ) : activeNav === 'home' ? (
             <DashboardOverview onNavigate={handleNavigate} />
           ) : (<>
