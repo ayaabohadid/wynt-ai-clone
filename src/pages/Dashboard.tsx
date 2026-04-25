@@ -35,6 +35,7 @@ import { LinkedInAnalysis } from '@/pages/LinkedInAnalysis'
 import { CVStudio } from '@/pages/CVStudio'
 import { CoverLetters } from '@/pages/CoverLetters'
 import { ApplicationTracker } from '@/pages/ApplicationTracker'
+import { ApplyPilotAnalytics } from '@/pages/ApplyPilotAnalytics'
 import { Link, useRouter } from '@/lib/router'
 import { useLanguage } from '@/lib/i18n'
 import { getCurrentUser, signOut } from '@/lib/auth'
@@ -262,6 +263,8 @@ export function Dashboard() {
             <CoverLetters />
           ) : activeNav === 'tracker' ? (
             <ApplicationTracker onNavigate={handleNavigate} />
+          ) : activeNav === 'analytics' ? (
+            <ApplyPilotAnalytics />
           ) : activeNav === 'home' ? (
             <DashboardOverview onNavigate={handleNavigate} />
           ) : (<>
