@@ -164,7 +164,7 @@ export function WyntIntelligence() {
       </div>
 
       {/* Form card */}
-      <div className="mt-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900 sm:p-8">
+      <div className="relative mt-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900 sm:p-8">
         {tab === 'manual' && (
           <ManualSearchForm
             keywords={keywords}
@@ -229,6 +229,72 @@ export function WyntIntelligence() {
           </div>
         )}
       </div>
+
+      {/* Powered by row */}
+      <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+        <span className="text-xs font-medium text-slate-500 dark:text-slate-400">
+          {copy('Powered by:', 'مدعوم بـ:')}
+        </span>
+        <div className="flex flex-wrap items-center gap-2">
+          <BrandBadge color="bg-blue-600 text-white" label="in" title="LinkedIn" />
+          <BrandBadge color="bg-blue-700 text-white" label="i" title="Indeed" />
+          <BrandBadge color="bg-emerald-600 text-white" label="G" title="Glassdoor" />
+          <BrandBadge color="bg-violet-600 text-white" label="M" title="Monster" />
+          <BrandBadge color="bg-sky-500 text-white" label="b" title="Bayt" />
+          <BrandBadge color="bg-emerald-500 text-white" label="W" title="Wuzzuf" />
+          <BrandBadge color="bg-amber-600 text-white" label="GT" title="GulfTalent" />
+          <span className="text-xs font-semibold text-slate-600 dark:text-slate-300">
+            +50 {copy('more', 'أكثر')}
+          </span>
+        </div>
+      </div>
+
+      {/* Coverage Note */}
+      <section className="mt-6 flex gap-3 rounded-2xl border border-amber-200 bg-amber-50 p-4 dark:border-amber-900/40 dark:bg-amber-950/20">
+        <Globe className="mt-0.5 h-5 w-5 shrink-0 text-amber-600 dark:text-amber-400" />
+        <div className="text-sm leading-relaxed">
+          <p className="font-semibold text-amber-900 dark:text-amber-200">
+            {copy('Coverage Note', 'ملاحظة التغطية')}
+          </p>
+          <p className="mt-1 text-amber-800 dark:text-amber-300">
+            {copy('Best results for:', 'أفضل النتائج في:')}{' '}
+            <strong>GCC</strong>{' '}
+            {copy(
+              '(UAE, Saudi Arabia, Qatar, Kuwait, Bahrain, Oman),',
+              '(الإمارات، السعودية، قطر، الكويت، البحرين، عُمان)،'
+            )}{' '}
+            <strong>UK</strong>, <strong>Ireland</strong>, <strong>Singapore</strong>,{' '}
+            <strong>USA</strong>, <strong>Canada</strong>, <strong>Australia</strong>,{' '}
+            {copy('and', 'و')} <strong>India</strong>.{' '}
+            {copy(
+              'Other regions may have limited listings depending on job board availability.',
+              'المناطق الأخرى قد تحتوي على قوائم محدودة حسب توفّر منصّات التوظيف.'
+            )}
+          </p>
+        </div>
+      </section>
+    </div>
+  )
+}
+
+function BrandBadge({
+  color,
+  label,
+  title,
+}: {
+  color: string
+  label: string
+  title: string
+}) {
+  return (
+    <div
+      title={title}
+      className={cn(
+        'flex h-7 min-w-[28px] items-center justify-center rounded-md px-1.5 text-xs font-bold tracking-tight shadow-sm',
+        color
+      )}
+    >
+      {label}
     </div>
   )
 }
