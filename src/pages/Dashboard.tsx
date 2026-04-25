@@ -32,6 +32,7 @@ import { AICoach } from '@/pages/AICoach'
 import { InterviewStudio } from '@/pages/InterviewStudio'
 import { SalaryAI } from '@/pages/SalaryAI'
 import { LinkedInAnalysis } from '@/pages/LinkedInAnalysis'
+import { CVStudio } from '@/pages/CVStudio'
 import { Link, useRouter } from '@/lib/router'
 import { useLanguage } from '@/lib/i18n'
 import { getCurrentUser, signOut } from '@/lib/auth'
@@ -253,6 +254,8 @@ export function Dashboard() {
             <SalaryAI />
           ) : activeNav === 'linkedin' ? (
             <LinkedInAnalysis />
+          ) : activeNav === 'cv' ? (
+            <CVStudio />
           ) : activeNav === 'home' ? (
             <DashboardOverview onNavigate={handleNavigate} />
           ) : (<>
