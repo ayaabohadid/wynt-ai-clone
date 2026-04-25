@@ -27,6 +27,7 @@ import { ThemeToggle } from '@/components/ui/theme-toggle'
 import { DashboardSidebar, type NavKey } from '@/components/layout/DashboardSidebar'
 import { BrowseJobs } from '@/pages/BrowseJobs'
 import { DashboardOverview } from '@/pages/DashboardOverview'
+import { WyntIntelligence } from '@/pages/WyntIntelligence'
 import { Link, useRouter } from '@/lib/router'
 import { useLanguage } from '@/lib/i18n'
 import { getCurrentUser, signOut } from '@/lib/auth'
@@ -228,6 +229,8 @@ export function Dashboard() {
         <main className="min-w-0 flex-1 px-4 py-6 sm:px-6 lg:px-8">
           {activeNav === 'livefeed' ? (
             <BrowseJobs />
+          ) : activeNav === 'intelligence' ? (
+            <WyntIntelligence />
           ) : activeNav === 'home' ? (
             <DashboardOverview onNavigate={handleNavigate} />
           ) : (<>
