@@ -1,4 +1,4 @@
-import { Settings, Target } from 'lucide-react'
+import { Settings, Sparkles, Target } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useLanguage } from '@/lib/i18n'
 import { getCurrentUser } from '@/lib/auth'
@@ -47,11 +47,50 @@ export function Profile() {
       value: copy('Not Set', 'لم تُحدَّد'),
       set: false,
     },
-    { label: copy('JOB TYPE', 'نوع الوظيفة'), value: copy('Any', 'أي'), set: true },
+    {
+      label: copy('JOB TYPE', 'نوع الوظيفة'),
+      value: copy('Full-Time', 'دوام كامل'),
+      set: true,
+    },
     {
       label: copy('EXPERIENCE LEVEL', 'مستوى الخبرة'),
-      value: copy('Not Set', 'لم يُحدَّد'),
-      set: false,
+      value: copy('Entry', 'مبتدئ'),
+      set: true,
+    },
+    {
+      label: copy('SALARY EXPECTATION', 'الراتب المتوقّع'),
+      value: '60000 USD',
+      set: true,
+    },
+    {
+      label: copy('REMOTE PREFERENCE', 'تفضيل العمل عن بُعد'),
+      value: copy('Hybrid', 'هجين'),
+      set: true,
+    },
+    {
+      label: copy('NOTICE PERIOD', 'فترة الإشعار'),
+      value: copy('Immediate', 'فوري'),
+      set: true,
+    },
+    {
+      label: copy('WILLING TO RELOCATE', 'مستعد للانتقال'),
+      value: copy('Yes', 'نعم'),
+      set: true,
+    },
+  ]
+
+  const slcFields: { label: string; empty: string }[] = [
+    {
+      label: copy('SKILLS', 'المهارات'),
+      empty: copy('No skills added', 'لم تُضَف مهارات'),
+    },
+    {
+      label: copy('LANGUAGES', 'اللغات'),
+      empty: copy('No languages added', 'لم تُضَف لغات'),
+    },
+    {
+      label: copy('CERTIFICATIONS', 'الشهادات'),
+      empty: copy('No certifications added', 'لم تُضَف شهادات'),
     },
   ]
 
@@ -129,6 +168,27 @@ export function Profile() {
               >
                 {f.value}
               </p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Skills, Languages & Certifications */}
+      <section className="mt-5 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900 sm:p-8">
+        <h3 className="inline-flex items-center gap-2 text-xs font-semibold tracking-widest text-slate-500 dark:text-slate-400">
+          <Sparkles className="h-4 w-4 text-violet-500" />
+          {copy(
+            'SKILLS, LANGUAGES & CERTIFICATIONS',
+            'المهارات واللغات والشهادات'
+          )}
+        </h3>
+        <div className="mt-5 space-y-5">
+          {slcFields.map((f) => (
+            <div key={f.label}>
+              <p className="text-xs font-semibold tracking-widest text-slate-500 dark:text-slate-400">
+                {f.label}
+              </p>
+              <p className="mt-1 text-sm italic text-slate-400 dark:text-slate-500">{f.empty}</p>
             </div>
           ))}
         </div>
