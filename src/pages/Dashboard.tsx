@@ -203,7 +203,7 @@ export function Dashboard() {
               <button
                 type="button"
                 onClick={() => handleNavigate('tokens')}
-                className="inline-flex items-center gap-1.5 rounded-full border border-violet-200 bg-violet-50 px-3 py-1.5 text-sm font-semibold text-violet-700 transition-colors hover:bg-violet-100 dark:border-violet-900/60 dark:bg-violet-950/40 dark:text-violet-300 dark:hover:bg-violet-950/60"
+                className="inline-flex items-center gap-1.5 rounded-full bg-violet-100 px-3 py-1.5 text-sm font-semibold text-violet-700 transition-colors hover:bg-violet-200 dark:bg-violet-950/50 dark:text-violet-300 dark:hover:bg-violet-950/70"
                 aria-label="Token balance"
               >
                 <TopBarCoins className="h-3.5 w-3.5" />
@@ -639,6 +639,15 @@ export function Dashboard() {
           </>)}
         </main>
       </div>
+
+      {/* Floating AI assistant */}
+      <button
+        type="button"
+        aria-label={lang === 'ar' ? 'المساعد الذكي' : 'AI Assistant'}
+        className="fixed bottom-6 end-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-violet-600 to-indigo-600 text-white shadow-lg shadow-violet-500/30 transition-transform hover:scale-110 hover:shadow-xl"
+      >
+        <Sparkles className="h-6 w-6" />
+      </button>
     </div>
   )
 }
