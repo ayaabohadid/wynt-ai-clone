@@ -28,6 +28,7 @@ import { DashboardSidebar, type NavKey } from '@/components/layout/DashboardSide
 import { BrowseJobs } from '@/pages/BrowseJobs'
 import { DashboardOverview } from '@/pages/DashboardOverview'
 import { WyntIntelligence } from '@/pages/WyntIntelligence'
+import { AICoach } from '@/pages/AICoach'
 import { Link, useRouter } from '@/lib/router'
 import { useLanguage } from '@/lib/i18n'
 import { getCurrentUser, signOut } from '@/lib/auth'
@@ -172,6 +173,18 @@ export function Dashboard() {
     { label: copy('Avg Match', 'متوسط المطابقة'), value: '87%', change: '+5%', color: 'text-emerald-600 dark:text-emerald-400', bg: 'bg-emerald-50 dark:bg-emerald-950/40' },
     { label: copy('Tokens Left', 'التوكنات المتبقية'), value: '240', change: copy('of 500', 'من 500'), color: 'text-amber-600 dark:text-amber-400', bg: 'bg-amber-50 dark:bg-amber-950/40' },
   ]
+
+  // AI Coach takes the full viewport — different layout (3 columns), no Dashboard chrome
+  if (activeNav === 'coach') {
+    return (
+      <AICoach
+        onExitToDashboard={() => {
+          setActiveNav('home')
+          navigate('/dashboard')
+        }}
+      />
+    )
+  }
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex" lang={lang} dir={lang === 'ar' ? 'rtl' : 'ltr'}>
