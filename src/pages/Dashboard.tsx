@@ -34,6 +34,7 @@ import { SalaryAI } from '@/pages/SalaryAI'
 import { LinkedInAnalysis } from '@/pages/LinkedInAnalysis'
 import { CVStudio } from '@/pages/CVStudio'
 import { CoverLetters } from '@/pages/CoverLetters'
+import { ApplicationTracker } from '@/pages/ApplicationTracker'
 import { Link, useRouter } from '@/lib/router'
 import { useLanguage } from '@/lib/i18n'
 import { getCurrentUser, signOut } from '@/lib/auth'
@@ -259,6 +260,8 @@ export function Dashboard() {
             <CVStudio />
           ) : activeNav === 'cover' ? (
             <CoverLetters />
+          ) : activeNav === 'tracker' ? (
+            <ApplicationTracker onNavigate={handleNavigate} />
           ) : activeNav === 'home' ? (
             <DashboardOverview onNavigate={handleNavigate} />
           ) : (<>
