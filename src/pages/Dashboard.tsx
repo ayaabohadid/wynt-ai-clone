@@ -33,6 +33,7 @@ import { InterviewStudio } from '@/pages/InterviewStudio'
 import { SalaryAI } from '@/pages/SalaryAI'
 import { LinkedInAnalysis } from '@/pages/LinkedInAnalysis'
 import { CVStudio } from '@/pages/CVStudio'
+import { CoverLetters } from '@/pages/CoverLetters'
 import { Link, useRouter } from '@/lib/router'
 import { useLanguage } from '@/lib/i18n'
 import { getCurrentUser, signOut } from '@/lib/auth'
@@ -256,6 +257,8 @@ export function Dashboard() {
             <LinkedInAnalysis />
           ) : activeNav === 'cv' ? (
             <CVStudio />
+          ) : activeNav === 'cover' ? (
+            <CoverLetters />
           ) : activeNav === 'home' ? (
             <DashboardOverview onNavigate={handleNavigate} />
           ) : (<>
