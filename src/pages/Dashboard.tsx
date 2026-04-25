@@ -36,6 +36,7 @@ import { CVStudio } from '@/pages/CVStudio'
 import { CoverLetters } from '@/pages/CoverLetters'
 import { ApplicationTracker } from '@/pages/ApplicationTracker'
 import { ApplyPilotAnalytics } from '@/pages/ApplyPilotAnalytics'
+import { Profile } from '@/pages/Profile'
 import { Link, useRouter } from '@/lib/router'
 import { useLanguage } from '@/lib/i18n'
 import { getCurrentUser, signOut } from '@/lib/auth'
@@ -265,6 +266,8 @@ export function Dashboard() {
             <ApplicationTracker onNavigate={handleNavigate} />
           ) : activeNav === 'analytics' ? (
             <ApplyPilotAnalytics />
+          ) : activeNav === 'profile' ? (
+            <Profile />
           ) : activeNav === 'home' ? (
             <DashboardOverview onNavigate={handleNavigate} />
           ) : (<>
