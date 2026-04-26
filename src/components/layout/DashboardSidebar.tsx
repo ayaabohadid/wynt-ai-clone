@@ -20,6 +20,7 @@ import {
 } from 'lucide-react'
 import { useLanguage, type Lang } from '@/lib/i18n'
 import { getCurrentUser } from '@/lib/auth'
+import { useRouter } from '@/lib/router'
 import { cn } from '@/lib/utils'
 
 export type NavKey =
@@ -207,6 +208,7 @@ interface Props {
 
 export function DashboardSidebar({ active, onNavigate, className }: Props) {
   const { lang } = useLanguage()
+  const { navigate } = useRouter()
   const [viewMode, setViewMode] = useState<'list' | 'grid'>('list')
 
   const user = getCurrentUser()
@@ -282,6 +284,7 @@ export function DashboardSidebar({ active, onNavigate, className }: Props) {
         <div className="border-t border-slate-200 pt-4 dark:border-slate-800">
           <button
             type="button"
+            onClick={() => navigate('/pricing')}
             className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-bold text-emerald-600 transition-colors hover:bg-emerald-50 dark:text-emerald-400 dark:hover:bg-emerald-950/40"
           >
             <Zap className="h-4 w-4 shrink-0 fill-emerald-500 text-emerald-500 dark:fill-emerald-400 dark:text-emerald-400" />

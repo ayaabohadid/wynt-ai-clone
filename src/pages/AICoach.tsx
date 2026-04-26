@@ -337,7 +337,14 @@ export function AICoach({ onExitToDashboard }: Props) {
                       key={a.key}
                       type="button"
                       onClick={() => {
-                        if (a.key === 'upgrade' || a.key === 'profile') return
+                        if (a.key === 'upgrade') {
+                          navigate('/pricing')
+                          return
+                        }
+                        if (a.key === 'profile') {
+                          navigate('/dashboard?section=profile')
+                          return
+                        }
                         navigate(`/dashboard?section=${a.key}`)
                       }}
                       className="flex flex-col items-center gap-1.5 rounded-xl border border-slate-200 bg-white p-3 text-center transition-all hover:-translate-y-0.5 hover:border-indigo-300 hover:shadow-sm dark:border-slate-700 dark:bg-slate-900 dark:hover:border-indigo-500/50"
