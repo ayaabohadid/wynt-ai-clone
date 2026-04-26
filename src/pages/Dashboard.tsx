@@ -40,6 +40,7 @@ import { Profile } from '@/pages/Profile'
 import { SettingsBilling } from '@/pages/SettingsBilling'
 import { TokensUsage } from '@/pages/TokensUsage'
 import { ChromeExtension } from '@/pages/ChromeExtension'
+import { HelpSupport } from '@/pages/HelpSupport'
 import { Link, useRouter } from '@/lib/router'
 import { useLanguage } from '@/lib/i18n'
 import { getCurrentUser, signOut } from '@/lib/auth'
@@ -277,6 +278,8 @@ export function Dashboard() {
             <TokensUsage />
           ) : activeNav === 'chrome' ? (
             <ChromeExtension />
+          ) : activeNav === 'help' ? (
+            <HelpSupport />
           ) : activeNav === 'home' ? (
             <DashboardOverview onNavigate={handleNavigate} />
           ) : (<>
