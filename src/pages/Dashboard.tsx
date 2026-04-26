@@ -37,6 +37,7 @@ import { CoverLetters } from '@/pages/CoverLetters'
 import { ApplicationTracker } from '@/pages/ApplicationTracker'
 import { ApplyPilotAnalytics } from '@/pages/ApplyPilotAnalytics'
 import { Profile } from '@/pages/Profile'
+import { SettingsBilling } from '@/pages/SettingsBilling'
 import { Link, useRouter } from '@/lib/router'
 import { useLanguage } from '@/lib/i18n'
 import { getCurrentUser, signOut } from '@/lib/auth'
@@ -268,6 +269,8 @@ export function Dashboard() {
             <ApplyPilotAnalytics />
           ) : activeNav === 'profile' ? (
             <Profile />
+          ) : activeNav === 'settings' ? (
+            <SettingsBilling />
           ) : activeNav === 'home' ? (
             <DashboardOverview onNavigate={handleNavigate} />
           ) : (<>
