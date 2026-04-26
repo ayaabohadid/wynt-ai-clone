@@ -129,40 +129,37 @@ export function ChromeExtension() {
     { value: 'connect', label: { en: 'Connect', ar: 'اتّصل' }, icon: Lock as IconC },
   ]
 
-  const installSteps: { title: string; desc: string }[] = [
+  const installSteps: { title: string; desc: string; icon: IconC }[] = [
     {
+      icon: Download as IconC,
       title: copy('Download the Extension', 'حمّل الإضافة'),
       desc: copy(
-        'Click the download button below to get the Wynt AI Chrome Extension as a zip archive.',
-        'اضغط زر التحميل بالأسفل للحصول على إضافة Wynt AI لـ Chrome كملف مضغوط.'
+        'Click the download button below to get the Wynt AI Chrome Extension as a ZIP file.',
+        'اضغط زر التحميل بالأسفل للحصول على إضافة Wynt AI لـ Chrome كملف ZIP.'
       ),
     },
     {
+      icon: Settings as IconC,
       title: copy('Unzip & Open Chrome Extensions', 'فك الضغط وافتح Chrome Extensions'),
       desc: copy(
-        'Unzip the file, then navigate to chrome://extensions in your browser address bar.',
-        'فك ضغط الملف، ثم انتقل إلى chrome://extensions في شريط العنوان.'
+        'Unzip the file, then navigate to chrome://extensions in your browser and enable Developer Mode in the top right.',
+        'فك ضغط الملف، ثم انتقل إلى chrome://extensions في المتصفّح وفعّل وضع المطوّر في الأعلى.'
       ),
     },
     {
-      title: copy('Enable Developer Mode', 'فعّل وضع المطوّر'),
+      icon: Briefcase as IconC,
+      title: copy('Load the Extension', 'حمّل الإضافة'),
       desc: copy(
-        'Toggle the "Developer mode" switch in the top-right corner of the Chrome extensions page.',
-        'فعّل مفتاح "وضع المطوّر" في الزاوية العلوية اليمنى من صفحة Chrome.'
+        'Click \'Load unpacked\' and select the unzipped extension folder. The Wynt icon will appear in your toolbar.',
+        'اضغط "Load unpacked" واختر مجلّد الإضافة المفكوك. ستظهر أيقونة Wynt في شريط الأدوات.'
       ),
     },
     {
-      title: copy('Load Unpacked', 'حمّل غير مضغوطة'),
+      icon: Lock as IconC,
+      title: copy('Connect Your Account', 'اتّصل بحسابك'),
       desc: copy(
-        'Click "Load unpacked" and select the unzipped Wynt extension folder.',
-        'اضغط "حمّل غير مضغوطة" واختر مجلّد إضافة Wynt المفكوك.'
-      ),
-    },
-    {
-      title: copy('Connect with API Key', 'اتّصل بمفتاح API'),
-      desc: copy(
-        'Open the extension, paste the API key from your Profile, and start browsing LinkedIn.',
-        'افتح الإضافة، الصق مفتاح API من ملفك الشخصي، وابدأ تصفح LinkedIn.'
+        'Click the Wynt icon, enter your dashboard URL and API token. Your analysis data will sync automatically.',
+        'اضغط أيقونة Wynt، أدخل رابط لوحة التحكم ومفتاح API. ستتزامن بيانات تحليلك تلقائياً.'
       ),
     },
   ]
@@ -395,31 +392,44 @@ export function ChromeExtension() {
         </h2>
 
         {tab === 'install' && (
-          <div className="mt-5 grid gap-3 sm:grid-cols-2">
-            {installSteps.map((step, i) => (
-              <div
-                key={step.title}
-                className="flex gap-3 rounded-xl border border-slate-100 bg-slate-50 p-4 dark:border-slate-800 dark:bg-slate-800/40"
+          <>
+            <div className="mt-5 grid gap-4 sm:grid-cols-2">
+              {installSteps.map((step, i) => {
+                const StepIcon = step.icon
+                return (
+                  <div
+                    key={step.title}
+                    className="flex gap-4 rounded-xl border border-slate-100 bg-slate-50 p-5 dark:border-slate-800 dark:bg-slate-800/40"
+                  >
+                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-blue-100 text-lg font-bold text-blue-700 dark:bg-blue-950/50 dark:text-blue-300">
+                      {i + 1}
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <p className="inline-flex items-center gap-2 text-base font-bold text-slate-900 dark:text-white">
+                        <StepIcon className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+                        {step.title}
+                      </p>
+                      <p className="mt-1.5 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
+                        {step.desc}
+                      </p>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+
+            {/* Download ZIP CTA */}
+            <div className="mt-6 flex justify-center">
+              <Button
+                variant="default"
+                size="lg"
+                className="gap-2 bg-blue-700 px-6 hover:bg-blue-800 focus-visible:ring-blue-700"
               >
-                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-blue-100 font-bold text-blue-700 dark:bg-blue-950/50 dark:text-blue-300">
-                  {i + 1}
-                </div>
-                <div className="min-w-0 flex-1">
-                  <p className="inline-flex items-center gap-1.5 font-semibold text-slate-900 dark:text-white">
-                    {i === 0 && <Download className="h-3.5 w-3.5 text-blue-500" />}
-                    {i === 1 && <Settings className="h-3.5 w-3.5 text-blue-500" />}
-                    {i === 2 && <Code2 className="h-3.5 w-3.5 text-blue-500" />}
-                    {i === 3 && <Sparkles className="h-3.5 w-3.5 text-blue-500" />}
-                    {i === 4 && <Key className="h-3.5 w-3.5 text-blue-500" />}
-                    {step.title}
-                  </p>
-                  <p className="mt-1 text-xs leading-relaxed text-slate-600 dark:text-slate-300">
-                    {step.desc}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
+                <Download className="h-4 w-4" />
+                {copy('Download Extension ZIP', 'حمّل الإضافة ZIP')}
+              </Button>
+            </div>
+          </>
         )}
 
         {tab === 'how' && (
@@ -455,6 +465,30 @@ export function ChromeExtension() {
             </p>
           </div>
         )}
+      </section>
+
+      {/* Optimize Your LinkedIn Profile hero */}
+      <section className="mt-6 rounded-2xl border border-slate-200 bg-gradient-to-br from-slate-50 to-slate-100 px-6 py-12 text-center dark:border-slate-800 dark:from-slate-900 dark:to-slate-950">
+        <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-violet-100 text-violet-600 shadow-sm dark:bg-violet-950/50 dark:text-violet-400">
+          <span className="text-2xl font-extrabold">in</span>
+        </div>
+        <h2 className="mt-5 text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
+          {copy('Optimize Your LinkedIn Profile', 'حسّن ملفك على LinkedIn')}
+        </h2>
+        <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-slate-500 dark:text-slate-400">
+          {copy(
+            'Run a LinkedIn Analysis on the dashboard first, then install the extension to see AI suggestions overlaid directly on your LinkedIn profile.',
+            'شغّل تحليل LinkedIn من لوحة التحكم أوّلاً، ثم ثبّت الإضافة لرؤية اقتراحات الذكاء الاصطناعي مباشرة على ملفك.'
+          )}
+        </p>
+        <Button
+          variant="default"
+          size="lg"
+          className="mt-6 gap-2 bg-blue-700 px-6 hover:bg-blue-800 focus-visible:ring-blue-700"
+        >
+          <Download className="h-4 w-4" />
+          {copy('Download Extension', 'حمّل الإضافة')}
+        </Button>
       </section>
     </div>
   )
