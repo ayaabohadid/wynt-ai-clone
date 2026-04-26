@@ -38,6 +38,7 @@ import { ApplicationTracker } from '@/pages/ApplicationTracker'
 import { ApplyPilotAnalytics } from '@/pages/ApplyPilotAnalytics'
 import { Profile } from '@/pages/Profile'
 import { SettingsBilling } from '@/pages/SettingsBilling'
+import { TokensUsage } from '@/pages/TokensUsage'
 import { Link, useRouter } from '@/lib/router'
 import { useLanguage } from '@/lib/i18n'
 import { getCurrentUser, signOut } from '@/lib/auth'
@@ -271,6 +272,8 @@ export function Dashboard() {
             <Profile />
           ) : activeNav === 'settings' ? (
             <SettingsBilling />
+          ) : activeNav === 'tokens' ? (
+            <TokensUsage />
           ) : activeNav === 'home' ? (
             <DashboardOverview onNavigate={handleNavigate} />
           ) : (<>
