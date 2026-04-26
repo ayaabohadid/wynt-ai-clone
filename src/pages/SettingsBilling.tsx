@@ -391,44 +391,43 @@ function TokensPane({
       {/* Quick Top-Ups */}
       <div className="mt-10">
         <h2 className="inline-flex items-center gap-2 text-xl font-bold tracking-tight text-slate-900 dark:text-white">
-          <Zap className="h-5 w-5 text-amber-500" />
+          <Zap className="h-5 w-5 fill-amber-400 text-amber-500" />
           {copy('Quick Top-Ups', 'إعادة شحن سريعة')}
         </h2>
         <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
           {copy(
-            'Need a small boost? Top up in seconds with one of these mini packs.',
-            'محتاجة دفعة صغيرة؟ أعيدي الشحن في ثوانٍ بإحدى هذه الباقات الصغيرة.'
+            'Need just a few more tokens? Grab a quick top-up.',
+            'محتاجة عدد قليل من التوكنات؟ خد إعادة شحن سريعة.'
           )}
         </p>
-        <div className="mt-4 grid gap-3 sm:grid-cols-3">
+        <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {[
-            { tokens: 10, price: '$0.99' },
-            { tokens: 25, price: '$1.99' },
-            { tokens: 40, price: '$2.49' },
+            { tokens: 10, price: '$0.99', perToken: '$0.099/token' },
+            { tokens: 25, price: '$1.99', perToken: '$0.080/token' },
+            { tokens: 50, price: '$3.49', perToken: '$0.070/token' },
+            { tokens: 75, price: '$4.49', perToken: '$0.060/token' },
           ].map((mini) => (
-            <button
+            <div
               key={mini.tokens}
-              type="button"
-              className="group flex items-center justify-between gap-3 rounded-xl border border-slate-200 bg-white p-4 text-start transition-all hover:-translate-y-0.5 hover:border-amber-300 hover:shadow-sm dark:border-slate-800 dark:bg-slate-900 dark:hover:border-amber-500/50"
+              className="flex flex-col items-center rounded-2xl border border-slate-200 bg-white p-5 text-center shadow-sm dark:border-slate-800 dark:bg-slate-900"
             >
-              <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-100 text-amber-600 dark:bg-amber-950/40 dark:text-amber-400">
-                  <Zap className="h-4 w-4" />
-                </div>
-                <div>
-                  <p className="font-bold text-slate-900 dark:text-white">
-                    {mini.tokens}{' '}
-                    <span className="text-xs font-medium text-slate-500 dark:text-slate-400">
-                      {copy('tokens', 'توكن')}
-                    </span>
-                  </p>
-                  <p className="text-xs text-slate-500 dark:text-slate-400">
-                    {copy('Quick top-up', 'شحن سريع')}
-                  </p>
-                </div>
+              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-indigo-100 text-indigo-600 dark:bg-indigo-950/40 dark:text-indigo-400">
+                <Zap className="h-4 w-4" />
               </div>
-              <p className="text-lg font-bold text-slate-900 dark:text-white">{mini.price}</p>
-            </button>
+              <p className="mt-3 text-2xl font-bold text-slate-900 dark:text-white">
+                {mini.tokens}
+              </p>
+              <p className="text-xs text-slate-500 dark:text-slate-400">
+                {copy('tokens', 'توكن')}
+              </p>
+              <p className="mt-2 text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
+                {mini.price}
+              </p>
+              <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">{mini.perToken}</p>
+              <Button variant="outline" className="mt-4 w-full">
+                {copy('Top Up', 'إعادة شحن')}
+              </Button>
+            </div>
           ))}
         </div>
       </div>
