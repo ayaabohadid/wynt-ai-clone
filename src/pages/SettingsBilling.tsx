@@ -11,6 +11,7 @@ import {
   ShoppingCart,
   Star,
   Tag,
+  Zap,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useLanguage, type Lang } from '@/lib/i18n'
@@ -115,6 +116,78 @@ const packs: Pack[] = [
         '33 تحضير مقابلة',
         '20 مقابلة صوتية',
         '40 حزمة تقديم تلقائي',
+      ],
+    },
+  },
+  {
+    tokens: 750,
+    name: { en: 'Business', ar: 'أعمال' },
+    price: '$26.99',
+    perToken: '$0.036/token',
+    discount: '40% off',
+    saveLabel: 'SAVE 40%',
+    includes: {
+      en: [
+        '150 CV analyses',
+        '93 CV tailorings',
+        '62 interview preps',
+        '37 voice interviews',
+        '75 auto-apply packages',
+      ],
+      ar: [
+        '150 تحليل سيرة',
+        '93 تخصيص سيرة',
+        '62 تحضير مقابلة',
+        '37 مقابلة صوتية',
+        '75 حزمة تقديم تلقائي',
+      ],
+    },
+  },
+  {
+    tokens: 1000,
+    name: { en: 'Enterprise', ar: 'مؤسّسات' },
+    price: '$32.99',
+    perToken: '$0.033/token',
+    discount: '45% off',
+    saveLabel: 'SAVE 45%',
+    includes: {
+      en: [
+        '200 CV analyses',
+        '125 CV tailorings',
+        '83 interview preps',
+        '50 voice interviews',
+        '100 auto-apply packages',
+      ],
+      ar: [
+        '200 تحليل سيرة',
+        '125 تخصيص سيرة',
+        '83 تحضير مقابلة',
+        '50 مقابلة صوتية',
+        '100 حزمة تقديم تلقائي',
+      ],
+    },
+  },
+  {
+    tokens: 1500,
+    name: { en: 'Ultimate', ar: 'الأقصى' },
+    price: '$44.99',
+    perToken: '$0.030/token',
+    discount: '50% off',
+    saveLabel: 'SAVE 50%',
+    includes: {
+      en: [
+        '300 CV analyses',
+        '187 CV tailorings',
+        '125 interview preps',
+        '75 voice interviews',
+        '150 auto-apply packages',
+      ],
+      ar: [
+        '300 تحليل سيرة',
+        '187 تخصيص سيرة',
+        '125 تحضير مقابلة',
+        '75 مقابلة صوتية',
+        '150 حزمة تقديم تلقائي',
       ],
     },
   },
@@ -313,6 +386,51 @@ function TokensPane({
             </Button>
           </div>
         ))}
+      </div>
+
+      {/* Quick Top-Ups */}
+      <div className="mt-10">
+        <h2 className="inline-flex items-center gap-2 text-xl font-bold tracking-tight text-slate-900 dark:text-white">
+          <Zap className="h-5 w-5 text-amber-500" />
+          {copy('Quick Top-Ups', 'إعادة شحن سريعة')}
+        </h2>
+        <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
+          {copy(
+            'Need a small boost? Top up in seconds with one of these mini packs.',
+            'محتاجة دفعة صغيرة؟ أعيدي الشحن في ثوانٍ بإحدى هذه الباقات الصغيرة.'
+          )}
+        </p>
+        <div className="mt-4 grid gap-3 sm:grid-cols-3">
+          {[
+            { tokens: 10, price: '$0.99' },
+            { tokens: 25, price: '$1.99' },
+            { tokens: 40, price: '$2.49' },
+          ].map((mini) => (
+            <button
+              key={mini.tokens}
+              type="button"
+              className="group flex items-center justify-between gap-3 rounded-xl border border-slate-200 bg-white p-4 text-start transition-all hover:-translate-y-0.5 hover:border-amber-300 hover:shadow-sm dark:border-slate-800 dark:bg-slate-900 dark:hover:border-amber-500/50"
+            >
+              <div className="flex items-center gap-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-100 text-amber-600 dark:bg-amber-950/40 dark:text-amber-400">
+                  <Zap className="h-4 w-4" />
+                </div>
+                <div>
+                  <p className="font-bold text-slate-900 dark:text-white">
+                    {mini.tokens}{' '}
+                    <span className="text-xs font-medium text-slate-500 dark:text-slate-400">
+                      {copy('tokens', 'توكن')}
+                    </span>
+                  </p>
+                  <p className="text-xs text-slate-500 dark:text-slate-400">
+                    {copy('Quick top-up', 'شحن سريع')}
+                  </p>
+                </div>
+              </div>
+              <p className="text-lg font-bold text-slate-900 dark:text-white">{mini.price}</p>
+            </button>
+          ))}
+        </div>
       </div>
     </div>
   )
