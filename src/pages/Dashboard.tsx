@@ -39,6 +39,7 @@ import { ApplyPilotAnalytics } from '@/pages/ApplyPilotAnalytics'
 import { Profile } from '@/pages/Profile'
 import { SettingsBilling } from '@/pages/SettingsBilling'
 import { TokensUsage } from '@/pages/TokensUsage'
+import { ChromeExtension } from '@/pages/ChromeExtension'
 import { Link, useRouter } from '@/lib/router'
 import { useLanguage } from '@/lib/i18n'
 import { getCurrentUser, signOut } from '@/lib/auth'
@@ -274,6 +275,8 @@ export function Dashboard() {
             <SettingsBilling />
           ) : activeNav === 'tokens' ? (
             <TokensUsage />
+          ) : activeNav === 'chrome' ? (
+            <ChromeExtension />
           ) : activeNav === 'home' ? (
             <DashboardOverview onNavigate={handleNavigate} />
           ) : (<>
