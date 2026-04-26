@@ -1,13 +1,23 @@
-import { useState } from 'react'
+import { type ComponentType } from 'react'
 import {
+  Brain,
+  Briefcase,
+  Building2,
   Clock,
+  FileText,
   Gift,
+  Mail,
+  Mic2,
   Package,
+  Search,
   Shield,
   ShoppingCart,
   Sparkles,
   Star,
+  Tag,
+  Target,
   TrendingUp,
+  Wand2,
   Zap,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -15,6 +25,43 @@ import { Navbar } from '@/components/sections/Navbar'
 import { Footer } from '@/components/sections/Footer'
 import { useLanguage, type Lang } from '@/lib/i18n'
 import { cn } from '@/lib/utils'
+
+function LinkedinIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      fill="currentColor"
+      aria-hidden
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.3 6.5a1.78 1.78 0 01-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0013 14.19a.66.66 0 000 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.86 3.36 3.66z" />
+    </svg>
+  )
+}
+
+type IconC = ComponentType<{ className?: string }>
+
+const tokenCosts: {
+  icon: IconC
+  label: Record<Lang, string>
+  cost: number
+  bg: string
+  color: string
+}[] = [
+  { icon: FileText as IconC, label: { en: 'CV Analysis', ar: 'تحليل السيرة' }, cost: 5, bg: 'bg-blue-100 dark:bg-blue-950/40', color: 'text-blue-600 dark:text-blue-400' },
+  { icon: Wand2 as IconC, label: { en: 'CV Regeneration', ar: 'إعادة إنشاء السيرة' }, cost: 8, bg: 'bg-violet-100 dark:bg-violet-950/40', color: 'text-violet-600 dark:text-violet-400' },
+  { icon: Target as IconC, label: { en: 'Job Matching', ar: 'مطابقة الوظائف' }, cost: 5, bg: 'bg-violet-100 dark:bg-violet-950/40', color: 'text-violet-600 dark:text-violet-400' },
+  { icon: Mail as IconC, label: { en: 'Cover Letter', ar: 'رسالة تقديم' }, cost: 5, bg: 'bg-emerald-100 dark:bg-emerald-950/40', color: 'text-emerald-600 dark:text-emerald-400' },
+  { icon: Sparkles as IconC, label: { en: 'Auto-Apply', ar: 'تقديم تلقائي' }, cost: 10, bg: 'bg-emerald-100 dark:bg-emerald-950/40', color: 'text-emerald-600 dark:text-emerald-400' },
+  { icon: Brain as IconC, label: { en: 'Interview Prep', ar: 'تحضير مقابلة' }, cost: 12, bg: 'bg-amber-100 dark:bg-amber-950/40', color: 'text-amber-600 dark:text-amber-400' },
+  { icon: Mic2 as IconC, label: { en: 'Voice Interview', ar: 'مقابلة صوتية' }, cost: 20, bg: 'bg-rose-100 dark:bg-rose-950/40', color: 'text-rose-600 dark:text-rose-400' },
+  { icon: LinkedinIcon, label: { en: 'LinkedIn Analysis', ar: 'تحليل LinkedIn' }, cost: 5, bg: 'bg-blue-100 dark:bg-blue-950/40', color: 'text-blue-600 dark:text-blue-400' },
+  { icon: Building2 as IconC, label: { en: 'Company Lookup', ar: 'بحث عن شركة' }, cost: 1, bg: 'bg-slate-100 dark:bg-slate-800', color: 'text-slate-600 dark:text-slate-300' },
+  { icon: Zap as IconC, label: { en: 'Live Feed (per 50 jobs)', ar: 'تغذية مباشرة (لكل 50 وظيفة)' }, cost: 10, bg: 'bg-indigo-100 dark:bg-indigo-950/40', color: 'text-indigo-600 dark:text-indigo-400' },
+  { icon: Sparkles as IconC, label: { en: 'Coach (after 10 free/day)', ar: 'المدرّب (بعد 10 مجانية/يوم)' }, cost: 1, bg: 'bg-rose-100 dark:bg-rose-950/40', color: 'text-rose-600 dark:text-rose-400' },
+  { icon: Search as IconC, label: { en: 'Job Search', ar: 'بحث الوظائف' }, cost: 2, bg: 'bg-indigo-100 dark:bg-indigo-950/40', color: 'text-indigo-600 dark:text-indigo-400' },
+]
 
 type Pack = {
   tokens: number
@@ -166,15 +213,14 @@ const packs: Pack[] = [
 ]
 
 const miniPacks = [
-  { tokens: 10, price: '$0.99', perToken: '$0.099/token' },
-  { tokens: 25, price: '$1.99', perToken: '$0.080/token' },
-  { tokens: 50, price: '$3.49', perToken: '$0.070/token' },
-  { tokens: 75, price: '$4.49', perToken: '$0.060/token' },
+  { tokens: 10, price: '$0.99', cents: '9.9' },
+  { tokens: 25, price: '$1.99', cents: '8.0' },
+  { tokens: 50, price: '$3.49', cents: '7.0' },
+  { tokens: 75, price: '$4.49', cents: '6.0' },
 ]
 
 export function PricingPage() {
   const { lang } = useLanguage()
-  const [billingCycle, setBillingCycle] = useState<'pack' | 'mini'>('pack')
   const copy = (en: string, ar: string) => (lang === 'ar' ? ar : en)
 
   const features = [
@@ -301,69 +347,95 @@ export function PricingPage() {
             )}
           </p>
 
-          {/* Toggle */}
-          <div className="mt-8 inline-flex items-center rounded-full bg-slate-100 p-1 dark:bg-slate-800">
-            <button
-              type="button"
-              onClick={() => setBillingCycle('pack')}
-              className={cn(
-                'rounded-full px-4 py-1.5 text-sm font-semibold transition-colors',
-                billingCycle === 'pack'
-                  ? 'bg-white text-slate-900 shadow-sm dark:bg-slate-900 dark:text-white'
-                  : 'text-slate-500 dark:text-slate-400'
-              )}
-            >
-              {copy('Token Packs', 'الباقات')}
-            </button>
-            <button
-              type="button"
-              onClick={() => setBillingCycle('mini')}
-              className={cn(
-                'rounded-full px-4 py-1.5 text-sm font-semibold transition-colors',
-                billingCycle === 'mini'
-                  ? 'bg-white text-slate-900 shadow-sm dark:bg-slate-900 dark:text-white'
-                  : 'text-slate-500 dark:text-slate-400'
-              )}
-            >
-              {copy('Quick Top-Ups', 'إعادة شحن سريعة')}
-            </button>
+          <div className="mt-8 grid gap-5 text-start sm:grid-cols-2 lg:grid-cols-4">
+            {packs.map((p) => (
+              <PackCard key={p.tokens} pack={p} />
+            ))}
           </div>
+        </section>
 
-          {billingCycle === 'pack' ? (
-            <div className="mt-8 grid gap-5 text-start sm:grid-cols-2 lg:grid-cols-4">
-              {packs.map((p) => (
-                <PackCard key={p.tokens} pack={p} />
-              ))}
-            </div>
-          ) : (
-            <div className="mt-8 grid gap-4 text-center sm:grid-cols-2 lg:grid-cols-4">
-              {miniPacks.map((m) => (
-                <div
-                  key={m.tokens}
-                  className="flex flex-col items-center rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900"
-                >
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-100 text-indigo-600 dark:bg-indigo-950/40 dark:text-indigo-400">
-                    <Zap className="h-4 w-4" />
-                  </div>
-                  <p className="mt-3 text-3xl font-bold text-slate-900 dark:text-white">
-                    {m.tokens}
-                  </p>
-                  <p className="text-xs text-slate-500 dark:text-slate-400">
-                    {copy('tokens', 'توكن')}
-                  </p>
-                  <p className="mt-3 text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
-                    {m.price}
-                  </p>
-                  <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
-                    {m.perToken}
-                  </p>
-                  <Button variant="outline" className="mt-5 w-full">
-                    {copy('Top Up', 'إعادة شحن')}
-                  </Button>
+        {/* Quick Top-Ups */}
+        <section className="mx-auto max-w-6xl px-4 py-12 text-center sm:px-6 lg:px-8">
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-4 py-1.5 text-xs font-semibold text-slate-700 shadow-sm dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200">
+            <Zap className="h-3.5 w-3.5 fill-amber-400 text-amber-500" />
+            {copy('Quick Top-Ups', 'إعادة شحن سريعة')}
+          </span>
+          <h2 className="mt-5 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl dark:text-white">
+            {copy('Need a Quick Refill?', 'محتاج إعادة شحن سريعة؟')}
+          </h2>
+          <p className="mx-auto mt-3 max-w-2xl text-sm leading-relaxed text-slate-500 dark:text-slate-400 sm:text-base">
+            {copy(
+              'Running low? Grab a quick top-up to keep your momentum going.',
+              'رصيدك على وشك ينتهي؟ خد إعادة شحن سريعة عشان تكمّل بنفس الزخم.'
+            )}
+          </p>
+          <div className="mt-8 grid gap-4 text-center sm:grid-cols-2 lg:grid-cols-4">
+            {miniPacks.map((m) => (
+              <div
+                key={m.tokens}
+                className="flex flex-col items-center rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900"
+              >
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-100 text-indigo-600 dark:bg-indigo-950/40 dark:text-indigo-400">
+                  <Zap className="h-4 w-4" />
                 </div>
-              ))}
-            </div>
-          )}
+                <p className="mt-3 text-3xl font-bold text-slate-900 dark:text-white">
+                  {m.tokens}
+                </p>
+                <p className="text-xs text-slate-500 dark:text-slate-400">
+                  {copy('tokens', 'توكن')}
+                </p>
+                <p className="mt-3 text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
+                  {m.price}
+                </p>
+                <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
+                  {m.cents}¢ {copy('per token', 'لكل توكن')}
+                </p>
+                <Button variant="outline" className="mt-5 w-full">
+                  {copy('Top Up', 'إعادة شحن')}
+                </Button>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Token Costs / What Each Action Costs */}
+        <section className="mx-auto max-w-6xl px-4 py-12 text-center sm:px-6 lg:px-8">
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-4 py-1.5 text-xs font-semibold text-slate-700 shadow-sm dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200">
+            <Tag className="h-3.5 w-3.5 text-indigo-500" />
+            {copy('Token Costs', 'تكاليف التوكنات')}
+          </span>
+          <h2 className="mt-5 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl dark:text-white">
+            {copy('What Each Action Costs', 'كم يكلّف كل إجراء')}
+          </h2>
+          <p className="mx-auto mt-3 max-w-2xl text-sm leading-relaxed text-slate-500 dark:text-slate-400 sm:text-base">
+            {copy(
+              'Transparent pricing for every AI-powered feature. No hidden fees.',
+              'تسعير شفاف لكل ميزة مدعومة بالذكاء الاصطناعي. لا رسوم خفية.'
+            )}
+          </p>
+          <div className="mt-8 grid gap-3 text-start sm:grid-cols-2 lg:grid-cols-3">
+            {tokenCosts.map((c) => {
+              const Icon = c.icon
+              return (
+                <div
+                  key={c.label.en}
+                  className="flex items-center justify-between gap-3 rounded-xl border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className={cn('flex h-10 w-10 items-center justify-center rounded-xl', c.bg)}>
+                      <Icon className={cn('h-4 w-4', c.color)} />
+                    </div>
+                    <span className="text-sm font-semibold text-slate-700 dark:text-slate-200">
+                      {c.label[lang]}
+                    </span>
+                  </div>
+                  <span className="rounded-full bg-indigo-100 px-2.5 py-1 text-xs font-bold text-indigo-700 dark:bg-indigo-950/50 dark:text-indigo-300">
+                    {c.cost} {copy('tokens', 'توكن')}
+                  </span>
+                </div>
+              )
+            })}
+          </div>
         </section>
       </main>
 
