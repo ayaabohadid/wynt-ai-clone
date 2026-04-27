@@ -1,4 +1,4 @@
-import { useState, type ComponentType } from 'react'
+import { useEffect, useRef, useState, type ComponentType } from 'react'
 import {
   BarChart3,
   Brain,
@@ -8,6 +8,7 @@ import {
   Headphones,
   LayoutGrid,
   List,
+  LogOut,
   Mail,
   PanelLeft,
   Rocket,
@@ -19,7 +20,7 @@ import {
   Zap,
 } from 'lucide-react'
 import { useLanguage, type Lang } from '@/lib/i18n'
-import { getCurrentUser } from '@/lib/auth'
+import { getCurrentUser, signOut } from '@/lib/auth'
 import { useRouter } from '@/lib/router'
 import { cn } from '@/lib/utils'
 
@@ -209,6 +210,33 @@ interface Props {
 export function DashboardSidebar({ active, onNavigate, className }: Props) {
   const { lang } = useLanguage()
   const { navigate } = useRouter()
+  const [menuOpen, setMenuOpen] = useState(false)
+  const menuWrapRef = useRef<HTMLDivElement | null>(null)
+
+  useEffect(() => {
+    if (!menuOpen) return
+    const onDocClick = (e: MouseEvent) => {
+      if (!menuWrapRef.current) return
+      if (!menuWrapRef.current.contains(e.target as Node)) {
+        setMenuOpen(false)
+      }
+    }
+    const onEsc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setMenuOpen(false)
+    }
+    document.addEventListener('mousedown', onDocClick)
+    document.addEventListener('keydown', onEsc)
+    return () => {
+      document.removeEventListener('mousedown', onDocClick)
+      document.removeEventListener('keydown', onEsc)
+    }
+  }, [menuOpen])
+
+  const handleSignOut = () => {
+    setMenuOpen(false)
+    signOut()
+    navigate('/')
+  }
   const [viewMode, setViewMode] = useState<'list' | 'grid'>('list')
 
   const user = getCurrentUser()
@@ -331,16 +359,69 @@ export function DashboardSidebar({ active, onNavigate, className }: Props) {
           </div>
         </div>
 
-        <div className="mt-3 flex items-center gap-2.5 rounded-lg px-1 py-1.5">
-          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-violet-100 text-sm font-semibold text-violet-700 dark:bg-violet-950/50 dark:text-violet-300">
-            {initial}
-          </div>
-          <div className="min-w-0">
-            <p className="truncate text-sm font-semibold text-slate-900 dark:text-white">
-              {userName}
-            </p>
-            <p className="truncate text-xs text-slate-500 dark:text-slate-400">{userEmail}</p>
-          </div>
+        <div ref={menuWrapRef} className="relative mt-3">
+          <button
+            type="button"
+            onClick={() => setMenuOpen((v) => !v)}
+            aria-haspopup="menu"
+            aria-expanded={menuOpen}
+            className={cn(
+              'flex w-full items-center gap-2.5 rounded-lg px-1 py-1.5 text-start transition-colors hover:bg-slate-100 dark:hover:bg-slate-800',
+              menuOpen && 'bg-slate-100 dark:bg-slate-800'
+            )}
+          >
+            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-violet-100 text-sm font-semibold text-violet-700 dark:bg-violet-950/50 dark:text-violet-300">
+              {initial}
+            </div>
+            <div className="min-w-0 flex-1">
+              <p className="truncate text-sm font-semibold text-slate-900 dark:text-white">
+                {userName}
+              </p>
+              <p className="truncate text-xs text-slate-500 dark:text-slate-400">{userEmail}</p>
+            </div>
+          </button>
+
+          {menuOpen && (
+            <div
+              role="menu"
+              className="absolute bottom-full start-2 mb-2 w-52 overflow-hidden rounded-xl border border-slate-200 bg-white py-1 shadow-lg dark:border-slate-700 dark:bg-slate-900"
+            >
+              <button
+                type="button"
+                role="menuitem"
+                onClick={() => {
+                  setMenuOpen(false)
+                  onNavigate('profile')
+                }}
+                className="flex w-full items-center gap-2.5 px-3 py-2 text-start text-sm text-slate-700 transition-colors hover:bg-slate-50 dark:text-slate-200 dark:hover:bg-slate-800"
+              >
+                <User className="h-4 w-4 text-slate-500 dark:text-slate-400" />
+                {lang === 'ar' ? 'الملف الشخصي' : 'Profile'}
+              </button>
+              <button
+                type="button"
+                role="menuitem"
+                onClick={() => {
+                  setMenuOpen(false)
+                  onNavigate('tokens')
+                }}
+                className="flex w-full items-center gap-2.5 px-3 py-2 text-start text-sm text-slate-700 transition-colors hover:bg-slate-50 dark:text-slate-200 dark:hover:bg-slate-800"
+              >
+                <CoinsIcon className="h-4 w-4 text-slate-500 dark:text-slate-400" />
+                {lang === 'ar' ? 'التوكنات' : 'tokens'}
+              </button>
+              <div className="my-1 border-t border-slate-100 dark:border-slate-800" />
+              <button
+                type="button"
+                role="menuitem"
+                onClick={handleSignOut}
+                className="flex w-full items-center gap-2.5 px-3 py-2 text-start text-sm font-semibold text-rose-600 transition-colors hover:bg-rose-50 dark:text-rose-400 dark:hover:bg-rose-950/40"
+              >
+                <LogOut className="h-4 w-4" />
+                {lang === 'ar' ? 'تسجيل الخروج' : 'Sign out'}
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </aside>
