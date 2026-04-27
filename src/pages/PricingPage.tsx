@@ -1,9 +1,10 @@
 import { type ComponentType } from 'react'
 import {
+  ArrowRight,
   Brain,
-  Briefcase,
   Building2,
   Clock,
+  Crown,
   FileText,
   Gift,
   Mail,
@@ -22,9 +23,28 @@ import {
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Navbar } from '@/components/sections/Navbar'
-import { Footer } from '@/components/sections/Footer'
+import { useRouter } from '@/lib/router'
 import { useLanguage, type Lang } from '@/lib/i18n'
 import { cn } from '@/lib/utils'
+
+function CoinsIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <circle cx="9" cy="9" r="6" />
+      <circle cx="15" cy="15" r="6" />
+    </svg>
+  )
+}
 
 function LinkedinIcon({ className }: { className?: string }) {
   return (
@@ -45,22 +65,23 @@ type IconC = ComponentType<{ className?: string }>
 const tokenCosts: {
   icon: IconC
   label: Record<Lang, string>
+  category: Record<Lang, string>
   cost: number
   bg: string
   color: string
 }[] = [
-  { icon: FileText as IconC, label: { en: 'CV Analysis', ar: 'تحليل السيرة' }, cost: 5, bg: 'bg-blue-100 dark:bg-blue-950/40', color: 'text-blue-600 dark:text-blue-400' },
-  { icon: Wand2 as IconC, label: { en: 'CV Regeneration', ar: 'إعادة إنشاء السيرة' }, cost: 8, bg: 'bg-violet-100 dark:bg-violet-950/40', color: 'text-violet-600 dark:text-violet-400' },
-  { icon: Target as IconC, label: { en: 'Job Matching', ar: 'مطابقة الوظائف' }, cost: 5, bg: 'bg-violet-100 dark:bg-violet-950/40', color: 'text-violet-600 dark:text-violet-400' },
-  { icon: Mail as IconC, label: { en: 'Cover Letter', ar: 'رسالة تقديم' }, cost: 5, bg: 'bg-emerald-100 dark:bg-emerald-950/40', color: 'text-emerald-600 dark:text-emerald-400' },
-  { icon: Sparkles as IconC, label: { en: 'Auto-Apply', ar: 'تقديم تلقائي' }, cost: 10, bg: 'bg-emerald-100 dark:bg-emerald-950/40', color: 'text-emerald-600 dark:text-emerald-400' },
-  { icon: Brain as IconC, label: { en: 'Interview Prep', ar: 'تحضير مقابلة' }, cost: 12, bg: 'bg-amber-100 dark:bg-amber-950/40', color: 'text-amber-600 dark:text-amber-400' },
-  { icon: Mic2 as IconC, label: { en: 'Voice Interview', ar: 'مقابلة صوتية' }, cost: 20, bg: 'bg-rose-100 dark:bg-rose-950/40', color: 'text-rose-600 dark:text-rose-400' },
-  { icon: LinkedinIcon, label: { en: 'LinkedIn Analysis', ar: 'تحليل LinkedIn' }, cost: 5, bg: 'bg-blue-100 dark:bg-blue-950/40', color: 'text-blue-600 dark:text-blue-400' },
-  { icon: Building2 as IconC, label: { en: 'Company Lookup', ar: 'بحث عن شركة' }, cost: 1, bg: 'bg-slate-100 dark:bg-slate-800', color: 'text-slate-600 dark:text-slate-300' },
-  { icon: Zap as IconC, label: { en: 'Live Feed (per 50 jobs)', ar: 'تغذية مباشرة (لكل 50 وظيفة)' }, cost: 10, bg: 'bg-indigo-100 dark:bg-indigo-950/40', color: 'text-indigo-600 dark:text-indigo-400' },
-  { icon: Sparkles as IconC, label: { en: 'Coach (after 10 free/day)', ar: 'المدرّب (بعد 10 مجانية/يوم)' }, cost: 1, bg: 'bg-rose-100 dark:bg-rose-950/40', color: 'text-rose-600 dark:text-rose-400' },
-  { icon: Search as IconC, label: { en: 'Job Search', ar: 'بحث الوظائف' }, cost: 2, bg: 'bg-indigo-100 dark:bg-indigo-950/40', color: 'text-indigo-600 dark:text-indigo-400' },
+  { icon: FileText as IconC, label: { en: 'CV Analysis', ar: 'تحليل السيرة' }, category: { en: 'CV', ar: 'السيرة' }, cost: 5, bg: 'bg-blue-100 dark:bg-blue-950/40', color: 'text-blue-600 dark:text-blue-400' },
+  { icon: Wand2 as IconC, label: { en: 'CV Regeneration', ar: 'إعادة إنشاء السيرة' }, category: { en: 'CV', ar: 'السيرة' }, cost: 8, bg: 'bg-violet-100 dark:bg-violet-950/40', color: 'text-violet-600 dark:text-violet-400' },
+  { icon: Target as IconC, label: { en: 'Job Matching', ar: 'مطابقة الوظائف' }, category: { en: 'Jobs', ar: 'الوظائف' }, cost: 5, bg: 'bg-violet-100 dark:bg-violet-950/40', color: 'text-violet-600 dark:text-violet-400' },
+  { icon: Mail as IconC, label: { en: 'Cover Letter', ar: 'رسالة تقديم' }, category: { en: 'Documents', ar: 'مستندات' }, cost: 5, bg: 'bg-emerald-100 dark:bg-emerald-950/40', color: 'text-emerald-600 dark:text-emerald-400' },
+  { icon: Sparkles as IconC, label: { en: 'Auto-Apply', ar: 'تقديم تلقائي' }, category: { en: 'Apply', ar: 'تقديم' }, cost: 10, bg: 'bg-emerald-100 dark:bg-emerald-950/40', color: 'text-emerald-600 dark:text-emerald-400' },
+  { icon: Brain as IconC, label: { en: 'Interview Prep', ar: 'تحضير مقابلة' }, category: { en: 'Interview', ar: 'مقابلة' }, cost: 12, bg: 'bg-amber-100 dark:bg-amber-950/40', color: 'text-amber-600 dark:text-amber-400' },
+  { icon: Mic2 as IconC, label: { en: 'Voice Interview', ar: 'مقابلة صوتية' }, category: { en: 'Interview', ar: 'مقابلة' }, cost: 20, bg: 'bg-rose-100 dark:bg-rose-950/40', color: 'text-rose-600 dark:text-rose-400' },
+  { icon: LinkedinIcon, label: { en: 'LinkedIn Analysis', ar: 'تحليل LinkedIn' }, category: { en: 'LinkedIn', ar: 'LinkedIn' }, cost: 5, bg: 'bg-blue-100 dark:bg-blue-950/40', color: 'text-blue-600 dark:text-blue-400' },
+  { icon: Building2 as IconC, label: { en: 'Company Lookup', ar: 'بحث عن شركة' }, category: { en: 'Research', ar: 'بحث' }, cost: 1, bg: 'bg-slate-100 dark:bg-slate-800', color: 'text-slate-600 dark:text-slate-300' },
+  { icon: Zap as IconC, label: { en: 'Live Feed (per 50 jobs)', ar: 'تغذية مباشرة (لكل 50 وظيفة)' }, category: { en: 'Jobs', ar: 'الوظائف' }, cost: 10, bg: 'bg-indigo-100 dark:bg-indigo-950/40', color: 'text-indigo-600 dark:text-indigo-400' },
+  { icon: Search as IconC, label: { en: 'Job Search', ar: 'بحث الوظائف' }, category: { en: 'Jobs', ar: 'الوظائف' }, cost: 2, bg: 'bg-indigo-100 dark:bg-indigo-950/40', color: 'text-indigo-600 dark:text-indigo-400' },
+  { icon: Sparkles as IconC, label: { en: 'Coach Chat (after 10 free/day)', ar: 'محادثة المدرّب (بعد 10 مجانية/يوم)' }, category: { en: 'Coach', ar: 'المدرّب' }, cost: 1, bg: 'bg-rose-100 dark:bg-rose-950/40', color: 'text-rose-600 dark:text-rose-400' },
 ]
 
 type Pack = {
@@ -221,6 +242,7 @@ const miniPacks = [
 
 export function PricingPage() {
   const { lang } = useLanguage()
+  const { navigate } = useRouter()
   const copy = (en: string, ar: string) => (lang === 'ar' ? ar : en)
 
   const features = [
@@ -413,33 +435,82 @@ export function PricingPage() {
               'تسعير شفاف لكل ميزة مدعومة بالذكاء الاصطناعي. لا رسوم خفية.'
             )}
           </p>
-          <div className="mt-8 grid gap-3 text-start sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mx-auto mt-8 max-w-3xl divide-y divide-slate-100 overflow-hidden rounded-2xl border border-slate-200 bg-white text-start shadow-sm dark:divide-slate-800 dark:border-slate-800 dark:bg-slate-900">
             {tokenCosts.map((c) => {
               const Icon = c.icon
               return (
                 <div
                   key={c.label.en}
-                  className="flex items-center justify-between gap-3 rounded-xl border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900"
+                  className="flex items-center gap-3 px-5 py-4"
                 >
-                  <div className="flex items-center gap-3">
-                    <div className={cn('flex h-10 w-10 items-center justify-center rounded-xl', c.bg)}>
-                      <Icon className={cn('h-4 w-4', c.color)} />
-                    </div>
-                    <span className="text-sm font-semibold text-slate-700 dark:text-slate-200">
-                      {c.label[lang]}
-                    </span>
+                  <div className={cn('flex h-9 w-9 shrink-0 items-center justify-center rounded-xl', c.bg)}>
+                    <Icon className={cn('h-4 w-4', c.color)} />
                   </div>
-                  <span className="rounded-full bg-indigo-100 px-2.5 py-1 text-xs font-bold text-indigo-700 dark:bg-indigo-950/50 dark:text-indigo-300">
-                    {c.cost} {copy('tokens', 'توكن')}
-                  </span>
+                  <p className="flex-1 text-sm font-semibold text-slate-900 dark:text-white">
+                    {c.label[lang]}
+                  </p>
+                  <p className="hidden text-sm text-slate-400 dark:text-slate-500 sm:block">
+                    {c.category[lang]}
+                  </p>
+                  <p className="inline-flex items-center gap-1 text-sm font-bold text-indigo-600 dark:text-indigo-400">
+                    <CoinsIcon className="h-3.5 w-3.5" />
+                    {c.cost}
+                  </p>
                 </div>
               )
             })}
           </div>
         </section>
+
+        {/* Final CTA */}
+        <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
+          <div className="rounded-3xl border border-slate-200 bg-gradient-to-br from-slate-50 to-slate-100 px-6 py-16 text-center shadow-sm dark:border-slate-800 dark:from-slate-900 dark:to-slate-950">
+            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-indigo-100 text-indigo-600 shadow-sm dark:bg-indigo-950/50 dark:text-indigo-400">
+              <Crown className="h-7 w-7" />
+            </div>
+            <h2 className="mt-5 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl dark:text-white">
+              {copy('Start Your Career Journey Today', 'ابدأ رحلتك المهنية اليوم')}
+            </h2>
+            <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-slate-500 sm:text-base dark:text-slate-400">
+              {copy(
+                'Sign up for free and get 100 tokens to explore all AI-powered career tools. No credit card required.',
+                'سجّل مجاناً واحصل على 100 توكن لاستكشاف كل أدوات المسيرة المهنية المدعومة بالذكاء الاصطناعي. لا يلزم بطاقة ائتمان.'
+              )}
+            </p>
+            <Button
+              variant="default"
+              size="lg"
+              className="mt-6 gap-2 bg-indigo-600 hover:bg-indigo-700 focus-visible:ring-indigo-600"
+              onClick={() => navigate('/dashboard')}
+            >
+              {copy('Go to Dashboard', 'اذهب إلى لوحة التحكم')}
+              <ArrowRight className="h-4 w-4 rtl:-scale-x-100" />
+            </Button>
+          </div>
+        </section>
       </main>
 
-      <Footer />
+      {/* Minimal footer (logo + copyright) */}
+      <footer className="border-t border-slate-200 bg-white py-6 dark:border-slate-800 dark:bg-slate-950">
+        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-4 sm:px-6 lg:px-8">
+          <a
+            href="/"
+            onClick={(e) => {
+              e.preventDefault()
+              navigate('/')
+            }}
+            className="flex items-center gap-2 text-sm font-bold text-slate-900 dark:text-white"
+          >
+            <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-indigo-600 to-violet-600">
+              <span className="text-xs font-extrabold text-white">W</span>
+            </div>
+            <span className="text-indigo-600 dark:text-indigo-400">wynt</span>
+          </a>
+          <p className="text-xs text-slate-500 dark:text-slate-400">
+            {copy('© 2026 Wynt.AI. All rights reserved.', '© 2026 Wynt.AI. جميع الحقوق محفوظة.')}
+          </p>
+        </div>
+      </footer>
     </div>
   )
 }
