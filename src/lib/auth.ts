@@ -67,9 +67,11 @@ export class EmailAlreadyRegisteredError extends Error {
 }
 
 export class InvalidCredentialsError extends Error {
-  constructor(public reason: 'no_user' | 'wrong_password') {
+  reason: 'no_user' | 'wrong_password'
+  constructor(reason: 'no_user' | 'wrong_password') {
     super(reason === 'no_user' ? 'No account for that email' : 'Wrong password')
     this.name = 'InvalidCredentialsError'
+    this.reason = reason
   }
 }
 

@@ -7,8 +7,6 @@ import {
   Mail,
   Mic2,
   PieChart,
-  RefreshCw,
-  Send,
   ShoppingCart,
   Sparkles,
   Star,

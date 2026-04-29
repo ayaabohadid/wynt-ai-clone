@@ -11,7 +11,6 @@ import {
   List,
   Mic,
   Palette,
-  Rocket,
   Search,
   Shield,
   Sparkles,

@@ -5,7 +5,7 @@ import { ThemeToggle } from '@/components/ui/theme-toggle'
 import { useRouter } from '@/lib/router'
 import { useLanguage } from '@/lib/i18n'
 import { getCurrentUser } from '@/lib/auth'
-import { ArrowRight, Menu, X, Zap } from 'lucide-react'
+import { ArrowRight, Menu, X } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 export function Navbar() {

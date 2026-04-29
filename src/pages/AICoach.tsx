@@ -2,7 +2,6 @@ import { useState, type ComponentType } from 'react'
 import {
   BarChart3,
   Briefcase,
-  ChevronRight,
   FileText,
   Home,
   LayoutGrid,

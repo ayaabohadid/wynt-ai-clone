@@ -9,7 +9,7 @@ import {
   Upload,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { useLanguage, type Lang } from '@/lib/i18n'
+import { useLanguage } from '@/lib/i18n'
 import { getCurrentUser } from '@/lib/auth'
 import { cn } from '@/lib/utils'
 import type { NavKey } from '@/components/layout/DashboardSidebar'

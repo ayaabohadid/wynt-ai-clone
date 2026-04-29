@@ -1,18 +1,15 @@
 import { useState } from 'react'
 import {
   BarChart3,
-  Bell,
   Brain,
   ChevronRight,
   DollarSign,
-  FileText,
   Globe,
   Home,
   Link2,
   LogOut,
   Mic2,
   PlayCircle,
-  Search,
   Send,
   Sparkles,
   TrendingUp,
