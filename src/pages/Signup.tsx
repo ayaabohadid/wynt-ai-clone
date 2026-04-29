@@ -1,14 +1,24 @@
 import { useState, type FormEvent } from 'react'
-import { ArrowRight, Eye, EyeOff, Mail, Lock, User, Zap, CheckCircle2 } from 'lucide-react'
+import {
+  AlertCircle,
+  ArrowRight,
+  CheckCircle2,
+  Eye,
+  EyeOff,
+  Lock,
+  Mail,
+  User,
+  Zap,
+} from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Link, useRouter } from '@/lib/router'
 import { useLanguage } from '@/lib/i18n'
-import { registerUser } from '@/lib/auth'
+import { EmailAlreadyRegisteredError, registerUser } from '@/lib/auth'
 import { cn } from '@/lib/utils'
 
 export function Signup() {
   const { navigate } = useRouter()
-  const { t } = useLanguage()
+  const { t, lang } = useLanguage()
   const stats = [
     { value: '10K+', label: t('signup.statUsers') },
     { value: '95%', label: t('signup.statMatch') },
@@ -19,6 +29,7 @@ export function Signup() {
   const [agree, setAgree] = useState({ terms: false, privacy: false })
   const [submitting, setSubmitting] = useState(false)
   const [success, setSuccess] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   const canSubmit =
     form.name.trim() &&
@@ -31,19 +42,36 @@ export function Signup() {
   function onSubmit(e: FormEvent) {
     e.preventDefault()
     if (!canSubmit) return
+    setError(null)
     setSubmitting(true)
     setTimeout(() => {
-      setSubmitting(false)
-      setSuccess(true)
-      // Register the user and set them as the current session
       try {
-        registerUser({ name: form.name, email: form.email })
-      } catch {
-        /* ignore */
+        registerUser({
+          name: form.name,
+          email: form.email,
+          password: form.password,
+        })
+        setSubmitting(false)
+        setSuccess(true)
+        // Route into onboarding after a brief celebratory pause
+        setTimeout(() => navigate('/onboarding'), 1600)
+      } catch (err) {
+        setSubmitting(false)
+        if (err instanceof EmailAlreadyRegisteredError) {
+          setError(
+            lang === 'ar'
+              ? 'هذا الإيميل مسجَّل بالفعل. سجّلي الدخول بدلاً من ذلك.'
+              : 'This email is already registered. Sign in instead.'
+          )
+        } else {
+          setError(
+            lang === 'ar'
+              ? 'حدث خطأ غير متوقّع. حاولي مرّة أخرى.'
+              : 'Something went wrong. Please try again.'
+          )
+        }
       }
-      // Route into onboarding after a brief celebratory pause
-      setTimeout(() => navigate('/onboarding'), 1600)
-    }, 900)
+    }, 700)
   }
 
   return (
@@ -199,6 +227,21 @@ export function Signup() {
                 </Check>
               </div>
 
+              {error && (
+                <div className="flex items-start gap-2 rounded-lg border border-rose-200 bg-rose-50 px-3 py-2.5 text-sm text-rose-800 dark:border-rose-900/50 dark:bg-rose-950/40 dark:text-rose-300">
+                  <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />
+                  <p className="leading-relaxed">
+                    {error}{' '}
+                    <Link
+                      to="/signin"
+                      className="font-semibold underline underline-offset-2 hover:no-underline"
+                    >
+                      {lang === 'ar' ? 'تسجيل الدخول' : 'Sign in'}
+                    </Link>
+                  </p>
+                </div>
+              )}
+
               <Button
                 type="submit"
                 variant="gradient"
@@ -216,7 +259,10 @@ export function Signup() {
         {/* Sign-in link */}
         <p className="mt-6 text-center text-sm text-slate-600 dark:text-slate-400">
           {t('signup.already')}{' '}
-          <Link to="/" className="font-semibold text-blue-600 hover:underline dark:text-blue-400">
+          <Link
+            to="/signin"
+            className="font-semibold text-blue-600 hover:underline dark:text-blue-400"
+          >
             {t('signup.signin')}
           </Link>
         </p>

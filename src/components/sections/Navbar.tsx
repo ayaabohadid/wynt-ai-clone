@@ -108,7 +108,7 @@ export function Navbar() {
               </Button>
             ) : (
               <>
-                <Button variant="ghost" size="sm" onClick={() => navigate('/signup')}>
+                <Button variant="ghost" size="sm" onClick={() => navigate('/signin')}>
                   {t('nav.signIn')}
                 </Button>
                 <Button
@@ -181,7 +181,7 @@ export function Navbar() {
                     size="sm"
                     onClick={() => {
                       setOpen(false)
-                      navigate('/signup')
+                      navigate('/signin')
                     }}
                   >
                     {t('nav.signIn')}

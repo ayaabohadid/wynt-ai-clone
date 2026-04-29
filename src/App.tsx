@@ -5,6 +5,7 @@ import { Features } from '@/components/sections/Features'
 import { Pricing } from '@/components/sections/Pricing'
 import { Footer } from '@/components/sections/Footer'
 import { Signup } from '@/pages/Signup'
+import { SignIn } from '@/pages/SignIn'
 import { Onboarding } from '@/pages/Onboarding'
 import { Dashboard } from '@/pages/Dashboard'
 import { PricingPage } from '@/pages/PricingPage'
@@ -29,6 +30,7 @@ export default function App() {
   const { path } = useRouter()
 
   if (path === '/signup') return <Signup />
+  if (path === '/signin' || path === '/login') return <SignIn />
   if (path === '/onboarding') return <Onboarding />
   if (path === '/dashboard') return <Dashboard />
   if (path === '/pricing') return <PricingPage />

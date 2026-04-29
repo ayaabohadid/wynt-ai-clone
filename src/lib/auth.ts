@@ -9,12 +9,18 @@
  *
  * All registered users (array):
  *   wynt-users       → RegisteredUser[]
+ *
+ * Passwords are stored as-is in localStorage. This is a CLIENT-SIDE DEMO
+ * only — no real security boundary, no real backend. Do not ship a real
+ * product on top of this.
  */
 
 export type RegisteredUser = {
   id: string
   name: string
   email: string
+  /** Stored in plain text in localStorage. Demo-only. */
+  password?: string
   registeredAt: string // ISO
 }
 
@@ -49,29 +55,80 @@ export function findUserByEmail(email: string): RegisteredUser | undefined {
   return getUsers().find((u) => u.email.toLowerCase() === target)
 }
 
+export function isEmailRegistered(email: string): boolean {
+  return !!findUserByEmail(email)
+}
+
+export class EmailAlreadyRegisteredError extends Error {
+  constructor() {
+    super('Email already registered')
+    this.name = 'EmailAlreadyRegisteredError'
+  }
+}
+
+export class InvalidCredentialsError extends Error {
+  constructor(public reason: 'no_user' | 'wrong_password') {
+    super(reason === 'no_user' ? 'No account for that email' : 'Wrong password')
+    this.name = 'InvalidCredentialsError'
+  }
+}
+
 /**
- * Register a new user. If the email already exists, returns the existing
- * record unchanged (idempotent). Always sets the current session.
+ * Register a new user. Throws EmailAlreadyRegisteredError if an account
+ * with that email already exists. On success the new user is set as the
+ * current session and returned.
  */
-export function registerUser(input: { name: string; email: string }): RegisteredUser {
+export function registerUser(input: {
+  name: string
+  email: string
+  password?: string
+}): RegisteredUser {
   const email = input.email.trim()
   const name = input.name.trim()
 
-  const existing = findUserByEmail(email)
-  if (existing) {
-    setCurrentUser(existing)
-    return existing
+  if (findUserByEmail(email)) {
+    throw new EmailAlreadyRegisteredError()
   }
 
   const user: RegisteredUser = {
     id: makeId(),
     name,
     email,
+    password: input.password,
     registeredAt: new Date().toISOString(),
   }
   const users = getUsers()
   users.push(user)
   window.localStorage.setItem(USERS_KEY, JSON.stringify(users))
+  setCurrentUser(user)
+  return user
+}
+
+/**
+ * Sign in with email + password. Throws InvalidCredentialsError on failure.
+ *
+ * Legacy users registered before passwords were stored will accept any
+ * password (one-time migration: the password they sign in with becomes
+ * their stored password).
+ */
+export function signIn(email: string, password: string): RegisteredUser {
+  const target = email.trim()
+  const users = getUsers()
+  const idx = users.findIndex((u) => u.email.toLowerCase() === target.toLowerCase())
+  if (idx === -1) throw new InvalidCredentialsError('no_user')
+  const user = users[idx]
+
+  // Legacy account with no stored password — accept and adopt this one
+  if (!user.password) {
+    user.password = password
+    users[idx] = user
+    window.localStorage.setItem(USERS_KEY, JSON.stringify(users))
+    setCurrentUser(user)
+    return user
+  }
+
+  if (user.password !== password) throw new InvalidCredentialsError('wrong_password')
+
   setCurrentUser(user)
   return user
 }
